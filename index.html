@@ -564,6 +564,769 @@ const BATCH_A = [
       }
     ]
   }
+  ,  {
+    id: 's02',
+    title: `Semana 2 — Topologia em Barramento`,
+    unidade: `Unidade 1`,
+    aulas: [
+      {
+        code: 'SISANO1C2B1S2A1',
+        title: `Estrutura do barramento e comunicação por broadcast`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender a estrutura linear do barramento, o compartilhamento do meio físico e o funcionamento do broadcast com endereçamento MAC.`,
+        habilidadeSocioemocional: `Avaliar criticamente uma proposta comercial antes de aceitá-la, buscando entender as implicações técnicas de uma decisão de custo.`,
+        pontoDePartida: {
+          titulo: `A proposta chamativa`,
+          texto: `<p>A startup de games está montando uma sala nova para os estagiários e um fornecedor oferece uma proposta chamativa: ligar os 8 computadores usando cabo coaxial em topologia de barramento, "por metade do preço de um switch".</p>
+<p>Como vocês já sabem, pelo Capítulo 1, que a empresa vai dobrar de tamanho em 1 ano e não pode ficar fora do ar, cabe a vocês avaliar essa proposta antes de levá-la ao CTO — entendendo antes o que acontece quando dois computadores tentam falar ao mesmo tempo no mesmo cabo.</p>`
+        },
+        conceito: [
+          {
+            heading: `Estrutura física do barramento`,
+            html: `<p>Na <strong>topologia em barramento</strong>, todos os dispositivos compartilham um único cabo (o backbone). É uma topologia <strong>linear</strong>, <strong>passiva</strong> (os dispositivos apenas "escutam" o cabo) e de <strong>broadcast natural</strong>: qualquer sinal colocado no cabo é recebido por todos.</p>
+<pre>[PC1]───[PC2]───[PC3]───[PC4]───[PC5]
+        BARRAMENTO (cabo único)</pre>
+<p>A estrutura física usa cabo <strong>coaxial</strong>, conectores <strong>T (BNC)</strong> e <strong>terminadores</strong> (resistores de 50 ohms) nas duas pontas — sem eles, o sinal "ricocheteia" de volta e corrompe a comunicação.</p>`
+          },
+          {
+            heading: `Broadcast e endereçamento MAC`,
+            html: `<p>Como o sinal chega a todos ao mesmo tempo, cada quadro Ethernet carrega o <strong>endereço MAC</strong> de origem e de destino (<code>[MAC Dest | MAC Orig | Dados | CRC]</code>). Cada dispositivo compara o MAC de destino com o seu próprio: se bater, aceita; se não, ignora.</p>`
+          },
+          {
+            heading: `Vantagens e desvantagens`,
+            html: `<table><tr><td><strong>Vantagens</strong></td><td><strong>Desvantagens</strong></td></tr>
+<tr><td>Custo muito baixo (menos cabo e equipamento)</td><td>Se o cabo principal rompe, a rede inteira para</td></tr>
+<tr><td>Instalação simples e rápida</td><td>Colisões aumentam com mais dispositivos</td></tr>
+<tr><td>Não depende de equipamento ativo central</td><td>Segurança fraca e diagnóstico difícil</td></tr></table>`
+          }
+        ],
+        sintese: [
+          `No barramento, todos os dispositivos compartilham um único cabo, com terminadores nas pontas.`,
+          `A comunicação é broadcast: todos recebem o sinal, mas só o dispositivo com o MAC de destino correto o processa.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B1S2A2',
+        title: `CSMA/CD e a probabilidade de colisão`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Explicar o funcionamento do CSMA/CD e calcular a probabilidade de colisão em função do número de estações.`,
+        habilidadeSocioemocional: `Comunicar uma avaliação técnica de forma clara para diferentes clientes com necessidades distintas.`,
+        conceito: [
+          {
+            heading: `CSMA/CD: como as estações evitam o caos`,
+            html: `<p>Como o meio é compartilhado, é preciso uma regra para decidir quem transmite: o <strong>CSMA/CD</strong> (<em>Carrier Sense Multiple Access / Collision Detection</em>) funciona em três passos — <strong>escutar</strong> o barramento (livre transmite, ocupado aguarda), <strong>monitorar</strong> o sinal durante a transmissão e, se houver <strong>colisão</strong>, parar, emitir um sinal de aviso (<strong>JAM</strong>) e aguardar um tempo aleatório antes de tentar de novo.</p>
+<pre>T=0: [PC1]──────[PC4] (ambos verificam: livre!)
+T=1: [PC1]→→💥←←[PC4] (transmitem juntos: COLISÃO!)
+T=2: [PC1]🛑JAM🛑[PC4] (aviso — ambos recuam e tentam depois)</pre>`
+          },
+          {
+            heading: `Probabilidade de colisão`,
+            html: `<p>A chance de colisão cresce com o número de estações ativas, e pode ser estimada pela fórmula:</p>
+<pre>P(colisão) = 1 − (1 − 1/N)^(N−1)</pre>
+<p>onde N é o número de estações tentando transmitir. A partir de 10–20 estações simultâneas, a proporção de colisões cresce rapidamente e o desempenho real despenca.</p>
+<p><strong>Exercício resolvido:</strong> com N = 5 estações, P = 1 − (1 − 1/5)⁴ = 1 − 0,8⁴ ≈ 0,59 (cerca de 59%) — mesmo com poucas estações a chance já é alta.</p>`
+          },
+          {
+            heading: `Onde o barramento ainda sobrevive`,
+            html: `<p>Apesar de obsoleto em redes corporativas, o conceito de meio compartilhado evoluiu para o Wi-Fi (CSMA/CA) e para a VLAN ("barramento lógico" dentro de um switch). Fisicamente, ainda aparece em automação residencial simples, telemetria de sensores e redes temporárias de baixo custo.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula 2 — "Consultoria de redes"</strong></p>
+<p><strong>Cenário:</strong> vocês são consultores de redes e precisam avaliar três clientes: <strong>Cliente A</strong> (fazenda remota, 5 sensores de solo espalhados em 1 km), <strong>Cliente B</strong> (escritório de advocacia, 15 computadores e dados sigilosos), <strong>Cliente C</strong> (laboratório maker educacional, orçamento mínimo, 10 PCs).</p>
+<p><strong>Para cada cliente, determinem:</strong> 1) Barramento é viável? (Sim/Não); 2) Justifiquem com duas vantagens ou dois problemas; 3) Se não for barramento, qual a alternativa?; 4) Estimem a diferença de custo (%) entre as duas opções.</p>
+<p><strong>Instruções de entrega:</strong> enviem a resposta do grupo por meio de um Doc/PDF aqui no AVA.</p>`
+        },
+        sintese: [
+          `O CSMA/CD organiza o acesso ao meio: escutar, transmitir, detectar colisão e recuar.`,
+          `A probabilidade de colisão cresce rapidamente com o número de estações ativas.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B1S2A3',
+        title: `Barramento como princípio: recursos compartilhados`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Reconhecer o princípio de contenção em recursos compartilhados e compará-lo entre CSMA/CD e CSMA/CA.`,
+        habilidadeSocioemocional: `Perceber que soluções tecnológicas antigas continuam ensinando princípios válidos para problemas modernos.`,
+        conceito: [
+          {
+            heading: `Um princípio que se repete`,
+            html: `<p>O barramento ensina um princípio válido para qualquer recurso compartilhado: quando muitos usuários disputam o mesmo recurso limitado, a contenção cresce mais rápido que o número de usuários — o mesmo princípio por trás de servidores sobrecarregados e da nuvem multi-tenant.</p>`
+          },
+          {
+            heading: `Erros comuns`,
+            html: `<table><tr><td><strong>Erro conceitual</strong></td><td><strong>Correção</strong></td></tr>
+<tr><td>Achar que "falar mais alto" resolve a colisão</td><td>A solução é o backoff aleatório do CSMA/CD</td></tr>
+<tr><td>Achar que QoS resolve o rompimento físico do cabo</td><td>QoS prioriza tráfego, não substitui redundância física</td></tr>
+<tr><td>Confundir CSMA/CD com CSMA/CA</td><td>CD detecta colisão depois; CA tenta evitá-la antes</td></tr></table>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Por que a topologia em barramento precisa obrigatoriamente de terminadores nas suas extremidades?`,
+            options: [
+              `Para evitar que os sinais reflitam e causem interferência.`,
+              `Para aumentar a velocidade da rede.`,
+              `Para economizar energia elétrica.`,
+              `Para conectar mais computadores.`
+            ],
+            correct: 0,
+            feedback: `Sem terminadores, os sinais refletem nas pontas e se misturam com novos sinais, corrompendo a comunicação.`
+          },
+          {
+            question: `Qual é a principal razão técnica para o abandono da topologia em barramento em redes corporativas modernas?`,
+            options: [
+              `Computadores modernos não suportam conectores BNC.`,
+              `Colisões crescem exponencialmente com mais usuários.`,
+              `Switches ficaram gratuitos.`,
+              `O cabo coaxial ficou muito caro.`
+            ],
+            correct: 1,
+            feedback: `Com mais estações disputando o mesmo meio compartilhado, a chance de colisão cresce rapidamente, degradando o desempenho.`
+          }
+        ],
+        sintese: [
+          `O barramento é barato e simples, mas frágil e inseguro.`,
+          `Hoje sobrevive só em nichos, mas seus conceitos (meio compartilhado, contenção) seguem presentes em redes modernas.`
+        ],
+        saibaMais: {
+          texto: `Pesquise a diferença entre CSMA/CD e CSMA/CA e explique por que o Wi-Fi não detecta colisões como um cabo.`,
+          link: `https://pt.wikipedia.org/wiki/CSMA/CA`
+        }
+      }
+    ]
+  },
+  {
+    id: 's03',
+    title: `Semana 3 — Topologia em Anel`,
+    unidade: `Unidade 1`,
+    aulas: [
+      {
+        code: 'SISANO1C2B1S3A1',
+        title: `Estrutura do anel e comunicação ponto a ponto`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender a estrutura física e lógica da topologia em anel e o papel do buffer em cada nó.`,
+        habilidadeSocioemocional: `Investigar as razões de uma decisão de projeto antes de propor sua substituição.`,
+        pontoDePartida: {
+          titulo: `O QA Lab da startup`,
+          texto: `<p>A startup adquire um pequeno laboratório de testes de hardware (o "QA Lab"), que valida controles antes do lançamento de cada jogo. O QA Lab usa uma rede <strong>Token Ring</strong> antiga para sincronizar os racks de teste automatizado — cada rack precisa receber comandos na mesma ordem, sem atraso variável, ou os testes ficam inválidos.</p>
+<p>Alguém da diretoria sugeriu "modernizar tudo para switches Ethernet comuns, é mais barato". Antes de aceitar ou recusar, vocês precisam entender por que essa rede foi projetada em anel, e o que se perderia ao trocá-la.</p>`
+        },
+        conceito: [
+          {
+            heading: `Estrutura da topologia em anel`,
+            html: `<p>Na <strong>topologia em anel</strong>, cada dispositivo conecta-se a exatamente dois outros, formando um caminho circular fechado. Os dados seguem sempre a mesma rota, em um único sentido (horário ou anti-horário).</p>
+<pre>[PC1]→→→[PC2]
+  ↑        ↓
+[PC4]←←←[PC3]
+Dados fluem: 1→2→3→4→1...</pre>`
+          },
+          {
+            heading: `Comunicação ponto a ponto e o buffer`,
+            html: `<p>A rede em anel só existe porque cada ligação entre dois nós é uma <strong>comunicação ponto a ponto</strong>: a informação é transmitida diretamente de um nó ao vizinho seguinte, sem equipamento central. Cada nó tem um <strong>buffer</strong> — memória temporária que recebe o quadro, verifica o endereço de destino e decide se aceita ou repassa. Cada nó regenera o sinal antes de repassar, o que permite ao anel alcançar distâncias maiores sem perda de qualidade.</p>`
+          }
+        ],
+        sintese: [
+          `Na topologia em anel, cada dispositivo se conecta a dois vizinhos, formando um círculo fechado.`,
+          `A comunicação é ponto a ponto, com cada nó usando um buffer para receber e repassar dados.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B1S3A2',
+        title: `O token e o Token Ring`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Explicar o funcionamento do token e do protocolo Token Ring, e compará-lo com Ethernet/CSMA/CD.`,
+        habilidadeSocioemocional: `Discutir em grupo os resultados de uma simulação, valorizando diferentes interpretações de uma mesma falha.`,
+        conceito: [
+          {
+            heading: `O token e o protocolo Token Ring`,
+            html: `<p>O <strong>token</strong> é um pacote de controle especial que circula continuamente pelo anel, concedendo permissão exclusiva para transmitir. Segue o padrão <strong>IEEE 802.5</strong>.</p>
+<ul><li><strong>Token livre:</strong> circulando, disponível para captura.</li><li><strong>Token ocupado:</strong> contém dados, está em uso.</li></ul>
+<p>Um nó só transmite depois de capturar o token livre; ao terminar, libera um novo token livre para o próximo — modelo chamado <strong>round-robin</strong> (rodízio): todos têm vez, sempre na mesma ordem.</p>`
+          },
+          {
+            heading: `Token Ring versus Ethernet`,
+            html: `<table><tr><td><strong>Aspecto</strong></td><td><strong>Ethernet (CSMA/CD)</strong></td><td><strong>Token Ring</strong></td></tr>
+<tr><td>Método de acesso</td><td>Escuta antes de falar</td><td>Token dá permissão explícita</td></tr>
+<tr><td>Colisões</td><td>Frequentes sob tráfego alto</td><td>Zero</td></tr>
+<tr><td>Determinismo</td><td>Não</td><td>Sim</td></tr></table>
+<p>Com N nós, a distância média é <strong>N/2 saltos</strong>: em um anel de 8 PCs, PC1→PC2 é 1 salto, mas PC1→PC5 é 4 saltos.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula 2 — "Simulando problemas no Token Ring"</strong></p>
+<p><strong>O que fazer:</strong> simular a operação do token em um cenário normal e em três cenários com falhas — usando o QA Lab da startup (a rede Token Ring que sincroniza os racks de teste automatizado) como pano de fundo.</p>
+<p><strong>Como fazer:</strong> com base nas orientações do professor: definam um monitor e as estações; guardem as instruções específicas apresentadas para três estações; façam a simulação apresentada para que o monitor possa identificar.</p>
+<p><strong>Discussão:</strong> 1) Qual falha foi mais difícil? 2) Como o monitor ajudou? 3) Qual foi a importância da redundância?</p>
+<p><strong>Instruções de entrega:</strong> enviem foto ou documento on-line com a análise e as respostas, aqui no AVA.</p>`
+        },
+        sintese: [
+          `O token concede permissão exclusiva de transmissão, eliminando colisões.`,
+          `O Token Ring é determinístico; a Ethernet clássica não é.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B1S3A3',
+        title: `Determinismo e diagramas de rede em anel`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Reconhecer situações em que o determinismo do anel ainda compensa e representar corretamente o fluxo de dados em um diagrama.`,
+        habilidadeSocioemocional: `Questionar a suposição de que "mais moderno" é sempre "melhor" antes de propor uma mudança técnica.`,
+        conceito: [
+          {
+            heading: `Nem sempre "moderno" é melhor`,
+            html: `<p>O Token Ring mostra que "mais moderno" nem sempre significa "melhor para o seu problema": Ethernet é mais rápida e barata em média, mas o Token Ring garante uma ordem absolutamente previsível. Sistemas que dependem de timing preciso ainda valorizam essa garantia, hoje entregue por tecnologias como o TSN (Time-Sensitive Networking).</p>`
+          },
+          {
+            heading: `Erros comuns`,
+            html: `<table><tr><td><strong>Erro</strong></td><td><strong>Correção</strong></td></tr>
+<tr><td>Achar que o anel é sempre mais lento que a estrela</td><td>O anel é previsível, não necessariamente mais lento</td></tr>
+<tr><td>Achar que ausência de colisão significa "sem espera"</td><td>Um nó pode esperar o token dar a volta inteira</td></tr></table>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Qual é a principal vantagem do token em uma rede em anel?`,
+            options: [
+              `Reduz o número de cabos necessários.`,
+              `Permite comunicação bidirecional.`,
+              `Aumenta a velocidade de transmissão dos dados.`,
+              `Garante que apenas um dispositivo transmita por vez.`
+            ],
+            correct: 3,
+            feedback: `O token garante exclusividade de transmissão; velocidade e cabos não têm relação direta com essa vantagem.`
+          },
+          {
+            question: `Qual é o elemento mais importante ao criar um diagrama de rede em anel?`,
+            options: [
+              `Desenhar um círculo perfeito.`,
+              `Usar muitas cores diferentes.`,
+              `Incluir todos os detalhes técnicos possíveis.`,
+              `Indicar claramente a direção do fluxo de dados.`
+            ],
+            correct: 3,
+            feedback: `Como a comunicação no anel segue sempre um sentido único, indicar claramente essa direção é o elemento mais importante do diagrama.`
+          }
+        ],
+        sintese: [
+          `A comunicação unidirecional simplifica o hardware e torna a latência previsível.`,
+          `Migrar tecnologia sem entender o que ela garante pode custar caro em sistemas críticos.`
+        ],
+        saibaMais: {
+          texto: `Pesquise sobre TSN (Time-Sensitive Networking) e explique como ele resolve, em Ethernet moderna, o mesmo problema que o Token Ring resolvia décadas atrás.`,
+          link: `https://en.wikipedia.org/wiki/Time-Sensitive_Networking`
+        }
+      }
+    ]
+  },
+  {
+    id: 's04',
+    title: `Semana 4 — Importância e Utilizações dos Meios de Transmissão`,
+    unidade: `Unidade 1`,
+    aulas: [
+      {
+        code: 'SISANO1C2B1S4A1',
+        title: `O que é um meio de transmissão`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o conceito de meio de transmissão e diferenciar sinais elétricos, ópticos e eletromagnéticos.`,
+        habilidadeSocioemocional: `Explicar um conceito técnico para alguém sem formação em TI, usando analogias claras.`,
+        pontoDePartida: {
+          titulo: `A filial de Belo Horizonte`,
+          texto: `<p>A startup de games cresceu, como previsto no Capítulo 1, e vai abrir uma filial em outra cidade para a equipe de suporte ao jogador. A matriz continua em São Paulo; a filial vai ficar em Belo Horizonte. O CEO está confuso: "por que não usar só Wi-Fi entre as duas cidades? A fibra parece cara, e alguém falou em satélite."</p>
+<p>Antes de responder, é preciso entender que existem diferentes <strong>meios de transmissão</strong> — os "caminhos" por onde os dados viajam — e que cada um tem características muito diferentes de velocidade, alcance e custo.</p>`
+        },
+        conceito: [
+          {
+            heading: `O que é um meio de transmissão`,
+            html: `<p><strong>Meio de transmissão</strong> é o canal físico ou lógico que permite a propagação de sinais entre dispositivos. Uma boa analogia: pense nos dados como carros viajando — os meios de transmissão são as "estradas digitais" por onde eles passam, cada uma com velocidade e capacidade diferentes.</p>
+<p>Cumprem três funções: <strong>transporte</strong> (carregar o sinal mantendo a integridade), <strong>proteção</strong> (blindagem contra interferências) e <strong>organização</strong> (múltiplos canais simultâneos).</p>`
+          },
+          {
+            heading: `Tipos de sinal`,
+            html: `<ul>
+<li><strong>Sinal elétrico:</strong> variações de voltagem em cabos metálicos (cobre) — ex.: Ethernet, USB.</li>
+<li><strong>Sinal óptico:</strong> pulsos de luz em fibras de vidro — altíssima velocidade, imune a interferência elétrica.</li>
+<li><strong>Sinal eletromagnético:</strong> ondas de rádio pelo ar — Wi-Fi, Bluetooth, 4G/5G e satélite.</li>
+</ul>`
+          }
+        ],
+        sintese: [
+          `Meio de transmissão é o canal físico ou lógico por onde os sinais viajam entre dispositivos.`,
+          `Existem três tipos de sinal: elétrico, óptico e eletromagnético.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B1S4A2',
+        title: `Meios guiados e não guiados`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar meios guiados de não guiados e comparar meios quanto a velocidade, custo e confiabilidade.`,
+        habilidadeSocioemocional: `Justificar tecnicamente uma recomendação de infraestrutura para um cliente fictício.`,
+        conceito: [
+          {
+            heading: `Guiados versus não guiados`,
+            html: `<table><tr><td><strong>Aspecto</strong></td><td><strong>Guiados (com fio)</strong></td><td><strong>Não guiados (sem fio)</strong></td></tr>
+<tr><td>Custo inicial</td><td>Alto</td><td>Baixo</td></tr>
+<tr><td>Manutenção</td><td>Baixa</td><td>Alta</td></tr>
+<tr><td>Segurança</td><td>Alta</td><td>Média</td></tr>
+<tr><td>Mobilidade</td><td>Nenhuma</td><td>Total</td></tr></table>
+<p>Meios guiados: par trançado, cabo coaxial e fibra óptica. Meios não guiados: radiofrequência (Wi-Fi, Bluetooth, 4G/5G), micro-ondas (links ponto a ponto, satélite) e infravermelho.</p>`
+          },
+          {
+            heading: `Escolhendo o meio certo`,
+            html: `<table><tr><td><strong>Meio</strong></td><td><strong>Velocidade</strong></td><td><strong>Uso típico</strong></td></tr>
+<tr><td>Fibra óptica</td><td>Muito alta</td><td>Backbones, conexões entre cidades</td></tr>
+<tr><td>Cabo metálico</td><td>Alta</td><td>Redes locais (LAN)</td></tr>
+<tr><td>Wi-Fi</td><td>Variável</td><td>Mobilidade dentro de um prédio</td></tr>
+<tr><td>Satélite</td><td>Baixa (alta latência)</td><td>Áreas remotas, último recurso</td></tr></table>
+<p>Um erro comum é achar que Wi-Fi resolve qualquer conexão: <strong>Wi-Fi é uma tecnologia de rede local (LAN)</strong>. Para conectar cidades, usam-se links dedicados contratados como <strong>WAN</strong>, muitas vezes com um <strong>SLA</strong> que garante banda e disponibilidade mínimas.</p>`
+          },
+          {
+            heading: `Exercício resolvido`,
+            html: `<p><strong>Um arquivo de build de 10 GB precisa ser enviado por um link de 100 Mbps. Quanto tempo leva?</strong></p>
+<p>10 GB ≈ 81.920 Mb (10 × 8 × 1024); em 100 Mbps, o tempo é 81.920 / 100 ≈ 819 s (≈ 13,6 min).</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula 1 — "Consultoria para CloudTech"</strong></p>
+<p><strong>Cenário:</strong> sua equipe foi contratada para definir a melhor solução de conexão entre os escritórios da empresa CloudTech, em São Paulo e no Rio de Janeiro.</p>
+<p><strong>Para cada conexão</strong> (SP–RJ 400 km, dentro de cada escritório, backup emergencial), indiquem: o meio de transmissão sugerido, o tipo de sinal, se é guiado ou não guiado, e a justificativa.</p>
+<p>Elaborem também um pitch de apresentação (4 a 5 linhas) explicando a solução recomendada e os benefícios.</p>
+<p><strong>Instruções de entrega:</strong> registrem a atividade no AVA, enviando uma foto ou documento digital com a tabela e o pitch.</p>`
+        },
+        sintese: [
+          `Meios guiados usam cabo; meios não guiados se propagam pelo espaço.`,
+          `A escolha do meio depende de velocidade, custo e confiabilidade.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B1S4A3',
+        title: `WAN, SLA e a cadeia de meios de um dado`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Reconhecer a diferença entre redes locais e de longa distância, e propor o meio de transmissão adequado a cenários de conexão entre cidades.`,
+        habilidadeSocioemocional: `Substituir "achismos" por raciocínio técnico ao avaliar uma proposta de infraestrutura.`,
+        conceito: [
+          {
+            heading: `A cadeia de meios de um dado`,
+            html: `<p>A confusão do CEO ("por que não usar só Wi-Fi?") é comum fora da área de TI, porque no dia a dia "internet" parece uma coisa só. Na prática, cada trecho da jornada de um dado passa por meios diferentes, escolhidos por critérios técnicos distintos.</p>`
+          },
+          {
+            heading: `Erros comuns`,
+            html: `<table><tr><td><strong>Erro</strong></td><td><strong>Correção</strong></td></tr>
+<tr><td>Achar que Wi-Fi conecta cidades diferentes</td><td>Wi-Fi é LAN; conexões entre cidades usam WAN (fibra, rádio licenciado)</td></tr>
+<tr><td>Escolher satélite para tráfego interativo</td><td>Satélite GEO tem latência muito alta; só serve como último recurso</td></tr>
+<tr><td>Depender de um único provedor/rota</td><td>Sem redundância, qualquer falha derruba a conexão inteira</td></tr></table>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Uma empresa precisa conectar dois prédios separados por uma avenida movimentada. Qual seria a melhor opção de cabeamento?`,
+            options: [
+              `Link de micro-ondas ponto a ponto`,
+              `Cabos enterrados sob a avenida`,
+              `Múltiplos roteadores Wi-Fi`,
+              `Cabo de par trançado passando por postes`
+            ],
+            correct: 1,
+            feedback: `Cabos subterrâneos protegem contra danos externos e oferecem alta velocidade, diferente de um cabo aéreo ou de soluções sem fio.`
+          },
+          {
+            question: `Uma empresa precisa conectar dois prédios distantes 2 km, com transferência de 50 GB diários. Qual a melhor opção considerando custo-benefício?`,
+            options: [
+              `Link de satélite dedicado.`,
+              `Fibra óptica monomodo.`,
+              `Cabo Cat6 com repetidores.`,
+              `Wi-Fi com antenas de alto ganho.`
+            ],
+            correct: 1,
+            feedback: `A fibra óptica monomodo alcança dezenas de quilômetros sem perda relevante de sinal — a opção mais equilibrada em custo-benefício para 2 km.`
+          }
+        ],
+        sintese: [
+          `Wi-Fi resolve mobilidade local, não conexão entre cidades.`,
+          `Links entre cidades (WAN) costumam usar fibra corporativa com SLA, e se beneficiam de um link de backup redundante.`
+        ],
+        saibaMais: {
+          texto: `Pesquise a diferença entre satélite GEO (geoestacionário) e LEO (órbita baixa, como as constelações Starlink) quanto à latência, e por que isso importa para jogos online.`,
+          link: `https://pt.wikipedia.org/wiki/Sat%C3%A9lite_de_%C3%B3rbita_baixa`
+        }
+      }
+    ]
+  },
+  {
+    id: 's05',
+    title: `Semana 5 — Meios de Transmissão Guiados (Cabos de Cobre)`,
+    unidade: `Unidade 1`,
+    aulas: [
+      {
+        code: 'SISANO1C2B1S5A1',
+        title: `Cabo coaxial e par trançado`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender por que o cabo de cobre continua relevante e diferenciar cabo coaxial de par trançado (UTP/STP).`,
+        habilidadeSocioemocional: `Tomar uma decisão técnica informada diante de opções aparentemente parecidas.`,
+        pontoDePartida: {
+          titulo: `Cabeando a filial de BH`,
+          texto: `<p>A filial de Belo Horizonte, aberta no Capítulo 4, precisa ser cabeada: passar os cabos que ligam cada PC, impressora e servidor ao switch da sala de TI. O técnico chegou com rolos de cabo diferentes — uns grossos e rígidos, outros finos e flexíveis, alguns com malha metálica por dentro, outros sem nada — e perguntou: "vocês querem Cat5e, Cat6, Cat6a ou coaxial em algum ponto?"</p>
+<p>Cabo de cobre pode parecer "antigo" perto da fibra, mas continua sendo o meio mais usado dentro de escritórios: é barato, fácil de instalar e ainda alimenta equipamentos pelo próprio cabo (PoE).</p>`
+        },
+        conceito: [
+          {
+            heading: `Por que ainda usamos cabo de cobre`,
+            html: `<p>Cabos de cobre oferecem sinal estável e baixa latência, além de suportarem <strong>PoE (Power over Ethernet)</strong>, que alimenta câmeras IP e telefones VoIP pelo mesmo cabo de dados. O cobre é o condutor mais usado por sua alta condutividade elétrica.</p>`
+          },
+          {
+            heading: `Cabo coaxial`,
+            html: `<p>Formado por camadas concêntricas: <strong>núcleo condutor</strong> → <strong>isolante dielétrico</strong> → <strong>malha metálica</strong> (blindagem) → <strong>capa externa</strong>. A malha em 360° garante excelente proteção contra interferência eletromagnética (EMI), por isso o coaxial ainda domina em TV a cabo e CFTV.</p>`
+          },
+          {
+            heading: `Par trançado: UTP e STP`,
+            html: `<p>O <strong>par trançado</strong> entrelaça pares de fios de cobre para reduzir interferência entre eles (crosstalk). É o padrão atual para redes locais.</p>
+<table><tr><td><strong>Característica</strong></td><td><strong>UTP</strong></td><td><strong>STP</strong></td></tr>
+<tr><td>Blindagem</td><td>Ausente</td><td>Presente</td></tr>
+<tr><td>Custo</td><td>Menor</td><td>Maior</td></tr>
+<tr><td>Aplicação típica</td><td>Escritórios, residências</td><td>Indústrias, hospitais, data centers</td></tr></table>`
+          }
+        ],
+        sintese: [
+          `Cabo de cobre continua relevante por estabilidade, baixa latência e suporte a PoE.`,
+          `Par trançado se divide em UTP (sem blindagem) e STP (com blindagem).`
+        ]
+      },
+      {
+        code: 'SISANO1C2B1S5A2',
+        title: `Categorias de par trançado e a regra dos 100 metros`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Comparar as categorias de par trançado (Cat5e a Cat8) e aplicar a regra dos 100 metros da norma TIA/EIA-568.`,
+        habilidadeSocioemocional: `Aceitar que uma limitação técnica não se resolve trocando de categoria, e sim ajustando o projeto.`,
+        conceito: [
+          {
+            heading: `Categorias de par trançado`,
+            html: `<table><tr><td><strong>Categoria</strong></td><td><strong>Velocidade</strong></td><td><strong>Distância máxima</strong></td></tr>
+<tr><td>Cat5e</td><td>1 Gbps</td><td>100 m</td></tr>
+<tr><td>Cat6</td><td>1 Gbps (10 Gbps até 55 m)</td><td>100 m</td></tr>
+<tr><td>Cat6a</td><td>10 Gbps</td><td>100 m</td></tr>
+<tr><td>Cat7</td><td>10 Gbps</td><td>100 m</td></tr>
+<tr><td>Cat8</td><td>24–40 Gbps</td><td>30 m</td></tr></table>
+<p>Para instalações novas, o mínimo recomendado é <strong>Cat6</strong>.</p>`
+          },
+          {
+            heading: `A regra dos 100 metros`,
+            html: `<p>A norma <strong>TIA/EIA-568</strong> limita o enlace de cobre a <strong>100 m no total (canal)</strong>: até <strong>90 m de cabeamento fixo</strong> mais até <strong>10 m de patch cords</strong> nas pontas. A solução para um trecho maior não é trocar de categoria (Cat7 não aumenta alcance), e sim usar um switch intermediário ou fibra.</p>
+<p><strong>Exercício resolvido:</strong> um servidor fica a 92 m do switch, já contando 2 m de patch cord em cada ponta. Não está dentro da norma: os 92 m de cabeamento fixo já ultrapassam os 90 m do link permanente.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Continuação do projeto contínuo — REDE-STARTUP-GAMES.pkt.</strong> A partir de agora, vocês vão adicionar a filial de Belo Horizonte como um segundo site dentro do mesmo arquivo salvo no Capítulo 1.</p>
+<p>No Packet Tracer: montem a filial (1 Switch, 4 PCs, 1 Servidor, 1 Impressora), liguem cada PC e a impressora ao switch com cabo de par trançado reto, liguem um segundo switch ao primeiro, simulem um trecho acima de 100 m e corrijam com um switch intermediário. Configurem IPs na mesma sub-rede local da filial e testem com <code>ping</code>.</p>
+<p>Salvem o arquivo <code>REDE-STARTUP-GAMES.pkt</code> — ele já tem dois sites (matriz e filial).</p>`
+        },
+        sintese: [
+          `Categorias de Cat5e a Cat8 diferem em frequência, velocidade e distância máxima.`,
+          `A TIA/EIA-568 limita o enlace de cobre a 100 m (90 m fixo + 10 m de patch cords).`
+        ]
+      },
+      {
+        code: 'SISANO1C2B1S5A3',
+        title: `Projeto de cabeamento por ambiente`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Escolher UTP ou STP e a categoria adequada considerando interferência, distância, velocidade e orçamento de um ambiente real.`,
+        habilidadeSocioemocional: `Planejar a escalabilidade futura de um projeto, não apenas a necessidade imediata.`,
+        conceito: [
+          {
+            heading: `"Cabo de rede não é tudo igual"`,
+            html: `<p>Cada ambiente tem um nível de interferência e uma necessidade de velocidade diferentes — a escolha errada custa caro, seja pagando a mais por blindagem desnecessária, seja sofrendo quedas por subdimensionar o cabo.</p>`
+          },
+          {
+            heading: `Erros comuns`,
+            html: `<table><tr><td><strong>Erro</strong></td><td><strong>Correção</strong></td></tr>
+<tr><td>Confundir capa externa com blindagem</td><td>A blindagem é a malha/folha interna; a capa é só proteção mecânica</td></tr>
+<tr><td>Achar que Cat7 aumenta a distância máxima</td><td>Categoria muda frequência e blindagem, não o alcance de 100 m</td></tr>
+<tr><td>Usar STP sem aterramento</td><td>Sem aterramento, a blindagem pode piorar o ruído</td></tr></table>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Uma empresa precisa conectar um servidor a um switch que está a 95 metros de distância. Qual a melhor solução?`,
+            options: [
+              `Usar cabo Cat7 que permite maior distância.`,
+              `Usar cabo Cat5e que é mais flexível para distâncias longas.`,
+              `Usar cabo Cat6 de 95 metros direto.`,
+              `Instalar um switch intermediário ou usar fibra.`
+            ],
+            correct: 3,
+            feedback: `95 m já ultrapassa os 90 m do link permanente; nenhuma categoria de par trançado aumenta o alcance máximo.`
+          },
+          {
+            question: `Uma fábrica está instalando uma rede em setor com máquinas que geram forte interferência eletromagnética. Qual cabo é mais indicado?`,
+            options: [
+              `Cabo STP Cat6a, com blindagem contra interferência externa.`,
+              `Cabos UTP Cat5e, mais baratos e fáceis de instalar.`,
+              `Cabos UTP Cat7, categorias altas dispensam blindagem.`,
+              `Cabos UTP Cat6, o trançamento reduz interferências.`
+            ],
+            correct: 0,
+            feedback: `O STP tem blindagem metálica que protege contra interferência eletromagnética externa — essencial em ambientes industriais.`
+          }
+        ],
+        sintese: [
+          `A escolha do cabo depende do ambiente e da necessidade futura de velocidade.`,
+          `Um bom projeto de cabeamento prevê o crescimento da infraestrutura nos próximos 5 a 10 anos.`
+        ],
+        saibaMais: {
+          texto: `Pesquise o Auto-MDI-X em switches modernos e explique por que ele tornou o cabo crossover quase desnecessário hoje.`,
+          link: `https://en.wikipedia.org/wiki/Medium-dependent_interface`
+        }
+      }
+    ]
+  },
+  {
+    id: 's06',
+    title: `Semana 6 — Introdução aos Protocolos e Camadas de Rede`,
+    unidade: `Unidade 2`,
+    aulas: [
+      {
+        code: 'SISANO1C2B2S6A1',
+        title: `O que é um protocolo e o TCP/IP`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o conceito de protocolo de rede e diferenciar as funções de TCP, IP, FTP/SFTP e DNS.`,
+        habilidadeSocioemocional: `Ponderar dois pontos de vista técnicos divergentes antes de tomar partido.`,
+        pontoDePartida: {
+          titulo: `Qual protocolo usar no jogo online?`,
+          texto: `<p>A filial de Belo Horizonte já está cabeada, e a startup agora foca no jogo online que está lançando. O sistema tem duas partes: o <strong>cliente de atualização</strong>, que baixa patches, e o <strong>motor de partida online</strong>, que sincroniza a posição dos jogadores em tempo real.</p>
+<p>Um desenvolvedor júnior sugeriu: "vamos usar o mesmo protocolo de transporte para tudo, simplifica". A analista de TI discordou: "se usarmos o protocolo errado no motor de partida, o jogo vai travar toda vez que um pacote se perder". Quem está certo?</p>`
+        },
+        conceito: [
+          {
+            heading: `O que é um protocolo`,
+            html: `<p><strong>Protocolo de rede</strong> é um conjunto de regras e padrões que permite que dispositivos diferentes se comuniquem — um idioma universal das máquinas. Na analogia dos Correios, o <strong>endereço no envelope</strong> equivale ao endereçamento do protocolo; o <strong>formato da carta</strong>, à sintaxe; e a <strong>rota do carteiro</strong>, ao caminho definido pelo protocolo.</p>`
+          },
+          {
+            heading: `TCP/IP`,
+            html: `<p><strong>TCP</strong>: foco em <strong>confiabilidade</strong>. Divide os dados em pacotes, numera-os, envia-os e, no destino, confere se todos chegaram, reordena e solicita reenvio dos perdidos. <strong>IP</strong>: foco em <strong>entrega correta</strong>. Responsável pelo endereçamento — cada pacote recebe o IP de origem e destino.</p>
+<p>Analogia: em um quebra-cabeça enviado pelo correio, o TCP numera as caixas e confere se chegaram todas; o IP é o serviço de postagem, que só lê o endereço e envia.</p>`
+          },
+          {
+            heading: `FTP, SFTP e DNS`,
+            html: `<p><strong>FTP</strong> move arquivos entre computadores, abrindo duas conexões (comandos e dados); <strong>SFTP</strong> faz o mesmo, mas com criptografia. <strong>DNS</strong> converte nomes de domínio em endereços IP — a "agenda de contatos" da internet.</p>`
+          }
+        ],
+        sintese: [
+          `Protocolo é um conjunto de regras que permite a comunicação entre dispositivos diferentes.`,
+          `TCP garante confiabilidade; IP garante endereçamento e entrega.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S6A2',
+        title: `O modelo OSI e protocolos por camada`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Explicar por que as redes são organizadas em camadas e reconhecer as sete camadas do modelo OSI e suas PDUs.`,
+        habilidadeSocioemocional: `Diagnosticar um problema técnico de forma estruturada, camada por camada, em vez de "tentar tudo ao mesmo tempo".`,
+        conceito: [
+          {
+            heading: `Por que organizar a rede em camadas`,
+            html: `<p>Um <strong>modelo de camadas</strong> divide a comunicação em partes menores e gerenciáveis. Cada camada só conversa com a camada acima e abaixo dela, trazendo: <strong>abstração</strong>, <strong>modularidade</strong>, <strong>padronização</strong> e <strong>diagnóstico</strong> mais fácil.</p>`
+          },
+          {
+            heading: `O modelo OSI`,
+            html: `<table><tr><td><strong>Camada</strong></td><td><strong>Função</strong></td><td><strong>PDU</strong></td></tr>
+<tr><td>7 Aplicação</td><td>Prover serviços ao usuário</td><td>Dados</td></tr>
+<tr><td>6 Apresentação</td><td>Tradução, compressão, criptografia</td><td>Dados</td></tr>
+<tr><td>5 Sessão</td><td>Controle de diálogo</td><td>Dados</td></tr>
+<tr><td>4 Transporte</td><td>Portas, segmentação</td><td>Segmento</td></tr>
+<tr><td>3 Rede</td><td>Endereçamento lógico, roteamento</td><td>Pacote</td></tr>
+<tr><td>2 Enlace</td><td>Endereçamento físico, erros</td><td>Quadro</td></tr>
+<tr><td>1 Física</td><td>Movimentação de bits</td><td>Bits</td></tr></table>`
+          },
+          {
+            heading: `Protocolos por camada, na prática`,
+            html: `<table><tr><td><strong>Ação</strong></td><td><strong>Protocolo</strong></td></tr>
+<tr><td>Conecta ao Wi-Fi e obtém IP</td><td>DHCP</td></tr>
+<tr><td>Digita o endereço do site</td><td>DNS</td></tr>
+<tr><td>Navegador conecta com segurança</td><td>TCP + TLS</td></tr>
+<tr><td>Pacotes são endereçados e roteados</td><td>IP</td></tr>
+<tr><td>Vídeo começa a tocar, priorizando velocidade</td><td>UDP</td></tr></table>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula 2 — "Diagnóstico de instabilidade no app"</strong></p>
+<p><strong>Cenário:</strong> a equipe de TI recebeu a mensagem: "nosso app web carrega páginas normalmente (HTTPS) e os downloads via SFTP estão ok, mas as chamadas de vídeo embutidas (WebRTC) ficaram instáveis. Migramos os pontos de acesso Wi-Fi e habilitamos um firewall novo."</p>
+<p>Usando os conceitos de modelos em camadas (OSI e TCP/IP): 1) identifiquem em quais camadas os sintomas provavelmente ocorrem; 2) proponham testes por camada; 3) indiquem mitigação rápida e correção definitiva.</p>
+<p><strong>Instruções de entrega:</strong> registrem a atividade no AVA seguindo o template do roteiro.</p>`
+        },
+        sintese: [
+          `Redes são organizadas em camadas para permitir abstração, modularidade e diagnóstico.`,
+          `O modelo OSI tem sete camadas, cada uma com sua função e sua PDU.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S6A3',
+        title: `TCP versus UDP: quando usar cada um`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Decidir quando usar TCP e quando usar UDP em uma aplicação real.`,
+        habilidadeSocioemocional: `Reconhecer que não existe "um protocolo para tudo", assim como não existe uma solução única para todo problema de equipe.`,
+        conceito: [
+          {
+            heading: `TCP versus UDP`,
+            html: `<p>TCP garante que cada byte chegue certo e na ordem, mas isso custa tempo (confirmações, reenvios). UDP é mais rápido e simples, mas não garante entrega. A escolha depende da prioridade: em um e-mail com anexo importante, a integridade vence → <strong>TCP</strong>; em uma videochamada ou jogo em tempo real, a velocidade vence → <strong>UDP</strong>.</p>`
+          },
+          {
+            heading: `Erros comuns`,
+            html: `<table><tr><td><strong>Erro</strong></td><td><strong>Correção</strong></td></tr>
+<tr><td>Achar que é preciso o mesmo dispositivo para se comunicar</td><td>Basta seguir o mesmo protocolo, não importa a marca</td></tr>
+<tr><td>Achar que reenvio é função do IP</td><td>É função do TCP; o IP só cuida do endereçamento</td></tr>
+<tr><td>Achar que UDP é sempre melhor para vídeo</td><td>Alguns serviços usam TCP/HTTPS (HLS/DASH) com bom desempenho</td></tr></table>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Qual protocolo garante entrega confiável de dados, quebrando-os em pacotes e endereçando corretamente?`,
+            options: [`DNS`, `HTTP`, `TCP/IP`, `FTP`],
+            correct: 2,
+            feedback: `O TCP/IP combina as duas funções: TCP divide, numera e confirma; IP cuida do endereçamento.`
+          },
+          {
+            question: `Você baixa um jogo de 50 GB e depois joga online. Qual a combinação de protocolos de transporte mais adequada?`,
+            options: [
+              `UDP para o download, TCP para o jogo`,
+              `UDP para ambos`,
+              `TCP para o download, UDP para o jogo`,
+              `TCP para ambos`
+            ],
+            correct: 2,
+            feedback: `O TCP garante que o download chegue completo; o UDP deixa o jogo online mais rápido, mesmo tolerando pequenas perdas.`
+          }
+        ],
+        sintese: [
+          `TCP prioriza confiabilidade; UDP prioriza velocidade.`,
+          `A organização em camadas permite trocar o protocolo de uma camada sem afetar as outras.`
+        ],
+        saibaMais: {
+          texto: `Pesquise HLS e DASH, tecnologias de streaming sobre TCP/HTTPS, e explique por que serviços como YouTube entregam vídeo estável mesmo com um protocolo "mais lento".`,
+          link: `https://en.wikipedia.org/wiki/HTTP_Live_Streaming`
+        }
+      }
+    ]
+  },
+  {
+    id: 's07',
+    title: `Semana 7 — Camada Física: Transmissão de Dados e Meios de Comunicação`,
+    unidade: `Unidade 2`,
+    aulas: [
+      {
+        code: 'SISANO1C2B2S7A1',
+        title: `O papel da camada Física`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o papel da camada Física como base de toda comunicação em rede e diferenciar sinal elétrico, óptico e de rádio.`,
+        habilidadeSocioemocional: `Investigar um problema técnico de forma metódica, começando pela camada mais básica.`,
+        pontoDePartida: {
+          titulo: `A internet caiu na hora do lançamento`,
+          texto: `<p>A startup organiza o lançamento do jogo, com transmissão ao vivo para investidores. Horas antes, a internet do escritório parou. Ninguém sabe se é o cabo, o roteador ou o provedor. O estagiário de TI foi chamado: "por onde eu começo a investigar?"</p>
+<p>A resposta certa começa na camada Física — a base sobre a qual todas as outras dependem. Se os bits não viram sinal e não viajam pelo meio físico, nenhuma camada acima resolve o problema.</p>`
+        },
+        conceito: [
+          {
+            heading: `O papel da camada Física`,
+            html: `<p>Toda comunicação digital começa com a transmissão de <strong>bits</strong>. A missão da camada Física é converter esses bits em um sinal capaz de viajar por um meio físico real. Ela <strong>não</strong> verifica se os dados chegaram sem erro — isso é responsabilidade da camada de Enlace, logo acima.</p>`
+          },
+          {
+            heading: `Três formas de converter bits em sinal`,
+            html: `<ul>
+<li><strong>Sinal elétrico:</strong> em cabos de cobre. Um nível de tensão representa "1", outro "0".</li>
+<li><strong>Sinal óptico:</strong> em fibra óptica. Pulsos de luz representam os bits.</li>
+<li><strong>Sinal de rádio:</strong> em Wi-Fi, Bluetooth, 4G/5G. Frequência e amplitude codificam os bits.</li>
+</ul>`
+          }
+        ],
+        sintese: [
+          `A camada Física converte bits em sinais elétricos, ópticos ou de rádio, e vice-versa.`,
+          `Diagnóstico de rede começa sempre pela camada Física, subindo pelas camadas seguintes.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S7A2',
+        title: `Codificação, modulação e multiplexação`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar codificação de modulação e reconhecer os tipos básicos de modulação (AM, FM, PM) e multiplexação (FDM, TDM, WDM).`,
+        habilidadeSocioemocional: `Sintetizar um conceito técnico em um formato curto e objetivo, como pedido por uma liderança real.`,
+        conceito: [
+          {
+            heading: `Codificação: a linguagem dos sinais digitais`,
+            html: `<p><strong>Codificação</strong> representa bits usando um sinal digital, sem onda contínua. Um esquema comum é o <strong>NRZ</strong>: tensão positiva representa "1", negativa representa "0". Usada em <strong>banda base</strong>, caso típico de uma LAN cabeada.</p>`
+          },
+          {
+            heading: `Modulação, ruído e multiplexação`,
+            html: `<p><strong>Modulação</strong> imprime os bits em uma onda portadora contínua, em <strong>banda passante</strong>, típica da comunicação sem fio: <strong>AM</strong> varia a "força" do sinal; <strong>FM</strong> varia a frequência mantendo a amplitude constante (mais robusta a ruído); <strong>PM</strong> varia a fase da onda.</p>
+<p><strong>Ruído</strong> é qualquer sinal indesejado que interfere na transmissão. <strong>Multiplexação</strong> permite que vários fluxos compartilhem o mesmo meio: <strong>FDM</strong> (faixas de frequência), <strong>TDM</strong> (fatias de tempo), <strong>WDM</strong> ("cores" de luz na mesma fibra).</p>`
+          },
+          {
+            heading: `Equipamentos da camada Física`,
+            html: `<p>Equipamentos da camada Física não decidem nada — apenas manipulam sinais. O <strong>repetidor</strong> combate a atenuação, regenerando o sinal. O <strong>hub</strong> é um repetidor com várias portas: recebe um sinal e copia para todas as outras, sem verificar o destino. Já <strong>switch</strong> e <strong>roteador</strong> tomam decisões e não são equipamentos de camada Física.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula 2 — "Entendimento do problema"</strong></p>
+<p><strong>Situação:</strong> a líder da equipe mandou no Slack: "preciso de um resumo claro sobre modulação (AM, FM, PM) e multiplexação (FDM, TDM, WDM): o que são, quando usar, prós/contras e um exemplo de cada."</p>
+<p>Respondam em um único reply com até 10 linhas: 1) Modulação (1 frase); 2) AM | FM | PM (1 linha cada); 3) Multiplexação (1 frase); 4) FDM | TDM | WDM (1 linha cada); 5) Risco e mitigação (1 linha).</p>
+<p><strong>Instruções de entrega:</strong> enviem um documento com a resposta do grupo, aqui no AVA.</p>`
+        },
+        sintese: [
+          `Codificação (NRZ) é usada em banda base; modulação (AM, FM, PM) em banda passante.`,
+          `Multiplexação (FDM, TDM, WDM) permite que vários fluxos compartilhem o mesmo meio.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S7A3',
+        title: `Hub, switch e diagnóstico por camadas`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar hub, repetidor, switch e roteador quanto ao nível de decisão de cada um, e diagnosticar uma falha de conectividade por camadas.`,
+        habilidadeSocioemocional: `Aplicar um raciocínio estruturado (de baixo para cima) diante de um problema urgente.`,
+        conceito: [
+          {
+            heading: `Sempre de baixo para cima`,
+            html: `<p>A pergunta do estagiário tem resposta técnica precisa: sempre de baixo para cima, começando pela camada Física. Se os bits não conseguem virar sinal e sair do computador, não faz sentido investigar DNS ou servidor primeiro.</p>`
+          },
+          {
+            heading: `Erros comuns`,
+            html: `<table><tr><td><strong>Erro</strong></td><td><strong>Correção</strong></td></tr>
+<tr><td>Confundir hub com switch</td><td>Hub repete sinal para todas as portas; switch decide a porta certa pelo MAC</td></tr>
+<tr><td>Achar que a camada Física confere erros nos dados</td><td>Essa é função da camada de Enlace</td></tr>
+<tr><td>Confundir amplitude com frequência</td><td>Amplitude é a "força" do sinal; frequência é a taxa de oscilação</td></tr></table>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Qual é a principal responsabilidade da camada Física no modelo OSI?`,
+            options: [
+              `Criptografar os dados para garantir a segurança da comunicação.`,
+              `Garantir que os dados cheguem sem erros ao destino.`,
+              `Organizar os dados em pacotes e endereçá-los corretamente.`,
+              `Converter bits em sinais elétricos, ópticos ou de rádio para transmissão.`
+            ],
+            correct: 3,
+            feedback: `A camada Física converte bits em sinais para que possam viajar pelo meio físico.`
+          },
+          {
+            question: `Se você conecta 8 computadores a um hub, e o Computador 1 envia uma mensagem só para o Computador 8, o que acontece com os computadores 2 a 7?`,
+            options: [
+              `Eles não recebem a mensagem, pois o hub a envia diretamente para o destino.`,
+              `Eles recebem a mensagem, mas a ignoram, pois não é para eles.`,
+              `Apenas o computador mais próximo recebe a mensagem como um eco.`,
+              `Eles não recebem a mensagem, pois o hub a bloqueia.`
+            ],
+            correct: 1,
+            feedback: `O hub repete o sinal elétrico para todas as portas, exceto a de origem, e cabe a cada dispositivo verificar se a mensagem é para ele.`
+          }
+        ],
+        sintese: [
+          `Hub é puramente camada Física; switch e roteador tomam decisões em camadas superiores.`,
+          `Diagnóstico de rede começa sempre pela camada Física, subindo pelas camadas seguintes.`
+        ],
+        saibaMais: {
+          texto: `Pesquise como o WDM funciona em cabos submarinos de fibra óptica entre continentes.`,
+          link: `https://en.wikipedia.org/wiki/Wavelength-division_multiplexing`
+        }
+      }
+    ]
+  }
+
 ];
 /* =========================================================
    MONTAGEM DOS MÓDULOS A PARTIR DOS DADOS BRUTOS
