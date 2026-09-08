@@ -284,6 +284,15 @@ footer.bottomnav .center-label { font-size: 12px; color: var(--text-dim); text-a
 .modal .sheet { position: relative; background: var(--panel); border-radius: 18px; padding: 28px; max-width: 480px; width: 100%; box-shadow: var(--shadow); max-height: 82vh; overflow-y: auto; }
 .modal .sheet h2 { font-family: "Fredoka"; margin: 0 0 6px; font-size: 20px; }
 .modal .close { position: absolute; top: 14px; right: 14px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; width: 30px; height: 30px; cursor: pointer; color: var(--text); }
+.field-lbl { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); margin: 12px 0 5px; }
+.field-input { width: 100%; box-sizing: border-box; font: inherit; font-size: 14px; color: var(--text); background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.field-input:focus { outline: none; border-color: var(--accent); background: var(--panel); }
+.panel-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.panel-table th { text-align: left; color: var(--text-dim); font-weight: 600; padding: 6px 10px; border-bottom: 1px solid var(--border); font-family: "Fredoka"; white-space: nowrap; }
+.panel-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.panel-table tr:last-child td { border-bottom: none; }
+.panel-bar-wrap { width: 90px; height: 8px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--border); overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 6px; }
+.panel-bar-wrap > div { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-3)); }
 .badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin-top: 16px; }
 .badge-card { border: 1px solid var(--border); border-radius: 14px; padding: 14px 10px; text-align: center; background: var(--panel-2); }
 .badge-card.earned { background: var(--gold-soft); border-color: var(--gold); }
@@ -346,6 +355,14 @@ footer.bottomnav .center-label { font-size: 12px; color: var(--text-dim); text-a
       </div>
       <div class="streak-chip" id="streakChip">0</div>
     </div>
+    <button class="icon-btn" id="nameChipBtn" title="Clique para informar ou trocar seu nome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="nameChipLabel">Informar nome</span>
+    </button>
+    <button class="icon-btn" id="panelBtn" title="Painel do professor: progresso de todos os alunos">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 14v3M12 10v7M16 7v10"/></svg>
+      Painel
+    </button>
     <button class="icon-btn" id="mapBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-6 2V6l6-2m0 16l6-2m-6 2V4m6 14l6 2V4l-6-2m0 16V2"/></svg>
       Mapa
@@ -396,6 +413,37 @@ footer.bottomnav .center-label { font-size: 12px; color: var(--text-dim); text-a
   </div>
 </div>
 
+<div class="modal" id="nameModal">
+  <div class="backdrop"></div>
+  <div class="sheet" id="nameModalSheet">
+    <button class="close" data-close id="nameModalCloseBtn">✕</button>
+    <h2>Quem está estudando?</h2>
+    <p style="color:var(--text-dim); font-size:13px; margin:0 0 14px;">Nome, turma e escola são obrigatórios — é assim que o professor identifica seu progresso na trilha. Fica salvo neste navegador.</p>
+    <div id="nameModalError" style="display:none; background:var(--err-soft); color:var(--err); border-radius:8px; padding:9px 12px; font-size:12.5px; margin-bottom:10px; font-weight:600;"></div>
+    <label class="field-lbl" for="nameInput">Nome completo *</label>
+    <input type="text" id="nameInput" class="field-input" placeholder="Ex.: Maria Silva" autocomplete="name">
+    <label class="field-lbl" for="turmaInput">Turma *</label>
+    <input type="text" id="turmaInput" class="field-input" placeholder="Ex.: 3ºA">
+    <label class="field-lbl" for="escolaInput">Escola *</label>
+    <input type="text" id="escolaInput" class="field-input" placeholder="Ex.: ETEC Getúlio Vargas">
+    <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
+      <button class="btn" id="nameSaveBtn">Salvar e continuar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="panelModal">
+  <div class="backdrop"></div>
+  <div class="sheet" style="max-width:920px;">
+    <button class="close" data-close>✕</button>
+    <h2>📊 Painel do professor</h2>
+    <p style="color:var(--text-dim); font-size:13px; margin:0 0 12px;">Progresso de cada aluno que já informou o nome nesta trilha. Atualiza em tempo real.</p>
+    <div id="panelBody">
+      <p style="color:var(--text-dim); font-size:13px;">Carregando…</p>
+    </div>
+  </div>
+</div>
+
 <canvas id="confettiCanvas"></canvas>
 
 <script>
@@ -417,8 +465,8 @@ footer.bottomnav .center-label { font-size: 12px; color: var(--text-dim); text-a
    ========================================================= */
 const BIMESTRE_INFO = {
   1: { title:'Bimestre 1 — Topologias de Rede e Meios de Transmissão', weeks:['s01','s02','s03','s04','s05','s06','s07'] },
-  2: { title:'Bimestre 2 — Camadas, Protocolos e Fundamentos de Segurança', weeks:['s08','s09','s10','s11','s12','s13','s14','s15'] },
-  3: { title:'Bimestre 3 — Gestão de Riscos, LGPD e Segurança na Nuvem', weeks:['s16','s17','s18','s19','s20'] }
+  2: { title:'Bimestre 2 — Camadas, Protocolos e Fundamentos de Segurança', weeks:['s08','s09','s10','s11','s12','s13','s14'] },
+  3: { title:'Bimestre 3 — Gestão de Riscos, LGPD e Segurança na Nuvem', weeks:['s15','s16','s17','s18','s19','s20'] }
 };
 function bimestreOfWeek(wid) {
   for (const b in BIMESTRE_INFO) { if (BIMESTRE_INFO[b].weeks.includes(wid)) return +b; }
@@ -2930,6 +2978,102 @@ function loadState() {
 let state = loadState();
 function saveState() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {} }
 
+/* =========================================================
+   NOME DO ALUNO + PAINEL DO PROFESSOR (capability "db")
+   ========================================================= */
+const ALUNO_NOME_KEY = 'redesAlunoNome';
+const ALUNO_TURMA_KEY = 'redesAlunoTurma';
+const ALUNO_ESCOLA_KEY = 'redesAlunoEscola';
+function getAlunoNome() { try { return localStorage.getItem(ALUNO_NOME_KEY) || ''; } catch(e) { return ''; } }
+function getAlunoTurma() { try { return localStorage.getItem(ALUNO_TURMA_KEY) || ''; } catch(e) { return ''; } }
+function getAlunoEscola() { try { return localStorage.getItem(ALUNO_ESCOLA_KEY) || ''; } catch(e) { return ''; } }
+function alunoCadastroCompleto() { return !!(getAlunoNome() && getAlunoTurma() && getAlunoEscola()); }
+function slugify(s) {
+  return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80) || ('aluno-'+Date.now());
+}
+let dbNS = null;
+(async () => { try { dbNS = (typeof claude !== 'undefined') ? await claude.use('db') : null; } catch(e) { dbNS = null; } })();
+
+function updateNameChip() {
+  const nome = getAlunoNome();
+  const lbl = document.getElementById('nameChipLabel');
+  if (lbl) lbl.textContent = nome ? nome.split(' ')[0] : 'Informar nome';
+}
+
+async function syncProgress() {
+  const nome = getAlunoNome();
+  if (!alunoCadastroCompleto() || !dbNS) return;
+  try {
+    const mod = MODULES[state.moduleIndex];
+    const screen = mod.screens[state.screenIndex];
+    const globalIdx = MODULES.slice(0, state.moduleIndex).reduce((n,m) => n+m.screens.length, 0) + state.screenIndex + 1;
+    const total = totalScreens();
+    await dbNS.doc('students/' + slugify(nome)).set({
+      nome: nome,
+      turma: getAlunoTurma(),
+      escola: getAlunoEscola(),
+      semanaAtual: mod.title,
+      telaAtual: screen.title,
+      telaNumero: globalIdx,
+      telaTotal: total,
+      percentual: Math.round(globalIdx / total * 100),
+      xp: state.xp,
+      nivel: levelOf(state.xp) + 1,
+      atualizadoEm: new Date().toISOString()
+    });
+  } catch(e) { /* offline ou db indisponível — segue local */ }
+}
+
+function openNameModal() {
+  document.getElementById('nameInput').value = getAlunoNome();
+  document.getElementById('turmaInput').value = getAlunoTurma();
+  document.getElementById('escolaInput').value = getAlunoEscola();
+  document.getElementById('nameModalError').style.display = 'none';
+  const obrigatorio = !alunoCadastroCompleto();
+  document.getElementById('nameModalCloseBtn').style.display = obrigatorio ? 'none' : '';
+  document.getElementById('nameModal').classList.add('show');
+}
+
+function fmtRelative(iso) {
+  if (!iso) return '—';
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const min = Math.round(diffMs / 60000);
+  if (min < 1) return 'agora mesmo';
+  if (min < 60) return 'há ' + min + ' min';
+  const h = Math.round(min / 60);
+  if (h < 24) return 'há ' + h + 'h';
+  return 'há ' + Math.round(h / 24) + 'd';
+}
+
+let panelUnsub = null;
+async function openPanel() {
+  document.getElementById('panelModal').classList.add('show');
+  const body = document.getElementById('panelBody');
+  if (!dbNS) { body.innerHTML = '<p style="color:var(--text-dim); font-size:13px;">O painel em tempo real só funciona na versão publicada como Artifact (com o banco de dados ativado).</p>'; return; }
+  if (panelUnsub) { panelUnsub(); panelUnsub = null; }
+  panelUnsub = dbNS.collection('students').orderBy('nome').onSnapshot(
+    (snap) => {
+      if (snap.empty) { body.innerHTML = '<p style="color:var(--text-dim); font-size:13px;">Nenhum aluno registrou o nome ainda.</p>'; return; }
+      let rows = '';
+      snap.docs.forEach(d => {
+        const s = d.data();
+        rows += '<tr><td><strong>'+esc(s.nome||'—')+'</strong></td><td>'+esc(s.turma||'—')+'</td><td>'+esc(s.escola||'—')+'</td>'
+          + '<td>'+esc(s.semanaAtual||'—')+'</td>'
+          + '<td><span class="panel-bar-wrap"><div style="width:'+(s.percentual||0)+'%"></div></span>'+(s.percentual||0)+'%</td>'
+          + '<td>'+(s.telaNumero||0)+' / '+(s.telaTotal||0)+'</td>'
+          + '<td>Nível '+(s.nivel||1)+' · '+(s.xp||0)+' XP</td>'
+          + '<td>'+fmtRelative(s.atualizadoEm)+'</td></tr>';
+      });
+      body.innerHTML = '<div style="overflow-x:auto;"><table class="panel-table"><thead><tr>'
+        + '<th>Aluno</th><th>Turma</th><th>Escola</th><th>Semana atual</th><th>Progresso</th><th>Tela</th><th>Nível/XP</th><th>Última atividade</th>'
+        + '</tr></thead><tbody>'+rows+'</tbody></table></div>';
+    },
+    (err) => { body.innerHTML = '<p style="color:var(--err); font-size:13px;">Não foi possível carregar o painel agora ('+esc(err.code||'erro')+').</p>'; }
+  );
+}
+function closePanel() { if (panelUnsub) { panelUnsub(); panelUnsub = null; } }
+
 const LEVELS = [
   { min:0,   title:'Estagiário(a) de TI' },
   { min:80,  title:'Aprendiz de Redes' },
@@ -3533,6 +3677,7 @@ function goTo(mi, si) {
     if (xp) justEarnedXP = xp;
   }
   saveState();
+  syncProgress();
   render();
   if (justEarnedXP) addXP(justEarnedXP);
   document.getElementById('content').scrollTop = 0;
@@ -3636,7 +3781,35 @@ function renderBadgesGrid() {
   });
 }
 
-document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', (e) => { e.target.closest('.modal').classList.remove('show'); }));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', (e) => {
+  const m = e.target.closest('.modal');
+  m.classList.remove('show');
+  if (m.id === 'panelModal') closePanel();
+}));
+document.getElementById('nameChipBtn').addEventListener('click', openNameModal);
+document.getElementById('panelBtn').addEventListener('click', openPanel);
+document.getElementById('nameSaveBtn').addEventListener('click', () => {
+  const nome = document.getElementById('nameInput').value.trim();
+  const turma = document.getElementById('turmaInput').value.trim();
+  const escola = document.getElementById('escolaInput').value.trim();
+  const errBox = document.getElementById('nameModalError');
+  if (!nome || !turma || !escola) {
+    const faltando = [!nome && 'nome', !turma && 'turma', !escola && 'escola'].filter(Boolean).join(', ');
+    errBox.textContent = 'Preencha ' + faltando + ' antes de continuar — os três campos são obrigatórios.';
+    errBox.style.display = 'block';
+    return;
+  }
+  try {
+    localStorage.setItem(ALUNO_NOME_KEY, nome);
+    localStorage.setItem(ALUNO_TURMA_KEY, turma);
+    localStorage.setItem(ALUNO_ESCOLA_KEY, escola);
+  } catch(e) {}
+  updateNameChip();
+  document.getElementById('nameModal').classList.remove('show');
+  syncProgress();
+});
+updateNameChip();
+if (!alunoCadastroCompleto()) { openNameModal(); }
 document.getElementById('badgesBtn').addEventListener('click', () => { renderBadgesGrid(); document.getElementById('badgesModal').classList.add('show'); });
 document.getElementById('mapBtn').addEventListener('click', () => { state.view='map'; saveState(); render(); });
 
