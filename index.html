@@ -1326,6 +1326,842 @@ Dados fluem: 1→2→3→4→1...</pre>`
       }
     ]
   }
+  ,  {
+    id: 's08',
+    title: `Semana 8 — Meios de Transmissão Não Guiados (Wireless)`,
+    unidade: `Unidade 2`,
+    aulas: [
+      {
+        code: 'SISANO1C2B2S8A1',
+        title: `Espectro eletromagnético e frequência`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o espectro eletromagnético e relacionar frequência com alcance e capacidade de transmissão de dados.`,
+        habilidadeSocioemocional: `Investigar problemas de conectividade em cenários cotidianos com curiosidade técnica.`,
+        pontoDePartida: {
+          titulo: `Três problemas, um denominador comum`,
+          texto: `<p>A startup de games vai participar de sua primeira feira do setor: três estações de teste de jogos, um totem de cadastro e transmissão ao vivo — tudo sem cabo de rede disponível no local. No escritório, a sala de reuniões perde Wi-Fi sempre que alguém esquenta comida no micro-ondas da copa ao lado. E a diretoria já cogita ligar o prédio principal a uma sala anexa do outro lado da rua, sem abrir valas para cabo.</p>
+<p>Três problemas, um denominador comum: comunicação sem fio. Por que existem tantas tecnologias sem fio diferentes, e o que faz cada uma ser boa para uma tarefa específica?</p>`
+        },
+        conceito: [
+          {
+            heading: `Espectro eletromagnético e frequência`,
+            html: `<p>Toda comunicação sem fio ocorre dentro do <strong>espectro eletromagnético</strong>. Pense em um piano gigante, onde cada tecla é uma frequência diferente. <strong>Regra geral:</strong> a frequência determina alcance e capacidade ao mesmo tempo.</p>
+<ul><li><strong>Baixa frequência</strong> (rádio AM/FM): ondas longas, viajam quilômetros, atravessam paredes — poucos dados.</li>
+<li><strong>Frequência média</strong> (micro-ondas): Wi-Fi, 4G/5G, Bluetooth — equilíbrio.</li>
+<li><strong>Alta frequência</strong> (luz visível, raios X): curto alcance, mas cheia de dados.</li></ul>
+<p><strong>Largura de banda</strong> é a capacidade de transmissão de um canal — não confunda com frequência.</p>`
+          },
+          {
+            heading: `Antenas`,
+            html: `<p>A <strong>antena transmissora</strong> converte sinal elétrico em onda; a <strong>receptora</strong> faz o caminho inverso. A <strong>omnidirecional</strong> espalha o sinal em todas as direções (roteador doméstico); a <strong>direcional</strong> concentra o sinal em uma direção, alcançando distâncias maiores (torres de celular, enlaces ponto a ponto).</p>`
+          }
+        ],
+        sintese: [
+          `Toda comunicação sem fio ocorre no espectro eletromagnético.`,
+          `Frequência baixa favorece alcance; alta favorece capacidade de dados.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S8A2',
+        title: `Wi-Fi, Bluetooth e NFC`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Comparar Wi-Fi, Bluetooth/BLE e NFC quanto a alcance, velocidade e uso.`,
+        habilidadeSocioemocional: `Aplicar uma analogia (caixa de ferramentas) para explicar tecnologia a alguém leigo.`,
+        conceito: [
+          {
+            heading: `Wi-Fi, Bluetooth e NFC: ferramentas complementares`,
+            html: `<p><strong>Wi-Fi (IEEE 802.11)</strong> conecta dispositivos a uma LAN e à internet com alta velocidade. Wi-Fi 4 opera em 2,4 GHz (mais interferência); Wi-Fi 5 em 5 GHz (mais estável); Wi-Fi 6/6E atende muitos dispositivos simultâneos.</p>
+<p><strong>Bluetooth e BLE</strong> são ideais para curto alcance e precisão. O <strong>BLE</strong> tem menor largura de banda, mas consumo de energia muito baixo.</p>
+<p><strong>NFC</strong> exige contato ou proximidade extrema — essa limitação é sua principal vantagem de segurança (pagamentos por aproximação, crachás). NFC não é QR Code: o QR Code é lido à distância pela câmera; o NFC exige proximidade eletromagnética real.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S08A2) — "Otimizando a oficina de casa"</strong></p>
+<p>Em grupo, analisem a "caixa de ferramentas" de conectividade da própria casa: 1) listem todos os equipamentos sem fio de casa, identificando qual "ferramenta" cada um usa (Wi-Fi, Bluetooth ou NFC); 2) onde o Wi-Fi está com dificuldade, e que solução propõem?; 3) qual dispositivo com fio poderia virar Bluetooth?; 4) que tarefa repetitiva o NFC poderia automatizar?</p>
+<p><strong>Instruções de entrega:</strong> anotem as respostas numeradas de acordo com as etapas e registrem aqui no AVA.</p>`
+        },
+        sintese: [
+          `Wi-Fi, Bluetooth/BLE e NFC são complementares, cada um otimizado para uma tarefa.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S8A3',
+        title: `Longo alcance: FSO e satélite`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar FSO de comunicação por satélite (GEO e LEO).`,
+        habilidadeSocioemocional: `Escolher a solução técnica adequada considerando restrições reais (distância, clima, latência).`,
+        conceito: [
+          {
+            heading: `FSO e satélite`,
+            html: `<p><strong>FSO (Free Space Optics)</strong> usa laser para transmitir dados pelo ar na velocidade da luz — mas exige linha de visão direta e é vulnerável a neblina, chuva e fumaça. Ideal para ligar prédios próximos.</p>
+<table><tr><td><strong>Tipo</strong></td><td><strong>Altitude</strong></td><td><strong>Vantagem</strong></td><td><strong>Limitação</strong></td></tr>
+<tr><td>GEO</td><td>36.000 km</td><td>Cobertura enorme</td><td>Alta latência</td></tr>
+<tr><td>LEO</td><td>500–2.000 km</td><td>Baixa latência</td><td>Cobertura pequena; exige constelação</td></tr></table>`
+          },
+          {
+            heading: `O espectro é finito e compartilhado`,
+            html: `<p>O espectro eletromagnético é finito e compartilhado por todos ao mesmo tempo — diferente de um cabo, que se pode comprar mais um. Por isso é regulado (no Brasil, pela Anatel). Quase todo problema de conexão sem fio instável tem, na raiz, congestionamento de espectro, obstáculo físico ou distância além do alcance da frequência usada.</p>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Na "orquestra invisível", uma onda de rádio AM, que viaja muito longe, seria qual tipo de "nota musical"?`,
+            options: [`Uma nota grave e profunda.`, `Uma nota de volume médio.`, `Uma nota silenciosa.`, `Uma nota aguda e rápida.`],
+            correct: 0,
+            feedback: `O AM opera em frequência baixa — ondas longas que viajam muito e atravessam obstáculos, mas carregam pouca informação.`
+          },
+          {
+            question: `Em uma videochamada de emergência em área remota, onde o tempo de resposta é essencial, qual "serviço de entrega" de internet seria o mais adequado?`,
+            options: [`Jatos executivos (satélite LEO), baixa latência.`, `Caminhão de entregas (fibra óptica).`, `Avião de carga (satélite GEO).`, `Entrega por drone (FSO).`],
+            correct: 0,
+            feedback: `Satélites LEO têm latência muito menor que os GEO, sendo a opção adequada quando o tempo de resposta é essencial, mesmo em área remota sem fibra.`
+          }
+        ],
+        sintese: [
+          `FSO é rápido em curta distância, mas vulnerável ao clima.`,
+          `GEO prioriza cobertura; LEO prioriza baixa latência.`
+        ],
+        saibaMais: {
+          texto: `Pesquise a faixa de frequência liberada pela Anatel para 5G no Brasil e compare com o Wi-Fi 6E.`,
+          link: `https://www.gov.br/anatel/pt-br`
+        }
+      }
+    ]
+  },
+  {
+    id: 's09',
+    title: `Semana 9 — Fibra Óptica e Fenômenos Físicos de Transmissão`,
+    unidade: `Unidade 2`,
+    aulas: [
+      {
+        code: 'SISANO1C2B2S9A1',
+        title: `Anatomia da fibra e reflexão interna total`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Descrever a estrutura física da fibra óptica e explicar a reflexão interna total.`,
+        habilidadeSocioemocional: `Investigar as causas de uma instabilidade técnica antes de propor uma solução.`,
+        pontoDePartida: {
+          titulo: `O novo data center a 800 metros`,
+          texto: `<p>A startup de games fechou contrato com um novo data center a 800 metros do escritório, para hospedar os servidores dos jogos multiplayer. A equipe precisa decidir que tipo de cabo óptico instalar — e logo descobre que "fibra óptica" não é uma escolha única.</p>
+<p>Semanas depois, o link começa a apresentar instabilidade nos horários de pico. Como a luz viaja dentro de um fio de vidro por quilômetros sem se perder, e o que pode dar errado nesse caminho?</p>`
+        },
+        conceito: [
+          {
+            heading: `Anatomia da fibra`,
+            html: `<p>A fibra óptica funciona como um túnel de luz com três camadas: <strong>núcleo (core)</strong>, por onde a luz viaja; <strong>casca (cladding)</strong>, que reflete a luz de volta para dentro; e <strong>revestimento (coating)</strong>, proteção externa. O núcleo tem índice de refração ≈ 1,46 e a casca ≈ 1,45 — essa diferença cria o "espelho interno" que aprisiona a luz.</p>`
+          },
+          {
+            heading: `Reflexão interna total`,
+            html: `<p>Ocorre quando a luz atinge a interface núcleo-casca acima do ângulo crítico, sendo completamente refletida de volta, viajando por quilômetros sem escapar. Três condições: a luz deve ir de um meio mais denso (núcleo) a um menos denso (casca); o ângulo deve superar o crítico; a interface deve estar limpa.</p>`
+          }
+        ],
+        sintese: [
+          `A fibra guia a luz por reflexão interna total, graças à diferença de índice entre núcleo e casca.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S9A2',
+        title: `Multimodo, monomodo e fenômenos que degradam o sinal`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar fibra multimodo (MM) e monomodo (SM) e identificar causas de atenuação, dispersão e ORL.`,
+        habilidadeSocioemocional: `Responder a um chamado urgente de forma estruturada, priorizando causas plausíveis.`,
+        conceito: [
+          {
+            heading: `Multimodo x monomodo`,
+            html: `<table><tr><td><strong>Característica</strong></td><td><strong>MM</strong></td><td><strong>SM</strong></td></tr>
+<tr><td>Núcleo</td><td>50 ou 62,5 μm</td><td>9 μm</td></tr>
+<tr><td>Alcance (10 Gbps)</td><td>~300 m</td><td>~80 km</td></tr>
+<tr><td>Aplicação</td><td>LAN, data center</td><td>MAN, WAN, backbone</td></tr></table>
+<p>Distância não é o único critério — performance, confiabilidade e interferência eletromagnética também pesam.</p>`
+          },
+          {
+            heading: `Fenômenos que degradam o sinal`,
+            html: `<p><strong>Atenuação</strong> é a perda gradual de força do sinal. <strong>Dispersão modal</strong> (só em MM) ocorre porque caminhos diferentes chegam em tempos diferentes. <strong>Dispersão cromática</strong> (em qualquer fibra) ocorre porque cores diferentes da luz viajam em velocidades levemente diferentes. <strong>ORL</strong> mede quanto da luz retorna à fonte por reflexões em conectores mal polidos, emendas malfeitas ou curvaturas excessivas.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S09A2) — "Chamado no Teams"</strong></p>
+<p><strong>Cenário:</strong> "Cliente com problema no link de fibra de 25 km. Conexão instável. Dados: fibra monomodo 1550 nm, seis conectores, três emendas, suspeita de curvatura excessiva. Preciso que vocês identifiquem as três principais causas possíveis e sugiram uma solução para cada. Prazo: 15 minutos!"</p>
+<p>Em pequenos grupos: 1) listem as 2 principais causas; 2) uma solução prática para cada causa; 3) qual instrumento vocês usariam primeiro para diagnosticar o problema?</p>
+<p><strong>Instruções de entrega:</strong> enviem um documento de texto com as respostas preenchidas, aqui no AVA.</p>`
+        },
+        sintese: [
+          `Multimodo tem núcleo largo para curtas distâncias; monomodo, núcleo estreito para longas.`,
+          `Atenuação, dispersão modal/cromática e ORL degradam o sinal óptico.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S9A3',
+        title: `Medição: Power Meter e OTDR`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o papel do OTDR e do power meter na certificação de um link óptico.`,
+        habilidadeSocioemocional: `Adotar uma postura investigativa sistemática diante de uma falha física intermitente.`,
+        conceito: [
+          {
+            heading: `Power Meter e OTDR`,
+            html: `<p><strong>Power Meter</strong> mede a potência óptica recebida. <strong>OTDR (Optical Time Domain Reflectometer)</strong> envia pulsos de luz e mapeia eventos ao longo do link pela distância, indicando onde estão conectores, emendas, curvaturas e rompimentos — diferente do power meter, que só mede a potência no final.</p>
+<p><strong>Orçamento de potência:</strong> Margem = Ptx − |Prx| − Perdas_totais. Critério de aprovação: margem ≥ 3 dB (digital) ou ≥ 6 dB (analógico).</p>`
+          },
+          {
+            heading: `Prender a luz, evitar que ela vaze`,
+            html: `<p>A engenharia da fibra óptica é uma disputa constante entre "prender a luz" e "deixar a luz vazar". Cada decisão de projeto tenta manter a luz confinada no núcleo pelo maior tempo possível. Diagnosticar um problema óptico é, no fundo, procurar onde a luz pode estar escapando.</p>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Por que fibras monomodo conseguem transmitir a distâncias muito maiores que fibras multimodo?`,
+            options: [`Porque evitam a dispersão modal com um único caminho.`, `Porque usam comprimentos de onda específicos.`, `Porque têm núcleo maior e mais resistente.`, `Porque usam materiais mais caros.`],
+            correct: 0,
+            feedback: `Com um único caminho de propagação, a fibra monomodo evita a dispersão modal — os sinais chegam juntos, sem "borramento".`
+          },
+          {
+            question: `Qual é a principal função do OTDR na certificação de links ópticos?`,
+            options: [`Medir apenas a potência óptica total do link.`, `Mapear eventos e perdas ao longo de toda a extensão da fibra.`, `Limpar automaticamente os conectores da fibra.`, `Calcular automaticamente o orçamento de potência.`],
+            correct: 1,
+            feedback: `O OTDR envia pulsos de luz e mapeia eventos e suas perdas ao longo de toda a extensão da fibra, indicando a distância de cada evento.`
+          }
+        ],
+        sintese: [
+          `Power Meter mede potência; OTDR mapeia eventos ao longo do link.`,
+          `O orçamento de potência garante margem suficiente entre transmissor e receptor.`
+        ],
+        saibaMais: {
+          texto: `Pesquise a diferença entre fibra G.652 padrão e G.652C ("sem pico de água") e por que isso importa para redes que usam WDM.`,
+          link: `https://en.wikipedia.org/wiki/Optical_fiber`
+        }
+      }
+    ]
+  },
+  {
+    id: 's10',
+    title: `Semana 10 — Camada de Enlace de Dados (Data-Link)`,
+    unidade: `Unidade 2`,
+    aulas: [
+      {
+        code: 'SISANO1C2B2S10A1',
+        title: `O quadro Ethernet`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Identificar os campos principais do quadro Ethernet e compreender a função do endereço MAC na rede local.`,
+        habilidadeSocioemocional: `Investigar a raiz de uma lentidão intermitente antes de propor uma solução.`,
+        pontoDePartida: {
+          titulo: `Lentidão intermitente ao enviar builds`,
+          texto: `<p>Com a conectividade sem fio e o link óptico resolvidos, um novo problema surge dentro da própria rede local: desenvolvedores relatam lentidão intermitente ao compilar o jogo e enviar builds grandes para o servidor de testes internos, todos conectados ao mesmo switch. A pessoa de TI suspeita de colisões, mas precisa entender exatamente o que isso significa antes de agir.</p>
+<p>Como os dados são embalados para viajar na rede local, e como os dispositivos evitam falar todos ao mesmo tempo?</p>`
+        },
+        conceito: [
+          {
+            heading: `O quadro Ethernet: o "envelope" dos dados`,
+            html: `<p>Assim como uma carta precisa de envelope com remetente, destinatário e lacre, cada dado na rede local é empacotado em um <strong>quadro Ethernet</strong>: Preâmbulo + SFD, MAC Destino, MAC Origem, Tipo, Dados (MTU), FCS.</p>
+<ul><li><strong>Preâmbulo e SFD:</strong> sincronizam a comunicação.</li>
+<li><strong>MAC de destino/origem:</strong> identificam remetente e destinatário na rede local.</li>
+<li><strong>Dados:</strong> limitados pela <strong>MTU</strong>, tipicamente 1.500 bytes.</li>
+<li><strong>FCS:</strong> "lacre de segurança" — o receptor recalcula esse valor; se não coincidir, o quadro é descartado.</li></ul>
+<p>O endereço <strong>MAC</strong> identifica o dispositivo na rede local, não em toda a internet (diferente do IP).</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S10A1) — "Engenheiros de rede: montando o quadro Ethernet perfeito"</strong></p>
+<p>Em grupo, montem fisicamente um quadro Ethernet: 1) criem um cartão para cada campo (Preâmbulo, SFD, MAC Destino, MAC Origem, Tipo, Dados, FCS), com o nome e uma frase da função; 2) organizem os cartões na ordem correta e discutam por que o FCS vem no final; 3) simulem um dado fictício com MAC de origem/destino, e discutam o que acontece com o FCS "batendo" e "não batendo".</p>
+<p><strong>Instruções de entrega:</strong> enviem as respostas da reflexão final, aqui no AVA.</p>`
+        },
+        sintese: [
+          `O quadro Ethernet empacota dados com MAC de origem/destino, tipo e FCS.`,
+          `O MAC identifica um dispositivo na rede local, independente do IP.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S10A2',
+        title: `CSMA/CD e CSMA/CA`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar CSMA/CD e CSMA/CA e explicar Jam Signal, Back-off Exponencial e RTS/CTS.`,
+        habilidadeSocioemocional: `Comparar duas filosofias distintas para resolver o mesmo problema de acesso ao meio.`,
+        conceito: [
+          {
+            heading: `CSMA/CD: redes cabeadas reagem a colisões`,
+            html: `<p>O dispositivo escuta o meio antes de transmitir; se dois transmitem ao mesmo tempo, ocorre <strong>colisão</strong>; os envolvidos enviam um <strong>Jam Signal</strong>; cada um espera um tempo aleatório antes de retransmitir, tempo que cresce a cada colisão sucessiva — o <strong>Back-off Exponencial</strong>.</p>`
+          },
+          {
+            heading: `CSMA/CA: redes sem fio evitam colisões antes`,
+            html: `<p>No meio sem fio, detectar colisão em andamento é inviável. Por isso o Wi-Fi usa <strong>CSMA/CA</strong>, proativo: o mecanismo <strong>RTS/CTS</strong> faz o dispositivo pedir permissão antes de transmitir e só começar após receber confirmação.</p>
+<table><tr><td><strong>Aspecto</strong></td><td><strong>CSMA/CD</strong></td><td><strong>CSMA/CA</strong></td></tr>
+<tr><td>Estratégia</td><td>Reativa</td><td>Proativa</td></tr>
+<tr><td>Meio</td><td>Cabeado</td><td>Sem fio</td></tr></table>`
+          }
+        ],
+        sintese: [
+          `O CSMA/CD organiza redes cabeadas reagindo a colisões com jam signal e back-off.`,
+          `O CSMA/CA organiza redes Wi-Fi evitando colisões preventivamente com RTS/CTS.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S10A3',
+        title: `Analisando tráfego real com Wireshark`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Utilizar filtros básicos do Wireshark (ARP, ICMP, DNS) para investigar tráfego local.`,
+        habilidadeSocioemocional: `Diferenciar diagnósticos distintos de um mesmo sintoma ("site não abre").`,
+        conceito: [
+          {
+            heading: `O Wireshark como microscópio de rede`,
+            html: `<p>O <strong>Wireshark</strong> captura e exibe o tráfego que passa pela placa de rede. Os <strong>filtros de exibição</strong> funcionam como uma "lupa": <code>arp</code> mostra o protocolo que associa IP a MAC; <code>icmp</code> mostra o tráfego usado para testar conectividade (base do ping); <code>dns</code> mostra apenas a resolução de nomes em IP.</p>
+<p>Raciocínio prático: quando um site não abre, o problema pode ser conectividade (sem resposta ICMP) ou resolução de nomes (sem resposta DNS) — dois diagnósticos distintos.</p>`
+          },
+          {
+            heading: `Erros comuns`,
+            html: `<table><tr><td><strong>Erro</strong></td><td><strong>Correção</strong></td></tr>
+<tr><td>Confundir MAC com IP</td><td>MAC identifica o dispositivo na rede local; IP, na rede</td></tr>
+<tr><td>Achar CSMA/CA sempre mais lento</td><td>Em alta congestão, pode ter melhor desempenho geral</td></tr></table>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Em um quadro Ethernet, qual campo é responsável por verificar se os dados foram corrompidos durante a transmissão?`,
+            options: [`Preâmbulo`, `Endereço MAC de Origem`, `Tipo`, `FCS (Frame Check Sequence)`],
+            correct: 3,
+            feedback: `O FCS é recalculado pelo receptor a partir dos dados recebidos; se o valor não coincidir, o quadro é descartado.`
+          },
+          {
+            question: `No Wireshark, se você quer visualizar apenas o tráfego de resolução de nomes (DNS), qual filtro de exibição você deveria aplicar?`,
+            options: [`ip.addr == 8.8.8.8`, `dns`, `eth.type == 0x0806`, `tcp.port == 80`],
+            correct: 1,
+            feedback: `O filtro dns mostra apenas o tráfego de resolução de nomes.`
+          }
+        ],
+        sintese: [
+          `O Wireshark permite capturar e filtrar tráfego real com arp, icmp e dns.`,
+          `Diferenciar falta de conectividade de falha de DNS é habilidade central de diagnóstico.`
+        ],
+        saibaMais: {
+          texto: `Capture 2 minutos de tráfego navegando em três sites e aplique o filtro dns. Conte quantas consultas ocorreram.`,
+          link: `https://www.wireshark.org/docs/`
+        }
+      }
+    ]
+  },
+  {
+    id: 's11',
+    title: `Semana 11 — Endereçamento IPv4 e Máscaras de Sub-rede`,
+    unidade: `Unidade 2`,
+    aulas: [
+      {
+        code: 'SISANO1C2B2S11A1',
+        title: `Estrutura do IPv4 e o sistema de classes`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Descrever a estrutura de um endereço IPv4 e reconhecer o sistema histórico de classes.`,
+        habilidadeSocioemocional: `Reorganizar um sistema em crescimento antes que o caos se agrave.`,
+        pontoDePartida: {
+          titulo: `Todos na mesma faixa de IP`,
+          texto: `<p>A startup de games está prestes a dobrar de tamanho — e o crescimento trouxe um problema concreto: todos os dispositivos (desenvolvedores, designers, servidores, impressoras, e agora sensores IoT) estão pendurados na mesma faixa de endereços IP, sem separação lógica. Quando o servidor de build trava, ninguém consegue isolar rapidamente se o problema afeta só ele ou a rede inteira.</p>
+<p>Como dividir um único bloco de endereços em pedaços organizados, do tamanho certo para cada setor da empresa?</p>`
+        },
+        conceito: [
+          {
+            heading: `Estrutura do endereço IPv4`,
+            html: `<p>O <strong>IPv4</strong> identifica unicamente cada dispositivo em uma rede, com <strong>32 bits</strong> divididos em <strong>4 octetos</strong> (ex.: 192.168.1.100). Analogia do CEP: a parte de <strong>rede</strong> é o nome da rua; a parte de <strong>host</strong> é o número da casa. A <strong>máscara de sub-rede</strong> define essa fronteira.</p>`
+          },
+          {
+            heading: `O sistema histórico de classes`,
+            html: `<table><tr><td><strong>Classe</strong></td><td><strong>1º octeto</strong></td><td><strong>Máscara</strong></td></tr>
+<tr><td>A</td><td>1–127</td><td>/8</td></tr>
+<tr><td>B</td><td>128–191</td><td>/16</td></tr>
+<tr><td>C</td><td>192–223</td><td>/24</td></tr></table>
+<p>O sistema é <strong>obsoleto desde 1993</strong>: só três tamanhos possíveis, desperdício e tabelas de roteamento gigantes.</p>`
+          }
+        ],
+        sintese: [
+          `Um endereço IPv4 tem 32 bits em 4 octetos; a máscara define a fronteira rede/host.`,
+          `O sistema de classes é obsoleto desde 1993, substituído pelo CIDR.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S11A2',
+        title: `CIDR e subnetting`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o CIDR e calcular sub-redes usando 2ⁿ (sub-redes) e 2ʰ − 2 (hosts).`,
+        habilidadeSocioemocional: `Aplicar fórmulas matemáticas a um problema real de organização.`,
+        conceito: [
+          {
+            heading: `CIDR: eliminando as classes`,
+            html: `<p>O <strong>CIDR</strong> elimina classes e permite redes de qualquer tamanho, com notação de barra-prefixo: /24 (254 hosts), /26 (62 hosts), /30 (2 hosts). A <strong>RFC 1918</strong> reserva faixas privadas: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.</p>`
+          },
+          {
+            heading: `Subnetting`,
+            html: `<p><strong>Subnetting</strong> divide uma rede maior em sub-redes menores, usando <strong>bits emprestados</strong> da parte de host. Exemplo: dividir 192.168.1.0/24 em 4 sub-redes → 2² ≥ 4 → nova máscara /26 → bloco de 64 → hosts por sub-rede: 2⁶ − 2 = 62.</p>
+<p><strong>Exercício resolvido:</strong> dividir 192.168.5.0/24 em 8 sub-redes iguais → 2³ = 8 → nova máscara /27 → hosts: 2⁵ − 2 = 30.</p>`
+          }
+        ],
+        sintese: [
+          `O CIDR resolve o desperdício e o esgotamento de endereços do sistema de classes.`,
+          `Subnetting usa 2ⁿ (sub-redes) e 2ʰ − 2 (hosts) para dividir uma rede.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S11A3',
+        title: `VLSM e tabela de alocação de endereços`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Aplicar VLSM para dividir uma rede em sub-redes de tamanhos diferentes e montar uma tabela de alocação.`,
+        habilidadeSocioemocional: `Planejar uma estrutura organizacional (departamentos) refletida em uma decisão técnica.`,
+        conceito: [
+          {
+            heading: `VLSM: máscaras de tamanhos diferentes`,
+            html: `<p>O <strong>VLSM</strong> permite máscaras diferentes na mesma rede. Três regras: (1) alocar do maior para o menor; (2) não sobrepor sub-redes; (3) alocar sequencialmente. O processo inverso é o <strong>supernetting</strong>: combinar redes menores em uma entrada maior.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S11A3) — "Planejamento de rede para startup"</strong></p>
+<p><strong>Cenário:</strong> a TechHub precisa planejar a rede do novo escritório com o bloco 192.168.10.0/24, para: Desenvolvimento (90 hosts), Wi-Fi visitantes (45), Administrativo (30), Servidores (12), Link roteadores (2).</p>
+<p>Calculem a máscara de cada departamento (2ʰ − 2 ≥ hosts) e aloquem as sub-redes sequencialmente, do maior para o menor, montando uma tabela com rede, máscara, primeiro host, último host e broadcast.</p>
+<p><strong>Instruções de entrega:</strong> a entrega deve ser realizada por uma planilha do Excel, enviada aqui no AVA.</p>`
+        },
+        quiz: [
+          {
+            question: `Você tem a rede 192.168.1.0/24 e precisa criar 16 sub-redes. Quantos bits você deve emprestar da parte host, e qual será a nova máscara?`,
+            options: [`Emprestar 2 bits → Nova máscara /26.`, `Emprestar 4 bits → Nova máscara /28.`, `Emprestar 3 bits → Nova máscara /27.`, `Emprestar 5 bits → Nova máscara /29.`],
+            correct: 1,
+            feedback: `2⁴ = 16 sub-redes exatas. Somando os 4 bits emprestados a /24, chega-se a /28.`
+          },
+          {
+            question: `Qual afirmação é CORRETA sobre 10.50.100.200, 172.16.5.100 e 192.168.1.1?`,
+            options: [`Todos têm a mesma máscara padrão.`, `Apenas o primeiro é roteável na internet pública.`, `Todos são endereços privados (RFC 1918).`, `Todos são endereços de classe C.`],
+            correct: 2,
+            feedback: `Os três endereços caem dentro de uma das faixas privadas da RFC 1918, nenhum roteável na internet pública.`
+          }
+        ],
+        sintese: [
+          `VLSM permite máscaras diferentes na mesma rede, otimizando o uso de endereços.`,
+          `Organização evita desperdício e reduz risco.`
+        ],
+        saibaMais: {
+          texto: `Usando 172.16.0.0/16, planeje uma estrutura híbrida (geográfica + funcional) para três filiais.`,
+          link: `https://www.rfc-editor.org/rfc/rfc1918`
+        }
+      }
+    ]
+  },
+  {
+    id: 's12',
+    title: `Semana 12 — Camada de Transporte: TCP e UDP`,
+    unidade: `Unidade 2`,
+    aulas: [
+      {
+        code: 'SISANO1C2B2S12A1',
+        title: `A camada de transporte e o 3-way handshake`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o papel da camada de transporte e o funcionamento inicial do TCP (3-way handshake).`,
+        habilidadeSocioemocional: `Analisar um problema de desempenho de forma estruturada, campo a campo.`,
+        pontoDePartida: {
+          titulo: `Login não pode falhar, movimento precisa ser rápido`,
+          texto: `<p>A startup de games está lançando seu primeiro título multiplayer. O login e as compras dentro do jogo não podem perder dados. Já a movimentação dos personagens em tempo real precisa ser extremamente rápida.</p>
+<p>O desenvolvedor pergunta: por que não usar sempre o mesmo protocolo para tudo? A resposta está na camada de transporte, que oferece dois protocolos com filosofias opostas.</p>`
+        },
+        conceito: [
+          {
+            heading: `O papel da camada de transporte`,
+            html: `<p>A <strong>camada de transporte</strong> (camada 4 do OSI) é responsável pelo estabelecimento, manutenção e término de conexões. Suas seis funções: controle de erros, controle de fluxo, segmentação/reagrupamento, controle de conexão, controle de congestionamento e multiplexação (via portas).</p>`
+          },
+          {
+            heading: `O 3-way handshake do TCP`,
+            html: `<p>O TCP estabelece a conexão em três passos:</p>
+<pre>A → B: SYN (Seq=1000, Flags=SYN)
+B → A: SYN,ACK (Seq=5000, Ack=1001)
+A → B: ACK (Seq=1001, Ack=5001)</pre>
+<p>O Ack do SYN soma +1 porque confirma o recebimento daquele byte de controle. Cada lado anuncia seu próprio MSS — quem envia deve respeitar o MSS anunciado pelo lado que recebe.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S12A1) — "Criando cabeçalho TCP e estabelecendo conexão (3-way handshake)"</strong></p>
+<p><strong>Contexto:</strong> vocês integram o time de redes de uma aplicação web na nuvem e estão recebendo reclamações de "páginas lentas" em horário de pico.</p>
+<p><strong>Etapa 1:</strong> desenhem as três setas do handshake (A→B, B→A, A→B) com Seq, Ack e Flags; expliquem por que o Ack do SYN é +1; definam o MSS efetivo por direção.</p>
+<p><strong>Etapa 2:</strong> analisem o ACK cumulativo em uma sequência de três segmentos, um deles com checksum inválido.</p>
+<p><strong>Etapa 3:</strong> analisem o crescimento do slow-start (cwnd dobrando a cada RTT).</p>
+<p><strong>Entrega:</strong> registrem o roteiro com as respostas, ou a foto de uma folha, aqui no AVA.</p>`
+        },
+        sintese: [
+          `A camada de transporte é a camada 4 do OSI, responsável por conexões eficientes e confiáveis.`,
+          `No 3-way handshake, cada lado anuncia seu próprio MSS.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S12A2',
+        title: `TCP versus UDP e portas de serviço`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar TCP e UDP e compreender o conceito de porta de serviço e suas três faixas.`,
+        habilidadeSocioemocional: `Reconhecer que a escolha de protocolo é um trade-off deliberado, não uma limitação.`,
+        conceito: [
+          {
+            heading: `TCP: confiável e orientado à conexão`,
+            html: `<p>O <strong>TCP</strong> estabelece uma conexão antes de transmitir. Características: controle de erros e fluxo embutidos, entrega confiável, full-duplex, números de sequência. Aplicações típicas: web, e-mail, arquivos.</p>`
+          },
+          {
+            heading: `UDP: simples e sem conexão`,
+            html: `<p>O <strong>UDP</strong> não exige conexão prévia: sem controle de fluxo, sem detecção de erros embutida, simplicidade e baixa latência. Adequado a streaming, VoIP e jogos online em tempo real.</p>`
+          },
+          {
+            heading: `Portas de serviço`,
+            html: `<table><tr><td><strong>Faixa</strong></td><td><strong>Intervalo</strong></td><td><strong>Uso</strong></td></tr>
+<tr><td>Bem-conhecidas</td><td>0–1023</td><td>HTTP (80), HTTPS (443), FTP (21)</td></tr>
+<tr><td>Registradas</td><td>1024–49151</td><td>Serviços registrados na IANA</td></tr>
+<tr><td>Dinâmicas</td><td>49152–65535</td><td>Comunicações temporárias</td></tr></table>`
+          }
+        ],
+        sintese: [
+          `O TCP é confiável e orientado à conexão; o UDP é simples e de baixa latência.`,
+          `Portas de serviço direcionam o tráfego à aplicação correta.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B2S12A3',
+        title: `ACK cumulativo, retransmissão e filtros no Wireshark`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o ACK cumulativo, decisões de retransmissão e aplicar filtros do Wireshark para tráfego TCP/UDP.`,
+        habilidadeSocioemocional: `Justificar tecnicamente uma decisão de retransmissão diante de dados incompletos.`,
+        conceito: [
+          {
+            heading: `TCP e UDP: trade-off, não limitação`,
+            html: `<p>TCP e UDP existem porque nenhuma rede real oferece velocidade máxima e confiabilidade máxima ao mesmo tempo — é um trade-off físico, não uma limitação de projeto. Por isso a camada de transporte oferece dois protocolos opostos e deixa a escolha para quem projeta a aplicação.</p>`
+          },
+          {
+            heading: `Cabeçalho UDP`,
+            html: `<p>O cabeçalho UDP tem exatamente <strong>8 bytes</strong> fixos (portas de origem/destino, length e checksum). O campo Length do UDP conta cabeçalho + payload juntos.</p>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Em um datagrama UDP, o campo Length vale 44 bytes. Qual é o tamanho do payload?`,
+            options: [`36 — Length inclui cabeçalho (8) + payload.`, `44 — o Length já é só o payload.`, `20 — cabeçalho UDP tem 20 bytes.`, `52 — Length soma cabeçalho IP + UDP + payload.`],
+            correct: 0,
+            feedback: `Length (44) − cabeçalho UDP (8) = payload de 36 bytes.`
+          },
+          {
+            question: `Qual filtro do Wireshark mostra somente os pacotes SYN,ACK de um handshake TCP?`,
+            options: [`tcp.flags.syn==1 && tcp.flags.ack==1`, `tcp.flags==0x12 && udp.port==53`, `tcp && syn_ack==true`, `tcp.flags.syn==1 && tcp.flags.ack==0`],
+            correct: 0,
+            feedback: `Um pacote SYN,ACK tem as duas flags ativas — exatamente esse filtro válido do Wireshark.`
+          }
+        ],
+        sintese: [
+          `A escolha entre TCP e UDP depende da aplicação — não há um "melhor" absoluto.`
+        ],
+        saibaMais: {
+          texto: `Pesquise o protocolo QUIC (usado no HTTP/3), que roda sobre UDP mas implementa parte das garantias do TCP.`,
+          link: `https://en.wikipedia.org/wiki/QUIC`
+        }
+      }
+    ]
+  },
+  {
+    id: 's13',
+    title: `Semana 13 — Fundamentos de Segurança de Redes: Políticas e Ameaças`,
+    unidade: `Unidade 4`,
+    aulas: [
+      {
+        code: 'SISANO1C2B4S13A1',
+        title: `A Tríade CIA e políticas de segurança`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender a Tríade CIA e relacionar seus três pilares a políticas de segurança organizacionais.`,
+        habilidadeSocioemocional: `Substituir a ideia de "acesso livre para não atrapalhar" por uma cultura de segurança consciente.`,
+        pontoDePartida: {
+          titulo: `"A gente só precisa de um firewall, né?"`,
+          texto: `<p>A startup de games acabou de lançar seu jogo multiplayer e migrar parte da infraestrutura para a nuvem (AWS). Com o crescimento, o time de TI agora precisa se preocupar com quem pode acessar o quê, se os dados estão íntegros e se o sistema continua disponível mesmo sob ataque. Um desenvolvedor comenta: "a gente só precisa de um firewall e pronto, né?"</p>
+<p>A resposta é mais complexa: segurança da informação é um conjunto de princípios, políticas e uma cultura organizacional — não um único equipamento.</p>`
+        },
+        conceito: [
+          {
+            heading: `A Tríade CIA`,
+            html: `<p><strong>Confidencialidade:</strong> dados acessíveis apenas por quem é autorizado. <strong>Integridade:</strong> dados confiáveis, completos e livres de adulteração. <strong>Disponibilidade:</strong> sistemas acessíveis quando necessário.</p>
+<p>Analogia do cofre de banco: confidencialidade é quem pode abri-lo; integridade é o conteúdo não ser falsificado; disponibilidade é o cofre estar acessível quando o cliente precisar.</p>`
+          },
+          {
+            heading: `Política de Segurança da Informação (PSI) e o modelo AAA`,
+            html: `<p>A <strong>PSI</strong> define diretrizes, garante conformidade (LGPD, ISO 27001), protege ativos e gerencia riscos. O controle de acesso segue o modelo <strong>AAA</strong>: <strong>Autenticação</strong> ("você é quem diz ser?"), <strong>Autorização</strong> ("tem permissão para isso?" — RBAC/ABAC) e <strong>Auditoria</strong> ("o que você fez?"). O <strong>princípio do menor privilégio</strong> determina que cada usuário tenha apenas as permissões estritamente necessárias.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S13A1) — "Dados sensíveis e classificação segundo a LGPD"</strong></p>
+<p><strong>Cenário:</strong> uma empresa de e-commerce armazena dados de clientes em um banco de dados.</p>
+<p><strong>Missão:</strong> explique por escrito por que dados pessoais de clientes se classificam como <strong>Confidenciais</strong> (não Públicos, Internos ou Secretos) segundo a LGPD, e detalhe os quatro controles de segurança que essa classificação exige (criptografia, MFA, auditoria, princípio do menor privilégio).</p>`
+        },
+        sintese: [
+          `A Tríade CIA (Confidencialidade, Integridade, Disponibilidade) é a base da segurança da informação.`,
+          `O controle de acesso segue o modelo AAA: Autenticação, Autorização, Auditoria.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B4S13A2',
+        title: `Ameaças cibernéticas: DoS/DDoS, Phishing e MITM`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Identificar os componentes de uma ameaça cibernética e reconhecer os ataques DoS/DDoS, Phishing e MITM.`,
+        habilidadeSocioemocional: `Explicar um incidente técnico de forma clara para uma liderança não técnica, sob pressão de tempo.`,
+        conceito: [
+          {
+            heading: `Vetor, motivação e superfície de ataque`,
+            html: `<p>Toda ameaça cibernética tem três componentes: <strong>vetor de ataque</strong> (o caminho usado), <strong>motivação</strong> (financeira, espionagem, hacktivismo) e <strong>superfície de ataque</strong> (soma de todos os pontos de entrada possíveis).</p>`
+          },
+          {
+            heading: `DoS/DDoS, Phishing e MITM`,
+            html: `<p><strong>DoS/DDoS</strong> sobrecarrega o alvo com uma inundação de requisições vindas de uma <strong>botnet</strong> — como um engarrafamento bloqueando uma rodovia. <strong>Phishing</strong> é engenharia social: o atacante se passa por entidade confiável — como um ladrão vestido de carteiro. <strong>MITM</strong> ocorre quando um criminoso se posiciona secretamente entre duas partes para interceptar ou alterar dados — como um ladrão que intercepta uma carta, lê e altera o conteúdo.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S13A2) — "Incidente no Slack"</strong></p>
+<p><strong>Cenário:</strong> "Pessoal, estamos com um problema crítico. O site parou de responder. O dashboard mostra uma entrada massiva de tráfego, 500% acima do normal, vindo de milhares de IPs diferentes ao mesmo tempo. Alguém consegue me explicar rápido o que pode estar acontecendo? É algum vírus?"</p>
+<p><strong>Missão:</strong> elaborem uma resposta contendo: 1) o nome do ataque; 2) uma explicação técnica breve de como ele funciona (mencionando botnet); 3) a analogia do engarrafamento.</p>
+<p><strong>Entrega:</strong> individual, 15 minutos, arquivo de texto enviado no AVA.</p>`
+        },
+        sintese: [
+          `Toda ameaça cibernética tem vetor de ataque, motivação e superfície de ataque.`,
+          `DoS/DDoS ataca disponibilidade; Phishing e MITM ameaçam confidencialidade e integridade.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B4S13A3',
+        title: `Matriz STRIDE, responsabilidade compartilhada e cultura de segurança`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Aplicar a matriz STRIDE e compreender o modelo de responsabilidade compartilhada em ambientes de nuvem.`,
+        habilidadeSocioemocional: `Atribuir responsabilidade corretamente diante de um incidente, sem culpar o provedor por decisões do cliente.`,
+        conceito: [
+          {
+            heading: `A matriz STRIDE`,
+            html: `<p>A <strong>matriz STRIDE</strong>, da Microsoft, categoriza ameaças em seis tipos: <strong>S</strong>poofing, <strong>T</strong>ampering, <strong>R</strong>epudiation, <strong>I</strong>nformation Disclosure, <strong>D</strong>enial of Service e <strong>E</strong>levation of Privilege.</p>`
+          },
+          {
+            heading: `Responsabilidade compartilhada e cultura de segurança`,
+            html: `<p>Analogia do prédio: o <strong>provedor de nuvem é o prédio</strong> (segurança <strong>DA</strong> nuvem); o <strong>cliente é o apartamento</strong> (segurança <strong>NA</strong> nuvem). Um bucket configurado como público por engano é responsabilidade do cliente, não do provedor.</p>
+<p><strong>Cultura de segurança</strong> se sustenta em senhas fortes (12+ caracteres, passphrase), atenção à engenharia social (o elo mais fraco é o ser humano) e atualizações constantes (patches).</p>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Qual ataque ocorre quando um criminoso se posiciona secretamente entre duas partes comunicantes para interceptar ou alterar dados?`,
+            options: [`Ransomware.`, `Phishing.`, `Man-in-the-Middle.`, `Negação de Serviço.`],
+            correct: 2,
+            feedback: `O MITM é exatamente essa interceptação secreta e ativa da comunicação.`
+          },
+          {
+            question: `Um desenvolvedor configurou um bucket S3 como público por engano, expondo dados de 50.000 clientes. Quem é o responsável pelo incidente?`,
+            options: [`CISO - não treinou o desenvolvedor.`, `Desenvolvedor - configurou errado.`, `AWS (provedor de nuvem) - deveria ter bloqueado.`, `Cliente (empresa) - responsável por configuração de segurança.`],
+            correct: 3,
+            feedback: `Configurar um bucket S3 é uma decisão de segurança na nuvem — responsabilidade contratual do cliente, independente de qual funcionário cometeu o erro técnico.`
+          }
+        ],
+        sintese: [
+          `A matriz STRIDE categoriza ameaças em seis tipos.`,
+          `Na nuvem, a segurança é compartilhada: o provedor cuida da infraestrutura, o cliente cuida da configuração.`
+        ],
+        saibaMais: {
+          texto: `Pesquise um incidente real de vazamento de dados por configuração incorreta de nuvem e identifique qual pilar da CIA foi violado.`,
+          link: `https://aws.amazon.com/pt/compliance/shared-responsibility-model/`
+        }
+      }
+    ]
+  },
+  {
+    id: 's14',
+    title: `Semana 14 — Soluções Técnicas: Firewalls, IDS/IPS`,
+    unidade: `Unidade 4`,
+    aulas: [
+      {
+        code: 'SISANO1C2B4S14A1',
+        title: `As três gerações de firewall e a DMZ`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar as três gerações de arquitetura de firewall e compreender a função estratégica da DMZ.`,
+        habilidadeSocioemocional: `Reconhecer que segurança depende de topologia, não só de um único dispositivo.`,
+        pontoDePartida: {
+          titulo: `Expondo serviços à internet`,
+          texto: `<p>A startup de games colocou seu jogo multiplayer na nuvem e agora expõe serviços à internet — servidor web, API de pagamentos, servidor de e-mail. O time de TI sabe que "colocar um firewall" não basta: é preciso decidir em que camada o firewall vai olhar o tráfego e onde posicionar os serviços públicos para não expor o núcleo da empresa.</p>`
+        },
+        conceito: [
+          {
+            heading: `As três gerações de firewall`,
+            html: `<table><tr><td><strong>Geração</strong></td><td><strong>Camada OSI</strong></td><td><strong>Base da decisão</strong></td></tr>
+<tr><td>Packet filter</td><td>3 e 4</td><td>IP e porta (cabeçalho)</td></tr>
+<tr><td>Stateful inspection</td><td>4 (com estado)</td><td>Tabela de conexões</td></tr>
+<tr><td>NGFW</td><td>7</td><td>Identidade e conteúdo (DPI)</td></tr></table>
+<p>Um firewall <strong>não remove vírus</strong> — essa é função do antivírus. Ele impede que a conexão maliciosa aconteça.</p>`
+          },
+          {
+            heading: `A Zona Desmilitarizada (DMZ)`,
+            html: `<p>A <strong>DMZ</strong> é uma "zona tampão" entre a internet e a rede interna. Serviços públicos (web, e-mail, DNS) ficam isolados nela. Tráfego originado na DMZ com destino à LAN deve ser <strong>totalmente bloqueado</strong> por padrão — a DMZ é uma zona de sacrifício controlada.</p>`
+          }
+        ],
+        sintese: [
+          `Firewalls evoluíram em três gerações: packet filter, stateful e NGFW.`,
+          `A DMZ isola serviços públicos da rede interna; tráfego da DMZ para a LAN é bloqueado por padrão.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B4S14A2',
+        title: `IDS versus IPS e detecção por assinatura/anomalia`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar IDS (detecção) de IPS (prevenção) e comparar métodos de detecção baseados em assinatura e em anomalia.`,
+        habilidadeSocioemocional: `Analisar um log de segurança com atenção ao contexto, evitando conclusões apressadas.`,
+        conceito: [
+          {
+            heading: `IDS: detecção passiva`,
+            html: `<p>O <strong>IDS</strong> monitora o tráfego de forma <strong>passiva</strong>: não interfere no fluxo, apenas "escuta" e gera alertas. É como um cão de guarda preso na coleira: late para avisar, mas não pode morder.</p>`
+          },
+          {
+            heading: `IPS: prevenção ativa`,
+            html: `<p>O <strong>IPS</strong> é posicionado <strong>in-line</strong> e pode descartar pacotes maliciosos em tempo real. É como o segurança na porta de uma festa, que barra fisicamente quem não está autorizado.</p>
+<p><strong>Assinatura:</strong> compara o tráfego a ataques conhecidos — cego para zero-day. <strong>Anomalia:</strong> compara a uma linha de base — detecta ataques novos, mas gera mais falsos positivos.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S14A2) — "Laboratório de análise de logs: ameaça ou ruído?"</strong></p>
+<p><strong>Cenário:</strong> o IDS gerou um alerta vindo da rede <strong>interna</strong> (Marketing, 192.168.1.50) para um servidor externo desconhecido, porta 443, transferência de 3,5 GB, detecção baseada em anomalia.</p>
+<p><strong>Missão:</strong> 1) o que este log indica — ataque externo ou possível vazamento de dados vindo de dentro (exfiltração)?; 2) que regra de IPS vocês criariam para prevenir isso, e por quê?</p>
+<p><strong>Entrega:</strong> envie o texto com as respostas pelo AVA.</p>`
+        },
+        sintese: [
+          `IDS detecta e alerta (passivo); IPS detecta e bloqueia (ativo, in-line).`,
+          `Detecção por assinatura é precisa contra ameaças conhecidas; por anomalia detecta ataques novos, mas gera mais falsos positivos.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B4S14A3',
+        title: `iptables e Snort na prática`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Escrever regras básicas de firewall com iptables e de detecção com Snort.`,
+        habilidadeSocioemocional: `Traduzir uma decisão de segurança em uma regra técnica precisa.`,
+        conceito: [
+          {
+            heading: `iptables`,
+            html: `<p>O <strong>iptables</strong> filtra pacotes com base em cadeias (<code>INPUT</code>, <code>OUTPUT</code>, <code>FORWARD</code>):</p>
+<pre>iptables -A [CADEIA] -s [ORIGEM] -p [PROTOCOLO] --dport [PORTA] -j [AÇÃO]</pre>
+<p><code>-j DROP</code> descarta silenciosamente, sem avisar o remetente; <code>-j REJECT</code> descarta e avisa.</p>`
+          },
+          {
+            heading: `Snort`,
+            html: `<p>O <strong>Snort</strong> é um IDS/IPS baseado em regras de assinatura:</p>
+<pre>alert [proto] [src_ip] -> [dst_ip] [dst_port] (msg:"Mensagem"; content:"Padrão"; sid:1001;)</pre>`
+          }
+        ],
+        quiz: [
+          {
+            question: `Qual é a política de segurança mandatória para o tráfego originado na DMZ com destino à rede interna (LAN)?`,
+            options: [`Deve ser totalmente bloqueado para conter possíveis invasões.`, `Deve ser liberado para permitir consultas ao banco de dados.`, `Deve passar apenas por inspeção de filtro de pacotes simples.`, `Deve ser permitido apenas durante o horário comercial.`],
+            correct: 0,
+            feedback: `Se um servidor na DMZ for comprometido, o tráfego dele para a LAN deve ser bloqueado por padrão.`
+          },
+          {
+            question: `No iptables, qual parâmetro de ação descarta um pacote silenciosamente, sem notificação de erro ao remetente?`,
+            options: [`-j ACCEPT`, `-j REJECT`, `-j DROP`, `-j LOG`],
+            correct: 2,
+            feedback: `-j DROP descarta o pacote sem qualquer resposta ao remetente, dificultando o mapeamento da rede pelo atacante.`
+          }
+        ],
+        sintese: [
+          `O iptables filtra por cadeias (INPUT/OUTPUT/FORWARD) e ações (ACCEPT/DROP/REJECT).`,
+          `Analisar um log exige contexto: a origem interna de um alerta pode indicar vazamento de dados, não invasão externa.`
+        ],
+        saibaMais: {
+          texto: `Escreva uma regra iptables que bloqueie todo tráfego ICMP vindo de um IP específico, e uma regra Snort equivalente.`,
+          link: `https://www.snort.org/`
+        }
+      }
+    ]
+  },
+  {
+    id: 's15',
+    title: `Semana 15 — Segurança de Aplicações Web (OWASP Top 10)`,
+    unidade: `Unidade 4`,
+    aulas: [
+      {
+        code: 'SISANO1C2B4S15A1',
+        title: `Vulnerabilidades e o OWASP Top 10`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Identificar as principais vulnerabilidades web listadas pelo OWASP Top 10 e compreender o que é uma vulnerabilidade.`,
+        habilidadeSocioemocional: `Refletir sobre um caso real de vazamento de dados e suas implicações para o próprio trabalho.`,
+        pontoDePartida: {
+          titulo: `Se um sistema como o INSS pode falhar...`,
+          texto: `<p>O jogo multiplayer da startup de games agora tem um portal web: login, busca de itens na loja, comentários em partidas e um formulário de suporte. Uma notícia real chama atenção da equipe: uma falha de segurança na plataforma digital do INSS expôs dados de cerca de 2 milhões de segurados. O tech lead pergunta: se um sistema público e crítico como esse pode falhar, o que garante que o portal da startup não vai repetir o mesmo erro?</p>`
+        },
+        conceito: [
+          {
+            heading: `O que é uma vulnerabilidade`,
+            html: `<p>Uma <strong>vulnerabilidade</strong> é uma brecha no sistema que pode: expor dados, liberar acesso indevido ou permitir mudanças no funcionamento. O problema não está só no ataque em si, mas na falha que deixou o ataque acontecer.</p>`
+          },
+          {
+            heading: `O OWASP Top 10`,
+            html: `<p>A <strong>OWASP</strong> mantém uma lista de referência dos riscos mais críticos em aplicações web — não reúne todos os ataques existentes, destaca os mais importantes.</p>
+<table><tr><td><strong>Categoria</strong></td><td><strong>Exemplo</strong></td></tr>
+<tr><td>A01 — Quebra de Controle de Acesso</td><td>Usuário acessa informações que não deveria.</td></tr>
+<tr><td>A03 — Injeção</td><td>Dados enviados alteram comandos da aplicação.</td></tr>
+<tr><td>A07 — Falhas de Identificação e Autenticação</td><td>Acesso ocorre sem verificar corretamente o usuário.</td></tr></table>`
+          }
+        ],
+        sintese: [
+          `Vulnerabilidade é uma brecha que pode expor dados, liberar acesso indevido ou alterar o funcionamento de um sistema.`,
+          `O OWASP Top 10 é uma lista de referência dos riscos mais críticos em aplicações web, não uma lista exaustiva.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B4S15A2',
+        title: `SQL Injection e XSS`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar SQL Injection (ataque ao banco de dados) de XSS (ataque à tela/navegador).`,
+        habilidadeSocioemocional: `Reconhecer campos de formulário comuns como pontos de entrada de risco.`,
+        conceito: [
+          {
+            heading: `SQL Injection: quando a entrada interfere no banco de dados`,
+            html: `<p>Se a aplicação não tratar corretamente a entrada de um campo (como busca), ela pode alterar o funcionamento da consulta ao banco de dados, abrir caminho para acesso indevido ou expor dados. Caminho: campo de busca → aplicação → banco de dados.</p>`
+          },
+          {
+            heading: `XSS: quando a entrada interfere no que aparece na tela`,
+            html: `<p>Se um comentário ou mensagem for exibido sem tratamento, outras pessoas poderão visualizar conteúdo inseguro — o script malicioso é executado no navegador da vítima.</p>
+<table><tr><td></td><td><strong>Injeção SQL</strong></td><td><strong>XSS</strong></td></tr>
+<tr><td>Para onde vai</td><td>Banco de dados</td><td>Tela do navegador</td></tr>
+<tr><td>Quem é afetado</td><td>Acessa dados restritos</td><td>Afeta outro usuário</td></tr></table>`
+          }
+        ],
+        sintese: [
+          `SQL Injection ocorre quando a entrada altera a consulta ao banco de dados.`,
+          `XSS ocorre quando a entrada é exibida sem tratamento e afeta a tela de outro usuário.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B4S15A3',
+        title: `Validação de entradas`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Aplicar técnicas básicas de validação de entradas para reduzir vulnerabilidades.`,
+        habilidadeSocioemocional: `Priorizar a prevenção (validar na entrada) em vez de corrigir problemas depois que já ocorreram.`,
+        conceito: [
+          {
+            heading: `Validação de entradas: cuidar do que entra no sistema`,
+            html: `<p>Os principais critérios de validação são: <strong>Tipo</strong> (texto, número, e-mail?), <strong>Tamanho</strong> (limite mínimo e máximo), <strong>Formato</strong> (padrão esperado) e <strong>Obrigatoriedade</strong> (campo obrigatório ou opcional?). Definir essas quatro regras para cada campo é a base do desenvolvimento seguro de formulários web.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S15A3) — "Plano de validação de entradas para um formulário web"</strong></p>
+<p><strong>Cenário:</strong> uma empresa criou um sistema para cadastro de candidatos em vagas de estágio (aplicável ao portal de cadastro de jogadores da startup). O formulário aceita praticamente qualquer entrada, sem verificar formato, tamanho ou conteúdo.</p>
+<p><strong>Campos:</strong> nome completo, e-mail, idade, senha, mensagem de apresentação.</p>
+<p><strong>Produção obrigatória:</strong> quadro de validação para os cinco campos, com Obrigatório?, Regra de validação, Exemplo aceito, Exemplo bloqueado, O que essa regra evita.</p>
+<p><strong>Ao final, respondam:</strong> 1) escolham duas regras e expliquem como reduzem erros/vulnerabilidades; 2) qual dos cinco campos é o mais crítico para a segurança do sistema?</p>
+<p><strong>Entrega:</strong> em duplas, quadro preenchido + respostas finais, no AVA.</p>`
+        },
+        quiz: [
+          {
+            question: `Em um formulário web, qual situação indica risco de XSS?`,
+            options: [`Aumentar o tamanho do campo nome.`, `Trocar a cor do botão do formulário.`, `Mostrar comentário inseguro a outro usuário.`, `Salvar uma senha com 10 caracteres.`],
+            correct: 2,
+            feedback: `Mostrar um comentário inseguro a outro usuário é exatamente o mecanismo do XSS: conteúdo enviado por alguém é exibido sem tratamento.`
+          },
+          {
+            question: `Ao criar um formulário web, qual escolha ajuda mais a reduzir riscos logo na entrada dos dados?`,
+            options: [`Aceitar tudo e revisar depois.`, `Ocultar qualquer mensagem de erro.`, `Definir regras para cada campo.`, `Usar texto livre em todos os campos.`],
+            correct: 2,
+            feedback: `Definir regras de tipo, tamanho, formato e obrigatoriedade é a validação de entrada propriamente dita.`
+          }
+        ],
+        sintese: [
+          `Validar entradas (tipo, tamanho, formato, obrigatoriedade) é a defesa básica contra SQL Injection e XSS.`,
+          `Tratar com cuidado tudo que o usuário digita é a defesa mais básica e mais eficaz.`
+        ],
+        saibaMais: {
+          texto: `Pesquise a versão mais recente do OWASP Top 10 e compare com a lista de 2021 vista nesta aula.`,
+          link: `https://owasp.org/Top10/`
+        }
+      }
+    ]
+  }
 
 ];
 /* =========================================================
