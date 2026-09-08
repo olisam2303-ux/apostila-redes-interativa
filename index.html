@@ -409,7 +409,14 @@ function buildScreensForAula(aula, aulaIdx) {
   if (aula.pontoDePartida) push('intro', { data: aula.pontoDePartida });
   if (aula.conceito && aula.conceito.length) push('concept', { data: { blocks: aula.conceito, skills: { tecnica: aula.habilidadeTecnica, socio: aula.habilidadeSocioemocional }, duracao: aula.duracao } });
   if (aula.colocandoEmPratica) push('practice', { data: aula.colocandoEmPratica });
-  if (aula.quiz && aula.quiz.length) push('quiz', { data: { questions: aula.quiz } });
+  if (aula.quiz && aula.quiz.length) {
+    // Cada quiz é uma tela unitária (um H5P "Pause e Responda" por vez), igual ao AVA real.
+    aula.quiz.forEach((q, qi) => {
+      const suffix = aula.quiz.length > 1 ? '-' + (qi+1) : '';
+      const label = aula.quiz.length > 1 ? SCREEN_META.quiz.label + ' ' + (qi+1) : SCREEN_META.quiz.label;
+      screens.push({ id: aula.code+'-quiz'+suffix, title: 'Aula '+n+' — '+label, type: 'quiz', aulaTitle: aula.title, aulaCode: aula.code, data: { questions: [q] } });
+    });
+  }
   if (aula.serSempreMais) push('social', { data: aula.serSempreMais });
   const refs = REFERENCIAS_POR_AULA[aula.code] || [];
   if ((aula.sintese && aula.sintese.length) || refs.length) push('summary', { data: { bullets: aula.sintese || [], saibaMais: aula.saibaMais, referencias: refs } });
