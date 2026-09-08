@@ -2162,6 +2162,542 @@ A → B: ACK (Seq=1001, Ack=5001)</pre>
       }
     ]
   }
+  ,  {
+    id: 's16',
+    title: `Semana 16 — Endereçamento IPv4 – Sub-rede e CIDR`,
+    unidade: `Unidade 5`,
+    aulas: [
+      {
+        code: 'SISANO1C2B5S16A1',
+        title: `Estrutura do IPv4 e de classful para CIDR`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Descrever a estrutura de 32 bits de um endereço IPv4 e explicar por que o CIDR substituiu o modelo classful.`,
+        habilidadeSocioemocional: `Aprofundar um conceito já visto (Capítulo 11) com mais precisão técnica.`,
+        pontoDePartida: {
+          titulo: `Broadcast desnecessário atrapalhando o firewall`,
+          texto: `<p>No Capítulo 11, vocês já foram apresentados ao IPv4 e às máscaras de sub-rede — o suficiente para dar IP a cada PC da startup. Agora a empresa cresceu: desenvolvedores, designers e servidores continuam no mesmo bloco de endereços, gerando broadcast desnecessário e dificultando regras de firewall específicas por setor.</p>
+<p>O gestor de TI decide dividir a rede em sub-redes por setor, usando notação CIDR. Como calcular, com precisão, quantos hosts cabem em cada sub-rede e onde cada bloco começa e termina?</p>`
+        },
+        conceito: [
+          {
+            heading: `Estrutura do endereço IPv4`,
+            html: `<p>Um endereço <strong>IPv4</strong> é um número de <strong>32 bits</strong>, escrito em decimal pontuado: quatro octetos de 0 a 255 (ex.: 192.168.1.10). Em redes corporativas, a atribuição costuma ser automática, via <strong>DHCP</strong>. O endereço se divide em <strong>porção de rede</strong> e <strong>porção de host</strong>, definidas pela máscara ou pelo prefixo CIDR.</p>`
+          },
+          {
+            heading: `De classful para CIDR`,
+            html: `<table><tr><td><strong>Classe</strong></td><td><strong>Bits rede/host</strong></td><td><strong>Hosts possíveis</strong></td></tr>
+<tr><td>A</td><td>8/24</td><td>~16,7 milhões</td></tr>
+<tr><td>B</td><td>16/16</td><td>65.534</td></tr>
+<tr><td>C</td><td>24/8</td><td>254</td></tr></table>
+<p>O modelo classful desperdiçava endereços (uma empresa com 300 dispositivos precisava de uma Classe B inteira). O <strong>CIDR</strong> permite prefixo variável: /8, /16, /24, /28, /30.</p>`
+          }
+        ],
+        sintese: [
+          `Um endereço IPv4 tem 32 bits, em decimal pontuado, com 4 octetos de 8 bits.`,
+          `O CIDR substituiu o classful fixo por prefixos sob medida.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B5S16A2',
+        title: `Calculando hosts válidos e blocos de sub-rede`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Calcular hosts válidos a partir do prefixo CIDR e calcular blocos de sub-rede, endereço de rede e de broadcast.`,
+        habilidadeSocioemocional: `Aplicar uma fórmula matemática com precisão a um cenário de infraestrutura real.`,
+        conceito: [
+          {
+            heading: `Calculando hosts válidos`,
+            html: `<pre>Hosts válidos = 2^n − 2
+n = bits de host = 32 − prefixo</pre>
+<p>O "−2" remove o <strong>endereço de rede</strong> (primeiro do bloco) e o <strong>de broadcast</strong> (último). Exemplo /24: n=8, 2⁸=256, 256−2=<strong>254 hosts válidos</strong>.</p>`
+          },
+          {
+            heading: `Exemplo: dividindo em blocos /26`,
+            html: `<p>192.168.10.0/26: n=6, 2⁶=64 endereços por bloco, 64−2=<strong>62 hosts válidos</strong>. Os blocos crescem de 64 em 64:</p>
+<pre>192.168.10.0/26    (.0 a .63)
+192.168.10.64/26   (.64 a .127)
+192.168.10.128/26  (.128 a .191)
+192.168.10.192/26  (.192 a .255)</pre>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Continuação do projeto contínuo — REDE-STARTUP-GAMES.pkt.</strong> No Packet Tracer: insiram 1 roteador, 2 switches e 4 PCs (2 devs, 2 designers). Planejem 192.168.10.0/24 dividido em /26 — devs em .0/26, designers em .64/26. Configurem IP/máscara em cada dispositivo e definam o gateway padrão. Testem com <code>ping</code> entre um PC de devs e um de designers: o tráfego deve passar pelo roteador.</p>`
+        },
+        sintese: [
+          `Hosts válidos = 2^n − 2, onde n é o número de bits de host.`,
+          `O primeiro endereço do bloco é a rede; o último é o broadcast.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B5S16A3',
+        title: `Dividindo a rede por departamento`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Dividir uma rede real em sub-redes por setor e reconhecer os benefícios da organização por departamento.`,
+        habilidadeSocioemocional: `Justificar uma decisão técnica em termos de benefícios organizacionais (organização, segurança).`,
+        conceito: [
+          {
+            heading: `Domínio de broadcast menor`,
+            html: `<p>Dividir em sub-redes não é só organização estética. Cada sub-rede é um <strong>domínio de broadcast menor</strong>: quando um dispositivo "grita para todo mundo", isso fica contido no bloco, sem sobrecarregar outros setores. Sub-redes separadas também facilitam regras de segurança específicas.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S16A2) — "Aplicação prática: divisão por departamentos"</strong></p>
+<p><strong>Cenário:</strong> a startup possui quatro departamentos: RH, Financeiro, TI e Vendas. A rede 192.168.1.0/24 deve ser dividida em quatro sub-redes /26, uma para cada departamento.</p>
+<p><strong>Tarefas:</strong> 1) calculem as quatro sub-redes /26 (rede, broadcast, faixa de hosts); 2) atribuam uma sub-rede a cada departamento; 3) apresentem os benefícios (organização, controle de tráfego, segurança).</p>
+<p><strong>Entrega:</strong> folha à parte com os cálculos, escaneada ou fotografada, enviada pelo AVA.</p>`
+        },
+        quiz: [
+          {
+            question: `Quantos hosts válidos existem em uma rede IPv4 com prefixo /27?`,
+            options: [`62.`, `14.`, `30.`, `32.`],
+            correct: 2,
+            feedback: `n=5, 2⁵=32 endereços, 32−2=30 hosts válidos.`
+          },
+          {
+            question: `Ao dividir uma rede /24 em quatro sub-redes iguais, qual será o novo prefixo?`,
+            options: [`/27.`, `/25.`, `/28.`, `/26.`],
+            correct: 3,
+            feedback: `2² = 4 sub-redes exatas — emprestando 2 bits, o prefixo /24 vira /26.`
+          }
+        ],
+        sintese: [
+          `Dividir por setor melhora organização, reduz broadcast e facilita segurança.`,
+          `Este capítulo aprofunda o que o Capítulo 11 introduziu sobre IPv4.`
+        ],
+        saibaMais: {
+          texto: `Pesquise VLSM (Variable Length Subnet Mask) — usar prefixos diferentes por setor conforme a necessidade de cada um.`,
+          link: `https://en.wikipedia.org/wiki/Variable-length_subnet_masking`
+        }
+      }
+    ]
+  },
+  {
+    id: 's17',
+    title: `Semana 17 — Gestão de Riscos de Segurança da Informação`,
+    unidade: `Unidade 5`,
+    aulas: [
+      {
+        code: 'SISANO1C2B5S17A1',
+        title: `Os quatro elementos do risco`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Identificar ativo, ameaça, vulnerabilidade e impacto em um cenário de segurança da informação.`,
+        habilidadeSocioemocional: `Registrar um incidente real de forma estruturada, sem confundir seus elementos.`,
+        pontoDePartida: {
+          titulo: `28 mil chaves Pix expostas`,
+          texto: `<p>A startup de games, agora operando parte da infraestrutura na nuvem, monitora dezenas de sistemas: servidores de jogo, banco de dados de jogadores, API de pagamentos. Um caso real chama a atenção da equipe de segurança: em março de 2026, o Banco Central comunicou publicamente que a financeira Pefisa S.A. teve dados cadastrais de <strong>28 mil chaves Pix</strong> expostos por falhas pontuais em seus sistemas.</p>
+<p>Como uma equipe de segurança organiza o raciocínio para identificar, avaliar e decidir o que fazer diante de um risco como esse?</p>`
+        },
+        conceito: [
+          {
+            heading: `Os quatro elementos que compõem um risco`,
+            html: `<table><tr><td><strong>Elemento</strong></td><td><strong>O que significa</strong></td></tr>
+<tr><td>Ativo</td><td>O que a organização precisa proteger.</td></tr>
+<tr><td>Ameaça</td><td>Quem ou o que pode explorar uma fragilidade.</td></tr>
+<tr><td>Vulnerabilidade</td><td>A fragilidade que permite a ameaça agir.</td></tr>
+<tr><td>Impacto</td><td>A consequência caso o risco se concretize.</td></tr></table>
+<p>Um risco surge quando uma ameaça pode explorar uma vulnerabilidade e afetar um ativo. Não confunda ameaça com vulnerabilidade: a ameaça é <strong>quem ou o que</strong> pode explorar; a vulnerabilidade é <strong>a fragilidade</strong> que torna isso possível.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S17A1) — "Identificação dos quatro elementos do risco"</strong></p>
+<p><strong>Cenário:</strong> vocês foram contratados como analistas júnior de segurança na <strong>PagoDigital</strong>, fintech com mais de 2 milhões de clientes. Por uma falha na configuração de um servidor de consulta, dados cadastrais (nome, CPF, telefone) associados às chaves Pix ficaram visíveis para qualquer usuário autenticado no sistema interno por cerca de <strong>seis horas</strong>.</p>
+<p>1) identifiquem: Ativo, Ameaça, Vulnerabilidade, Impacto; 2) escrevam de duas a três frases explicando como a ameaça e a vulnerabilidade podem afetar o ativo e gerar impactos.</p>
+<p><strong>Entrega:</strong> em duplas, 20 minutos, registrado no AVA.</p>`
+        },
+        sintese: [
+          `Um risco surge quando uma ameaça explora uma vulnerabilidade e afeta um ativo, gerando impacto.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B5S17A2',
+        title: `Probabilidade, impacto e a matriz de priorização`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Avaliar riscos combinando probabilidade e impacto, usando a matriz de priorização.`,
+        habilidadeSocioemocional: `Basear uma decisão de priorização em evidências, não em impressões.`,
+        conceito: [
+          {
+            heading: `O caso WannaCry`,
+            html: `<p>O ransomware WannaCry explora uma vulnerabilidade conhecida desde <strong>2017</strong>, com correção disponível gratuitamente há anos. Ainda assim, responde por <strong>40,59% das detecções de ransomware na América Latina</strong>, porque muitas empresas continuam operando sistemas desatualizados.</p>
+<table><tr><td><strong>Fator</strong></td><td><strong>Classificação</strong></td></tr>
+<tr><td>Probabilidade</td><td>Alta</td></tr>
+<tr><td>Impacto</td><td>Alto</td></tr>
+<tr><td>Prioridade resultante</td><td>Crítica</td></tr></table>
+<p>A probabilidade de um risco depende, principalmente, da <strong>manutenção e atualização real dos sistemas</strong> — não da idade da vulnerabilidade, do tamanho da empresa ou da sofisticação técnica do ataque.</p>`
+          },
+          {
+            heading: `A matriz de probabilidade x impacto`,
+            html: `<p>Cruza os dois fatores: <strong>baixa probabilidade + baixo impacto</strong> pode ser monitorado; <strong>alta + alto</strong> exige ação imediata (crítico). A priorização deve se basear em evidências, não na impressão que um risco causa.</p>`
+          }
+        ],
+        sintese: [
+          `A avaliação de risco combina probabilidade (baseada em evidências) e impacto para definir prioridade.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B5S17A3',
+        title: `Estratégias de tratamento de risco`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Diferenciar as quatro estratégias de tratamento de risco: mitigar, evitar, transferir e aceitar.`,
+        habilidadeSocioemocional: `Propor uma medida de mitigação concreta e justificada, não genérica.`,
+        conceito: [
+          {
+            heading: `Quatro estratégias de tratamento`,
+            html: `<table><tr><td><strong>Estratégia</strong></td><td><strong>O que significa</strong></td></tr>
+<tr><td>Mitigar</td><td>Implementar controles que diminuem probabilidade ou impacto.</td></tr>
+<tr><td>Evitar</td><td>Eliminar a atividade que gera o risco.</td></tr>
+<tr><td>Transferir</td><td>Compartilhar consequências financeiras (ex.: seguro).</td></tr>
+<tr><td>Aceitar</td><td>Decidir formalmente conviver com o risco.</td></tr></table>
+<p>Aceitar um risco <strong>não é o mesmo que ignorá-lo</strong> — é uma decisão consciente, documentada e justificada.</p>`
+          }
+        ],
+        quiz: [
+          {
+            question: `No caso da Pefisa, o que representa a vulnerabilidade?`,
+            options: [`Os dados cadastrais associados às chaves Pix.`, `As falhas identificadas nos sistemas.`, `As pessoas que poderiam usar os dados.`, `As possíveis consequências da exposição.`],
+            correct: 1,
+            feedback: `As falhas identificadas nos sistemas da Pefisa são a fragilidade que permitiu a exposição — a vulnerabilidade.`
+          },
+          {
+            question: `A portaria do MCTI prevê que um risco pode ser tratado por controles de segurança ou aceitação formal. O que isso demonstra?`,
+            options: [`Todo risco identificado precisa ser eliminado.`, `Nem todo risco precisa ser eliminado, mas deve ser tratado.`, `Aceitar um risco é o mesmo que ignorá-lo.`, `Só órgãos públicos tratam riscos formalmente.`],
+            correct: 1,
+            feedback: `A existência de uma estratégia formal de "aceitação" mostra que nem todo risco precisa ser eliminado — mas todo risco precisa passar por uma decisão documentada.`
+          }
+        ],
+        sintese: [
+          `O tratamento de riscos segue quatro estratégias: mitigar, evitar, transferir e aceitar.`,
+          `Uma medida de mitigação precisa ser específica, viável e mensurável.`
+        ],
+        saibaMais: {
+          texto: `Pesquise a norma ISO 27005 e compare sua terminologia de gestão de riscos com o que foi visto nesta aula.`,
+          link: `https://www.iso.org/standard/27005`
+        }
+      }
+    ]
+  },
+  {
+    id: 's18',
+    title: `Semana 18 — LGPD: Fundamentos e Bases Legais`,
+    unidade: `Unidade 6`,
+    aulas: [
+      {
+        code: 'SISANO1C2B6S18A1',
+        title: `Titular, dado pessoal e dado pessoal sensível`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Compreender o objetivo da LGPD e identificar quem é o titular dos dados, diferenciando dado pessoal de dado pessoal sensível.`,
+        habilidadeSocioemocional: `Refletir sobre um caso real de fiscalização e suas implicações práticas.`,
+        pontoDePartida: {
+          titulo: `A ANPD notificou 20 empresas`,
+          texto: `<p>A startup de games está lançando um novo portal de cadastro para jogadores do seu multiplayer. Um caso real preocupa a equipe: em dezembro de 2024, a ANPD notificou <strong>20 empresas</strong> por descumprirem regras de proteção de dados. Que dados o formulário de cadastro do jogo realmente precisa pedir, e quais decisões o time de desenvolvimento precisa tomar para não repetir esses erros?</p>`
+        },
+        conceito: [
+          {
+            heading: `Quem é o titular dos dados`,
+            html: `<p>O <strong>titular</strong> é a pessoa a quem os dados se referem. Armazenar ou tratar um dado não muda quem é o titular: a relação é de <strong>uso</strong>, não de <strong>posse</strong>.</p>`
+          },
+          {
+            heading: `Dado pessoal e dado pessoal sensível`,
+            html: `<p><strong>Dado pessoal</strong> é qualquer informação relacionada a uma pessoa identificada ou identificável. Alguns identificam diretamente; outros identificam quando <strong>combinados</strong> com outras informações. <strong>Dado pessoal sensível</strong> exige proteção máxima: saúde, religião, biometria, origem racial, opinião política.</p>
+<table><tr><td></td><td><strong>Dado pessoal</strong></td><td><strong>Dado pessoal sensível</strong></td></tr>
+<tr><td>Exemplos</td><td>Nome, e-mail, CPF, telefone</td><td>Saúde, religião, biometria</td></tr>
+<tr><td>Cuidado</td><td>Moderado</td><td>Máximo</td></tr></table>`
+          }
+        ],
+        sintese: [
+          `Titular é sempre a pessoa a quem os dados se referem — armazenar não transfere titularidade.`,
+          `Dado pessoal identifica ou torna identificável uma pessoa, direta ou combinado com outros dados.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B6S18A2',
+        title: `Princípios da LGPD: finalidade, adequação e necessidade`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Reconhecer o que é um dado pessoal e classificar campos de um formulário como pessoal ou sensível.`,
+        habilidadeSocioemocional: `Aplicar critérios objetivos a um mapeamento de dados, evitando julgamentos vagos.`,
+        conceito: [
+          {
+            heading: `Três princípios que orientam a LGPD`,
+            html: `<ul><li><strong>Finalidade:</strong> os dados devem ser coletados para um objetivo específico e claro.</li>
+<li><strong>Adequação:</strong> o uso dos dados deve estar de acordo com esse objetivo.</li>
+<li><strong>Necessidade:</strong> os dados solicitados devem ser apenas aqueles realmente necessários.</li></ul>
+<p>Todo sistema deve coletar apenas os dados necessários para cumprir sua finalidade — pedir mais do que isso já é, por si só, um problema de conformidade.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Prática preparatória (Aula 2) — "Mapa de dados de um sistema de cadastro"</strong></p>
+<p><strong>Cenário:</strong> uma empresa está desenvolvendo uma plataforma para inscrição de estudantes em vagas de estágio, com os campos: nome completo, CPF, e-mail, telefone, endereço, foto do rosto, histórico de doenças, religião, curso atual e rendimento escolar.</p>
+<p>Em dupla, classifiquem cada campo como <strong>dado pessoal</strong> ou <strong>dado pessoal sensível</strong>, justificando os classificados como sensíveis, e indiquem dois campos que exigem maior cuidado, explicando se a coleta faz sentido para a finalidade do cadastro.</p>`
+        },
+        sintese: [
+          `Seus três princípios centrais são finalidade, adequação e necessidade.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B6S18A3',
+        title: `Verificando a conformidade de um cadastro`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Verificar se o tratamento de dados de uma aplicação atende aos princípios de finalidade e necessidade.`,
+        habilidadeSocioemocional: `Propor ajustes concretos a um sistema real antes que ele entre no ar.`,
+        conceito: [
+          {
+            heading: `Nem todo dado pedido é necessário`,
+            html: `<p>A LGPD não avalia apenas <strong>que tipo</strong> de dado é coletado — ela também avalia <strong>por que</strong> e <strong>quanto</strong> está sendo pedido. Pedir religião ou histórico de doenças em um formulário de inscrição, sem relação com a finalidade, fere o princípio da necessidade, mesmo que a coleta seja transparente.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S18A3) — "Análise de conformidade de um cadastro com a LGPD"</strong></p>
+<p><strong>Cenário:</strong> uma plataforma de inscrição de estudantes em programa de estágio, com finalidade de selecionar candidatos e organizar inscrições, pede: nome completo, CPF, e-mail, telefone, endereço completo, foto do rosto, religião, histórico de doenças, curso atual, rendimento escolar, nome da mãe, perfil em rede social.</p>
+<p><strong>Produção obrigatória:</strong> tabela com os 12 campos, contendo para cada um: relação com a finalidade, é necessário?, adequado ou excessivo?, o que ajustar?</p>
+<p><strong>Entrega:</strong> em duplas, tabela preenchida enviada no AVA.</p>`
+        },
+        quiz: [
+          {
+            question: `Em um sistema de cadastro, qual opção representa melhor a ideia de titular de dados?`,
+            options: [`O banco que guarda os registros.`, `A empresa que criou o sistema.`, `A pessoa a quem os dados se referem.`, `O técnico que fez o cadastro.`],
+            correct: 2,
+            feedback: `O titular é sempre a pessoa a quem os dados se referem — armazenar ou tratar um dado é uma relação de uso, não de posse.`
+          },
+          {
+            question: `Se um sistema pede mais dados do que realmente precisa para cumprir sua função, qual princípio da LGPD está sendo desrespeitado?`,
+            options: [`Publicidade.`, `Necessidade.`, `Portabilidade.`, `Autoria.`],
+            correct: 1,
+            feedback: `Pedir mais dados do que o objetivo exige é exatamente a violação do princípio da necessidade.`
+          }
+        ],
+        sintese: [
+          `Verificar conformidade significa checar, campo a campo, se o dado tem finalidade clara e é necessário.`
+        ],
+        saibaMais: {
+          texto: `Escolha um aplicativo que você usa e liste todos os dados que ele pede no cadastro. Avalie se há relação clara com a finalidade declarada.`,
+          link: `https://www.gov.br/anpd/pt-br`
+        }
+      }
+    ]
+  },
+  {
+    id: 's19',
+    title: `Semana 19 — Segurança na Nuvem – Conceitos de IAM e Criptografia em Trânsito`,
+    unidade: `Unidade 6`,
+    aulas: [
+      {
+        code: 'SISANO1C2B6S19A1',
+        title: `O Modelo de Responsabilidade Compartilhada`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Explicar o Modelo de Responsabilidade Compartilhada e comparar como a responsabilidade muda entre IaaS, PaaS e SaaS.`,
+        habilidadeSocioemocional: `Questionar uma suposição confortável ("a nuvem cuida de tudo") com raciocínio técnico.`,
+        pontoDePartida: {
+          titulo: `"A segurança passa a ser problema do provedor, certo?"`,
+          texto: `<p>A startup de games decidiu migrar parte da infraestrutura para a nuvem — servidor de builds e banco de dados de jogadores vão para um provedor como AWS ou Azure. Na reunião de planejamento, alguém pergunta: "se migrarmos para a nuvem, a segurança passa a ser problema do provedor, certo?"</p>
+<p>A resposta é mais delicada. Existe uma linha clara entre o que o provedor garante e o que continua sendo dever da empresa.</p>`
+        },
+        conceito: [
+          {
+            heading: `O Modelo de Responsabilidade Compartilhada`,
+            html: `<p>Analogia do apartamento alugado: o proprietário garante a estrutura do edifício; o inquilino é responsável pelo que está dentro. <strong>Provedor garante:</strong> infraestrutura física, rede física, virtualização. <strong>Cliente garante:</strong> dados, identidades e acessos, configurações de rede virtual, SO/aplicações em IaaS.</p>`
+          },
+          {
+            heading: `Responsabilidade por modelo de serviço`,
+            html: `<table><tr><td><strong>Responsabilidade</strong></td><td><strong>IaaS</strong></td><td><strong>PaaS</strong></td><td><strong>SaaS</strong></td></tr>
+<tr><td>Sistema operacional</td><td>Cliente</td><td>Provedor</td><td>Provedor</td></tr>
+<tr><td>Aplicação</td><td>Cliente</td><td>Cliente</td><td>Provedor</td></tr>
+<tr><td>Dados</td><td>Cliente</td><td>Cliente</td><td>Cliente</td></tr>
+<tr><td>Identidades e acessos</td><td>Cliente</td><td>Cliente</td><td>Cliente</td></tr></table>
+<p><strong>Dados e identidades/acessos são sempre do cliente</strong>, em qualquer modelo.</p>`
+          }
+        ],
+        sintese: [
+          `O Shared Responsibility Model define o que é do provedor e o que é do cliente.`,
+          `Dados e identidades/acessos são sempre do cliente, em qualquer modelo.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B6S19A2',
+        title: `IAM: menor privilégio, MFA, RBAC e rotação`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Descrever os controles de IAM: menor privilégio, MFA, RBAC, rotação e monitoramento.`,
+        habilidadeSocioemocional: `Auditar uma configuração de acesso real e propor uma arquitetura mais segura.`,
+        conceito: [
+          {
+            heading: `IAM: o pilar central da responsabilidade do cliente`,
+            html: `<ul><li><strong>Menor Privilégio:</strong> só as permissões mínimas necessárias.</li>
+<li><strong>MFA:</strong> mais de um fator de verificação.</li>
+<li><strong>RBAC:</strong> permissões por função, não individualmente.</li>
+<li><strong>Rotação de credenciais:</strong> trocar senhas e chaves periodicamente.</li>
+<li><strong>Monitoramento:</strong> registrar quem acessou o quê, quando e de onde.</li></ul>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Prática complementar (Aula 2) — "IAM – Papéis, políticas e MFA"</strong></p>
+<p><strong>Cenário:</strong> na startup DataBridge, uma chave de API da conta corporativa do usuário <code>dev-backend-01</code>, com permissão de AdministradorTotal, ficou exposta publicamente em um repositório de código por <strong>72 horas</strong>.</p>
+<p>Conduzam uma auditoria de IAM: 1) identifiquem violações do Princípio do Menor Privilégio; 2) proponham o papel ideal para cada violação; 3) construam uma política de rotação de credenciais por criticidade de perfil; 4) definam quais usuários devem ter MFA obrigatório.</p>
+<p>No relatório, descrevam três ações críticas que um invasor poderia ter feito nas 72 horas de exposição.</p>`
+        },
+        sintese: [
+          `O IAM reúne os principais controles: menor privilégio, MFA, RBAC, rotação e monitoramento.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B6S19A3',
+        title: `TLS 1.3: handshake e criptografia em trânsito`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Explicar por que a criptografia em trânsito é do cliente configurar e mapear o handshake TLS 1.3.`,
+        habilidadeSocioemocional: `Documentar tecnicamente uma migração de segurança para uma auditoria de conformidade.`,
+        conceito: [
+          {
+            heading: `Criptografia em trânsito`,
+            html: `<p>Dados precisam de proteção não só armazenados, mas também <strong>enquanto trafegam pela rede</strong> — cabe ao <strong>cliente</strong> configurar isso, usando HTTPS/TLS. Incidentes reais em nuvem costumam ter origem em má configuração do cliente: buckets públicos, chaves de API vazadas, firewalls permissivos.</p>`
+          },
+          {
+            heading: `O handshake do TLS 1.3`,
+            html: `<pre>1. Client Hello — versões TLS, cipher suites, chave DH efêmera do cliente
+2. Server Hello — cipher suite escolhida, chave DH efêmera do servidor
+3. Certificate + Finished — certificado já criptografado (canal já protegido)
+4. Finished — valida certificado, confirma chaves de sessão</pre>
+<p>O cliente já envia sua chave Diffie-Hellman no primeiro Client Hello, reduzindo o handshake para <strong>1 RTT</strong> (o TLS 1.2 precisava de 2 RTTs).</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S19A3) — "TLS 1.3 na prática"</strong></p>
+<p><strong>Cenário:</strong> vocês atuam como Analista de Segurança na FinSecure, revisando a configuração TLS dos servidores de produção antes de um audit de conformidade, após a migração de TLS 1.2 para TLS 1.3.</p>
+<p><strong>Etapa 1:</strong> respondam por que o TLS 1.3 faz o handshake em 1 RTT e em qual etapa o canal já está criptografado.</p>
+<p><strong>Etapa 2:</strong> analisem os campos de um certificado digital real (Subject, Issuer, validade, cipher suite).</p>
+<p><strong>Etapa 3:</strong> preencham a matriz comparativa TLS 1.2 x TLS 1.3 (RTTs, forward secrecy, criptografia do certificado).</p>
+<p><strong>Etapa 4:</strong> analisem um cenário de downgrade attack e o mecanismo do TLS 1.3 que o torna ineficaz.</p>
+<p><strong>Entrega:</strong> registrado no AVA.</p>`
+        },
+        quiz: [
+          {
+            question: `Em um modelo SaaS, qual é a principal responsabilidade do cliente em termos de segurança?`,
+            options: [`Configurar os firewalls de hardware do provedor.`, `Gerenciar identidades, acessos e proteger os dados.`, `Garantir a segurança da infraestrutura física.`, `Aplicar patches de segurança no sistema operacional.`],
+            correct: 1,
+            feedback: `Mesmo em SaaS, dados e identidades/acessos continuam sendo sempre do cliente.`
+          },
+          {
+            question: `No handshake do TLS 1.3, o cliente já envia sua chave Diffie-Hellman no primeiro Client Hello. Qual a principal vantagem em relação ao TLS 1.2?`,
+            options: [`Permite usar algoritmos de criptografia obsoletos.`, `Reduz o handshake para 1 RTT, diminuindo a latência.`, `Elimina a necessidade de certificados digitais.`, `Torna o MFA obrigatório na camada de transporte.`],
+            correct: 1,
+            feedback: `Antecipar a chave Diffie-Hellman elimina uma rodada de comunicação, reduzindo o handshake de 2 RTTs para 1 RTT.`
+          }
+        ],
+        sintese: [
+          `A criptografia em trânsito protege dados na rede, e cabe ao cliente configurá-la.`,
+          `A maioria dos incidentes reais tem origem em má configuração do cliente.`
+        ],
+        saibaMais: {
+          texto: `Pesquise, no site da AWS ou da Azure, como cada provedor descreve seu Shared Responsibility Model.`,
+          link: `https://aws.amazon.com/pt/compliance/shared-responsibility-model/`
+        }
+      }
+    ]
+  },
+  {
+    id: 's20',
+    title: `Semana 20 — Backup, Recuperação e Continuidade de Negócio`,
+    unidade: `Unidade 5`,
+    aulas: [
+      {
+        code: 'SISANO1C2B5S20A1',
+        title: `Política de backup: full, incremental e snapshot`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Explicar o que é uma política de backup e diferenciar backup full, incremental e snapshot.`,
+        habilidadeSocioemocional: `Tratar dados diferentes (código, banco, ativos) com estratégias diferentes, evitando soluções únicas.`,
+        pontoDePartida: {
+          titulo: `E se, mesmo com os acessos corretos, algo der errado?`,
+          texto: `<p>No Capítulo 19, a startup migrou parte da infraestrutura para a nuvem e aprendeu que dados e acessos continuam sendo sempre responsabilidade dela. Agora surge a pergunta natural: e se, mesmo com os controles de acesso corretos, algo der errado — falha de hardware, erro humano, corrupção de dados?</p>
+<p>A startup tem três tipos de dado muito diferentes: código-fonte do jogo (muda a cada commit), banco de dados de jogadores (muda o tempo todo) e ativos de arte (mudam bem menos). Tratar os três igual seria ineficiente.</p>`
+        },
+        conceito: [
+          {
+            heading: `O que é uma política de backup`,
+            html: `<p>Uma <strong>política de backup</strong> define: o que será salvo, com que frequência, de qual forma, por quanto tempo e onde. Sem política, o backup é um ato aleatório; com política, é um processo gerenciável, auditável e confiável (ISO/IEC 27001, controle A.12.3).</p>`
+          },
+          {
+            heading: `Full, Incremental e Snapshot`,
+            html: `<table><tr><td><strong>Característica</strong></td><td><strong>Full</strong></td><td><strong>Incremental</strong></td><td><strong>Snapshot</strong></td></tr>
+<tr><td>O que copia</td><td>Tudo</td><td>Apenas alterações</td><td>Estado dos blocos</td></tr>
+<tr><td>Velocidade de backup</td><td>Lenta</td><td>Rápida</td><td>Quase instantânea</td></tr>
+<tr><td>Independência</td><td>Total</td><td>Depende da cadeia</td><td>Depende do storage</td></tr></table>
+<p>Um <strong>snapshot não sobrevive a falha de hardware</strong>, pois depende do mesmo storage de origem — diferente de um backup completo, que é cópia independente.</p>`
+          }
+        ],
+        sintese: [
+          `Uma política de backup formaliza o que salvar, com que frequência e onde armazenar.`,
+          `O snapshot é quase instantâneo, mas não sobrevive a falha de hardware.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B5S20A2',
+        title: `RPO, RTO e a regra 3-2-1`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Explicar RPO e RTO, usá-los para escolher uma estratégia, e calcular consumo de armazenamento com deduplicação/compressão.`,
+        habilidadeSocioemocional: `Planejar uma política de backup considerando restrições reais de orçamento.`,
+        conceito: [
+          {
+            heading: `RPO e RTO`,
+            html: `<p><strong>RPO (Recovery Point Objective):</strong> perda máxima tolerada de dados. <strong>RTO (Recovery Time Objective):</strong> tempo máximo tolerado de restauração. Dados que mudam pouco toleram RPO maior; dados que mudam sempre exigem RPO menor.</p>`
+          },
+          {
+            heading: `A regra 3-2-1`,
+            html: `<p>Manter <strong>3 cópias</strong>, em <strong>2 tipos de mídia diferentes</strong>, com <strong>1 cópia off-site</strong>. Sem off-site, um evento catastrófico (incêndio, inundação, roubo) destrói dados e backups juntos.</p>
+<p><strong>Exercício resolvido:</strong> 2 TB de dados, deduplicação 8:1, compressão adicional de 40%: 2.000 GB ÷ 8 = 250 GB; 250 GB × (1 − 0,40) = 150 GB.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Atividade prática guiada — Política de backup da startup de games</strong></p>
+<p><strong>Cenário:</strong> Código-fonte (10 GB, várias vezes por dia), Banco de jogadores (150 GB, contínua), Ativos de arte (300 GB, poucas vezes por semana). RPO de 4h para o banco, 24h para os demais; RTO de 2h; orçamento de 1.200 GB/mês.</p>
+<p>1) proponham uma estratégia (full, incremental, snapshot ou combinação) para cada dado, justificando pelo RPO; 2) calculem o consumo mensal estimado e verifiquem se cabe no orçamento; 3) avaliem o risco de não ter cópia off-site.</p>`
+        },
+        sintese: [
+          `RPO define a perda máxima tolerada; RTO define o tempo máximo de restauração.`,
+          `A regra 3-2-1 recomenda 3 cópias, 2 mídias diferentes, 1 cópia off-site.`
+        ]
+      },
+      {
+        code: 'SISANO1C2B5S20A3',
+        title: `Planejando um DR Test`,
+        duracao: `50 minutos`,
+        habilidadeTecnica: `Reconstruir a cadeia de restauração após uma falha e justificar a importância de testar a restauração.`,
+        habilidadeSocioemocional: `Planejar um teste de recuperação de desastres sem impactar a produção.`,
+        conceito: [
+          {
+            heading: `Um backup nunca testado é apenas presumido funcional`,
+            html: `<p>Uma política de backup só tem valor real no momento em que precisa ser usada. Um backup que nunca foi restaurado não é garantidamente funcional — é apenas presumido funcional. Testar a restauração é o que separa uma política de verdade de um simples hábito de copiar arquivos.</p>`
+          },
+          {
+            heading: `A cadeia de restauração`,
+            html: `<p><strong>Exercício resolvido:</strong> full aos domingos e incremental de segunda a sábado. Na quinta-feira, antes do backup incremental, o servidor falha. A restauração precisa do full de domingo mais os incrementais de segunda, terça e quarta — o de quinta nunca foi executado.</p>`
+          }
+        ],
+        colocandoEmPratica: {
+          enunciado: `<p><strong>Registro da Aula (S20A3) — "Planejando o DR Test da SegurData"</strong></p>
+<p><strong>Cenário:</strong> a SegurData tem três servidores em VMs: VM-01 (80 GB, câmeras, RTO 2h), VM-02 (25 GB, autenticação, RTO 1h), VM-03 (120 GB, histórico, RTO 4h). Conexão de 200 Mbps dedicada, storage SSD, backups no AWS S3 (São Paulo).</p>
+<p>1) calculem o tempo estimado de download de cada VM e quais atendem ao RTO; 2) para a VM-02, proponham duas estratégias para garantir o RTO; 3) montem um checklist de validação pós-restore para a VM-01; 4) que cuidados evitam conflito de IP/nomes de rede entre o ambiente de teste e a produção?</p>
+<p><strong>Entrega:</strong> documento com as respostas, no AVA.</p>`
+        },
+        quiz: [
+          {
+            question: `Uma empresa tem 2 TB de dados, usa deduplicação com razão de 8:1 e compressão adicional de 40%. Qual o espaço aproximado ocupado?`,
+            options: [`Aproximadamente 400 GB.`, `Aproximadamente 150 GB.`, `Aproximadamente 250 MB.`, `Aproximadamente 1,2 TB.`],
+            correct: 1,
+            feedback: `2.000 GB ÷ 8 (dedup) = 250 GB. Aplicando 40% de compressão sobre esse valor: 250 GB × 0,60 = 150 GB.`
+          },
+          {
+            question: `Uma VM de 60 GB está em backup na nuvem, com conexão de 120 Mbps e storage SSD de destino. Qual a estimativa mais realista de tempo de restore?`,
+            options: [`Aproximadamente 4 horas.`, `Aproximadamente 8 minutos.`, `Aproximadamente 67 minutos.`, `Aproximadamente 15 minutos.`],
+            correct: 2,
+            feedback: `120 Mbps ÷ 8 = 15 MB/s. 60.000 MB ÷ 15 MB/s = 4.000 s ≈ 66,7 minutos — a rede é o gargalo, não o SSD.`
+          }
+        ],
+        sintese: [
+          `Sem off-site, mesmo uma política correta pode falhar diante de um desastre local.`,
+          `Testar a restauração é o que garante que uma política de backup funciona de verdade.`
+        ],
+        saibaMais: {
+          texto: `Pesquise a diferença entre backup incremental e diferencial, e reflita: a política de backup é responsabilidade do provedor ou do cliente?`,
+          link: `https://www.veeam.com/blog/321-backup-rule.html`
+        }
+      }
+    ]
+  }
 
 ];
 /* =========================================================
