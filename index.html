@@ -227,6 +227,35 @@ main#content { flex: 1; overflow-y: auto; padding: 30px 34px 70px; max-width: 88
 /* ---------- ACTIVITY / GABARITO TOGGLE ---------- */
 .gabarito-toggle { background: var(--panel-2); border: 1px dashed var(--border); border-radius: 10px; padding: 10px 14px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-dim); font-family: "Fredoka"; margin-top: 10px; }
 .gabarito-box { display: none; margin-top: 10px; }
+
+/* ---------- REGISTRO DE AULA: FORMULÁRIO + PDF ---------- */
+.pratica-form { border: 1px solid var(--accent-soft); background: var(--panel); }
+.pratica-form > h4 { margin: 0 0 4px; font-family: "Fredoka"; font-size: 15px; }
+.pratica-form .muted-note { margin: 0 0 14px; font-size: 12.5px; color: var(--text-dim); }
+.pratica-form .campo { margin: 12px 0; }
+.pratica-form .campo label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 5px; color: var(--text); }
+.pratica-form input[type="text"], .pratica-form textarea {
+  width: 100%; font: inherit; font-size: 14px; color: var(--text); background: var(--panel-2);
+  border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; box-sizing: border-box;
+}
+.pratica-form textarea { min-height: 76px; resize: vertical; }
+.pratica-form input[type="text"]:focus, .pratica-form textarea:focus { outline: none; border-color: var(--accent); background: var(--panel); }
+.pratica-form .btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+.pratica-save-msg { font-size: 12px; color: var(--ok); font-family: "Fredoka"; }
+
+#globalPrintSummary { display: none; }
+@media print {
+  body.printing-pratica > #app { display: none !important; }
+  body.printing-pratica #globalPrintSummary {
+    display: block !important; padding: 28px; color: #111; background: #fff;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  #globalPrintSummary h1 { font-size: 19px; margin: 0 0 4px; }
+  #globalPrintSummary .print-sub { color: #555; font-size: 12.5px; margin: 0 0 18px; }
+  #globalPrintSummary .campo-print { margin: 12px 0; break-inside: avoid; }
+  #globalPrintSummary .campo-print .lbl { font-weight: 700; font-size: 13px; margin-bottom: 3px; }
+  #globalPrintSummary .campo-print .val { white-space: pre-wrap; font-size: 13px; border-bottom: 1px solid #ccc; padding-bottom: 6px; }
+}
 .gabarito-box.open { display: block; }
 
 /* ---------- SUMMARY / SAIBA MAIS ---------- */
@@ -3065,6 +3094,40 @@ function renderConcept(body, mod, screen) {
   });
 }
 
+function ensurePrintSummaryEl() {
+  let s = document.getElementById('globalPrintSummary');
+  if (!s) { s = document.createElement('div'); s.id = 'globalPrintSummary'; document.body.appendChild(s); }
+  return s;
+}
+
+function extractFieldsFromEnunciado(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const fields = [];
+  fields.push({ id: 'ident_turma', label: 'Turma', type: 'text' });
+  fields.push({ id: 'ident_grupo', label: 'Nome/nº do grupo e integrantes', type: 'text' });
+  let tableFieldsFound = 0;
+  div.querySelectorAll('table').forEach((table, ti) => {
+    const headerText = (table.querySelector('tr') ? table.querySelector('tr').textContent : '').toLowerCase();
+    const looksLikeTask = /respond|tarefa|o que fazer|passo|justific/.test(headerText);
+    if (!looksLikeTask) return;
+    const rows = [...table.querySelectorAll('tr')].slice(1);
+    rows.forEach((tr, ri) => {
+      const cells = [...tr.querySelectorAll('td')];
+      if (!cells.length) return;
+      const label = cells[0].textContent.replace(/\s+/g,' ').trim();
+      if (!label) return;
+      fields.push({ id: 'campo_'+ti+'_'+ri, label, type: 'textarea' });
+      tableFieldsFound++;
+    });
+  });
+  if (!tableFieldsFound) {
+    fields.push({ id: 'resposta_geral', label: 'Resposta do grupo (sigam o enunciado acima, passo a passo)', type: 'textarea' });
+  }
+  fields.push({ id: 'reflexao_final', label: 'Conclusão / observações finais (opcional)', type: 'textarea' });
+  return fields;
+}
+
 function renderPractice(body, mod, screen) {
   const d = screen.data;
   const card = el('div','card');
@@ -3076,6 +3139,66 @@ function renderPractice(body, mod, screen) {
     card.appendChild(dica);
   }
   body.appendChild(card);
+
+  // Formulário de preenchimento — passo a passo, com botão para gerar PDF e enviar no AVA.
+  const fields = extractFieldsFromEnunciado(d.enunciado);
+  const formCard = el('div','card pratica-form');
+  formCard.appendChild(el('h4','', '📝 Registro da Aula — preencham para gerar o PDF'));
+  formCard.appendChild(el('p','muted-note','Respondam campo a campo, na ordem, e depois cliquem em "Gerar PDF" para baixar/imprimir e enviar no AVA.'));
+  const storageKey = 'pratica_' + mod.id + '_' + screen.id;
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch (e) {}
+  const inputs = [];
+  fields.forEach((f, fi) => {
+    const wrapF = el('div','campo');
+    const lab = document.createElement('label');
+    lab.textContent = (fi > 1 ? (fi - 1) + '. ' : '') + f.label;
+    lab.setAttribute('for', f.id);
+    wrapF.appendChild(lab);
+    const inputEl = document.createElement(f.type === 'text' ? 'input' : 'textarea');
+    if (f.type === 'text') inputEl.type = 'text';
+    inputEl.id = f.id;
+    inputEl.value = saved[f.id] || '';
+    wrapF.appendChild(inputEl);
+    formCard.appendChild(wrapF);
+    inputs.push({ f, el: inputEl });
+  });
+  function collect() { const o = {}; inputs.forEach(({f, el}) => { o[f.id] = el.value; }); return o; }
+  function persist() { try { localStorage.setItem(storageKey, JSON.stringify(collect())); } catch (e) {} }
+  inputs.forEach(({el}) => el.addEventListener('input', persist));
+
+  const btnRow = el('div','btn-row');
+  const btnPdf = document.createElement('button'); btnPdf.type = 'button'; btnPdf.className = 'btn-primary'; btnPdf.textContent = '🖨️ Gerar PDF';
+  const btnSave = document.createElement('button'); btnSave.type = 'button'; btnSave.className = 'btn-ghost'; btnSave.textContent = 'Salvar rascunho';
+  const btnClear = document.createElement('button'); btnClear.type = 'button'; btnClear.className = 'btn-ghost'; btnClear.textContent = 'Limpar';
+  const saveMsg = el('span','pratica-save-msg','');
+  [btnPdf, btnSave, btnClear, saveMsg].forEach(x => btnRow.appendChild(x));
+  formCard.appendChild(btnRow);
+  body.appendChild(formCard);
+
+  btnSave.addEventListener('click', () => { persist(); saveMsg.textContent = 'Rascunho salvo neste navegador.'; setTimeout(() => saveMsg.textContent = '', 2500); });
+  btnClear.addEventListener('click', () => {
+    if (!confirm('Apagar o preenchimento desta atividade?')) return;
+    inputs.forEach(({el}) => el.value = '');
+    try { localStorage.removeItem(storageKey); } catch (e) {}
+    saveMsg.textContent = 'Formulário limpo.'; setTimeout(() => saveMsg.textContent = '', 2500);
+  });
+  btnPdf.addEventListener('click', () => {
+    persist();
+    const data = collect();
+    const summary = ensurePrintSummaryEl();
+    let html = '<h1>' + esc(screen.aulaTitle || 'Registro da Aula') + '</h1>';
+    html += '<p class="print-sub">' + esc(mod.title) + ' — Redes de Computadores e Segurança da Informação na Nuvem</p>';
+    fields.forEach((f, fi) => {
+      const v = data[f.id] || '';
+      html += '<div class="campo-print"><div class="lbl">' + (fi > 1 ? (fi - 1) + '. ' : '') + esc(f.label) + '</div><div class="val">' + (v ? esc(v) : '<em>(em branco)</em>') + '</div></div>';
+    });
+    summary.innerHTML = html;
+    document.body.classList.add('printing-pratica');
+    window.print();
+  });
+  window.addEventListener('afterprint', () => document.body.classList.remove('printing-pratica'));
+
   if (d.gabarito) {
     const toggle = el('button','gabarito-toggle', icon('eye')+'Ver orientações do professor');
     const box = el('div','gabarito-box card');
