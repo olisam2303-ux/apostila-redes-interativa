@@ -549,7 +549,28 @@ function buildModule(week) {
   return { id: week.id, title: week.title, unidade: week.unidade, bimestre: bimestreOfWeek(week.id), screens };
 }
 
-const REFERENCIAS_POR_AULA = {};
+const REFERENCIAS_POR_AULA = {
+  'SISANO1C2B1S1A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 1, §1.1–1.3 (O que é a Internet, periferia e núcleo da rede), p. 2–25.' }],
+  'SISANO1C2B1S2A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 5, §5.3.2 (Protocolos de acesso aleatório — CSMA/CD), p. 333–340.' }],
+  'SISANO1C2B1S3A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 5, §5.3.3 (Protocolos de revezamento — token), p. 340–341.' }],
+  'SISANO1C2B1S4A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 1, §1.2.2 (Meios físicos), p. 14–15.' }],
+  'SISANO1C2B1S5A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 1, §1.2.2 (Meios físicos) e Cap. 5, §5.4.2 (Ethernet), p. 14–15 e 348–351.' }],
+  'SISANO1C2B2S6A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 1, §1.5 (Camadas de protocolo e modelos de serviço), p. 35–40.' }],
+  'SISANO1C2B2S7A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 1, §1.2.2 (Meios físicos), p. 14–15.' }],
+  'SISANO1C2B2S8A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 6, §6.2–6.3.6 (Wi-Fi, Bluetooth/Zigbee), p. 384–403.' }],
+  'SISANO1C2B2S9A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 1, §1.2.2 (Meios físicos), p. 14–15.' }],
+  'SISANO1C2B2S10A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 5, §5.4.1–5.4.2 (Endereçamento MAC, Ethernet), p. 343–351.' }],
+  'SISANO1C2B2S11A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 4, §4.4.2 (Endereçamento IPv4), p. 249–259.' }],
+  'SISANO1C2B2S12A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 3, §3.3 (UDP) e §3.5 (TCP), p. 145 e 168–190.' }],
+  'SISANO1C2B4S13A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 8, §8.1–8.2 (O que é segurança de rede, criptografia), p. 496–507.' }],
+  'SISANO1C2B4S14A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 8, §8.9 (Segurança operacional: firewalls e sistemas de detecção de invasão), p. 538–546.' }],
+  'SISANO1C2B4S15A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 8, §8.1–8.3 (fundamentos de segurança — o livro não cobre OWASP especificamente), p. 496–518.' }],
+  'SISANO1C2B5S16A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 4, §4.4.2 (Endereçamento IPv4 — revisão), p. 249–259.' }],
+  'SISANO1C2B5S17A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 8, §8.1 (fundamentos gerais de segurança — risco não é foco do livro), p. 496.' }],
+  'SISANO1C2B6S18A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — fora do escopo do livro (fundamentos de rede, não trata de legislação de dados).' }],
+  'SISANO1C2B6S19A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — fora do escopo do livro (não trata de computação em nuvem).' }],
+  'SISANO1C2B5S20A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — fora do escopo do livro (não trata de backup/continuidade de negócio).' }]
+};
 
 const ALL_WEEKS = [
   {
