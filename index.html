@@ -3363,6 +3363,7 @@ function typeBanner(type, xpEarned) {
   return b;
 }
 
+const APP_DEFAULT_TITLE = document.title;
 function renderScreen(mod, screen, mi, si) {
   const c = document.getElementById('content');
   c.innerHTML = '';
@@ -3373,6 +3374,12 @@ function renderScreen(mod, screen, mi, si) {
   c.appendChild(typeBanner(screen.type, screen.type!=='quiz' ? justEarnedXP : 0));
   const body = el('div');
   c.appendChild(body);
+  if (screen.type === 'practice') {
+    const semanaNum = String(mod.id || '').replace(/[^0-9]/g,'').padStart(2,'0');
+    document.title = 'Registro Semana ' + semanaNum;
+  } else {
+    document.title = APP_DEFAULT_TITLE;
+  }
   const renderers = { intro: renderIntro, concept: renderConcept, practice: renderPractice, quiz: renderQuiz, social: renderSocial, summary: renderSummary, activity: renderActivity };
   (renderers[screen.type] || function(){})(body, mod, screen, mi, si);
 }
@@ -3539,12 +3546,9 @@ function renderPractice(body, mod, screen, mi, si) {
       syncProgress();
       updateFooter();
     }
-    const nomeArquivo = (nomeRegistro + (getAlunoNome() ? ' - ' + getAlunoNome() : '')).replace(/\s+/g,' ').trim();
-    const oldTitle = document.title;
-    document.title = nomeArquivo;
+    document.title = (nomeRegistro + (getAlunoNome() ? ' - ' + getAlunoNome() : '')).replace(/\s+/g,' ').trim();
     document.body.classList.add('printing-pratica');
     window.print();
-    document.title = oldTitle;
   });
   window.addEventListener('afterprint', () => document.body.classList.remove('printing-pratica'));
 
