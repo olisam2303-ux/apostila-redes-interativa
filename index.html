@@ -3028,6 +3028,23 @@ function alunoCadastroCompleto() { return !!(getAlunoNome() && getAlunoTurma() &
 /** Garante que um computador compartilhado nunca herde o progresso do
  *  aluno anterior: zera trilha, quizzes e rascunhos de Registro de Aula
  *  guardados neste navegador quando o nome cadastrado muda. */
+/** Se este aluno já tem progresso salvo no banco (de outro dispositivo ou
+ *  de antes de limpar o navegador), restaura para não fingir que ele é
+ *  novo — o "começar zerado" vale só para quem realmente nunca acessou. */
+async function tryRestoreFromDb(nome) {
+  if (!dbNS) return false;
+  try {
+    const doc = await dbNS.doc('students/' + slugify(nome)).get();
+    if (!doc.exists) return false;
+    const d = doc.data();
+    if (d.estadoCompleto && typeof d.estadoCompleto === 'object') {
+      Object.assign(state, JSON.parse(JSON.stringify(DEFAULT_STATE)), d.estadoCompleto);
+      saveState();
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
 function resetLocalProgress() {
   try {
     Object.keys(localStorage).filter(k => k.startsWith('pratica_')).forEach(k => localStorage.removeItem(k));
@@ -3070,6 +3087,7 @@ async function syncProgress() {
       notaBim1: bimestreScore(1).pts,
       notaBim2: bimestreScore(2).pts,
       notaBim3: bimestreScore(3).pts,
+      estadoCompleto: state,
       atualizadoEm: new Date().toISOString()
     });
   } catch(e) { /* offline ou db indisponível — segue local */ }
@@ -3425,7 +3443,7 @@ function cabecalhoRoteiroHtml(mod, screen) {
   const escola = getAlunoEscola() || '_______________________________';
   const hoje = new Date().toLocaleDateString('pt-BR');
   return '<table class="cabecalho-roteiro"><tbody>'
-    + '<tr><td colspan="2"><strong>ETEC ' + esc(escola) + '</strong> — Centro Estadual de Educação Tecnológica Paula Souza</td></tr>'
+    + '<tr><td colspan="2"><strong>' + esc(escola) + '</strong> — Habilitação Técnica em Desenvolvimento de Sistemas</td></tr>'
     + '<tr><td><strong>Componente curricular:</strong> Redes de Computadores e Segurança da Informação na Nuvem</td>'
     + '<td><strong>Turma:</strong> ' + esc(turma) + '</td></tr>'
     + '<tr><td><strong>Aluno(a):</strong> ' + esc(nome) + '</td><td><strong>Data:</strong> ' + esc(hoje) + '</td></tr>'
@@ -4009,10 +4027,13 @@ document.getElementById('nameSaveBtn').addEventListener('click', async () => {
     localStorage.setItem(ALUNO_ESCOLA_KEY, escola);
   } catch(e) {}
   if (trocouDeAluno) resetLocalProgress();
+  const restaurado = await tryRestoreFromDb(nome);
   if (dbNS) { try { await dbNS.doc('escolas/' + slugify(escola)).set({ nome: escola }); } catch(e) {} }
   updateNameChip();
   document.getElementById('nameModal').classList.remove('show');
-  if (trocouDeAluno) { goTo(0, 0); } else { render(); }
+  if (restaurado) { toast('Bem-vindo(a) de volta! Retomando de onde você parou.'); goTo(state.moduleIndex, state.screenIndex); }
+  else if (trocouDeAluno) { goTo(0, 0); }
+  else { render(); }
   syncProgress();
 });
 updateNameChip();
