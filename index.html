@@ -479,7 +479,8 @@ footer.bottomnav .center-label { font-size: 12px; color: var(--text-dim); text-a
 const BIMESTRE_INFO = {
   1: { title:'Bimestre 1 — Topologias de Rede e Meios de Transmissão', weeks:['s01','s02','s03','s04','s05','s06','s07'] },
   2: { title:'Bimestre 2 — Camadas, Protocolos e Fundamentos de Segurança', weeks:['s08','s09','s10','s11','s12','s13','s14'] },
-  3: { title:'Bimestre 3 — Gestão de Riscos, LGPD e Segurança na Nuvem', weeks:['s15','s16','s17','s18','s19','s20'] }
+  3: { title:'Bimestre 3 — Gestão de Riscos, LGPD e Segurança na Nuvem', weeks:['s15','s16','s17','s18','s19','s20'] },
+  4: { title:'Bimestre 4 — Virtualização de Rede e SDN', weeks:['s21'] }
 };
 function bimestreOfWeek(wid) {
   for (const b in BIMESTRE_INFO) { if (BIMESTRE_INFO[b].weeks.includes(wid)) return +b; }
@@ -547,7 +548,8 @@ const ATIVIDADE_POR_SEMANA = {
   s17: [['redes-17-s17a1.html', 'Os quatro elementos do risco']],
   s18: [['redes-18-s18a3.html', 'Conformidade de um cadastro com a LGPD']],
   s19: [['redes-19-s19a3.html', 'TLS 1.3 na prática']],
-  s20: [['redes-20-s20a3.html', 'Planejando o DR Test da SegurData']]
+  s20: [['redes-20-s20a3.html', 'Planejando o DR Test da SegurData']],
+  s21: [['redes-21a-s21a2.html', 'Desenhando uma rede virtual na nuvem (VPC/VNet)'], ['redes-21b-s21a3.html', 'Planejando uma topologia SDN com Mininet']]
 };
 
 function atividadeLinkCard(modId, mi, si) {
@@ -609,7 +611,10 @@ const REFERENCIAS_POR_AULA = {
   'SISANO1C2B5S17A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — Cap. 8, §8.1 (fundamentos gerais de segurança — risco não é foco do livro), p. 496.' }],
   'SISANO1C2B6S18A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — fora do escopo do livro (fundamentos de rede, não trata de legislação de dados).' }],
   'SISANO1C2B6S19A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — fora do escopo do livro (não trata de computação em nuvem).' }],
-  'SISANO1C2B5S20A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — fora do escopo do livro (não trata de backup/continuidade de negócio).' }]
+  'SISANO1C2B5S20A3': [{ texto: 'KUROSE, J. F.; ROSS, K. W. Redes de Computadores e a Internet. Pearson, 2013 — fora do escopo do livro (não trata de backup/continuidade de negócio).' }],
+  'SISANO1C2B4S21A1': [{ texto: 'GUEDES, D. et al. Redes definidas por software: uma abordagem sistêmica para o desenvolvimento das pesquisas em redes de computadores. Belo Horizonte: Universidade Federal de Minas Gerais – Departamento de Ciência da Computação, [s.d.]. Disponível em: https://homepages.dcc.ufmg.br/~mmvieira/cc/papers/minicurso-sdn.pdf. Acesso em: 14 maio 2026.' }, { texto: 'MARCHESAN, G. Uma análise comparativa entre paradigmas de virtualização de redes. Dissertação (Mestrado em Ciência da Computação). Santa Maria: Universidade Federal de Santa Maria, 2018. Disponível em: https://repositorio.ufsm.br/handle/1/14521. Acesso em: 14 maio 2026.' }],
+  'SISANO1C2B4S21A2': [{ texto: 'GUEDES, D. et al. Redes definidas por software: uma abordagem sistêmica para o desenvolvimento das pesquisas em redes de computadores. Belo Horizonte: Universidade Federal de Minas Gerais – Departamento de Ciência da Computação, [s.d.]. Disponível em: https://homepages.dcc.ufmg.br/~mmvieira/cc/papers/minicurso-sdn.pdf. Acesso em: 14 maio 2026.' }, { texto: 'MARCHESAN, G. Uma análise comparativa entre paradigmas de virtualização de redes. Dissertação (Mestrado em Ciência da Computação). Santa Maria: Universidade Federal de Santa Maria, 2018. Disponível em: https://repositorio.ufsm.br/handle/1/14521. Acesso em: 14 maio 2026.' }],
+  'SISANO1C2B4S21A3': [{ texto: 'GUEDES, D. et al. Redes definidas por software: uma abordagem sistêmica para o desenvolvimento das pesquisas em redes de computadores. Belo Horizonte: Universidade Federal de Minas Gerais – Departamento de Ciência da Computação, [s.d.]. Disponível em: https://homepages.dcc.ufmg.br/~mmvieira/cc/papers/minicurso-sdn.pdf. Acesso em: 14 maio 2026.' }, { texto: 'MARCHESAN, G. Uma análise comparativa entre paradigmas de virtualização de redes. Dissertação (Mestrado em Ciência da Computação). Santa Maria: Universidade Federal de Santa Maria, 2018. Disponível em: https://repositorio.ufsm.br/handle/1/14521. Acesso em: 14 maio 2026.' }]
 };
 
 const ALL_WEEKS = [
@@ -3051,7 +3056,158 @@ const ALL_WEEKS = [
         }
       }
     ]
-  }
+  },
+  {
+    "id": "s21",
+    "title": "Semana 21 — Virtualização de Rede e SDN",
+    "unidade": "Unidade 6",
+    "aulas": [
+      {
+        "code": "SISANO1C2B4S21A1",
+        "title": "Virtual switch, vRouter e plano de controle vs. data plane",
+        "duracao": "50 minutos",
+        "habilidadeTecnica": "Identificar componentes de uma rede virtual e diferenciar o plano de controle do plano de dados em uma arquitetura SDN.",
+        "habilidadeSocioemocional": "Explorar as possibilidades de segmentação e roteamento em ambientes virtualizados, buscando entender suas aplicações em redes modernas.",
+        "pontoDePartida": {
+          "titulo": "O trânsito e o guarda",
+          "texto": "<p>Imagine um cruzamento muito movimentado em uma grande cidade. Antigamente, em cada esquina, havia um guarda de trânsito. Ele precisava olhar os carros chegando, decidir quem passava primeiro e fazer os gestos com as mãos.</p>\n<p>O guarda fazia duas coisas ao mesmo tempo: <strong>pensava</strong> nas regras do trânsito e <strong>executava</strong> a ação de liberar os carros.</p>\n<p>Agora, imagine que a cidade instalou semáforos inteligentes. Os semáforos apenas acendem as luzes (eles executam a ação). Mas quem decide o tempo de cada luz é um computador central na prefeitura, que analisa o trânsito da cidade inteira de cima (ele pensa nas regras).</p>\n<p><strong>Em duplas, respondam:</strong> o que acontece se o computador central perceber um acidente a três quarteirões de distância?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Redes tradicionais vs. redes modernas",
+            "html": "<p>Nas redes tradicionais, cada roteador ou switch físico funciona como o \"guarda de trânsito\" da nossa analogia. O equipamento precisa fazer duas coisas:</p>\n<ul>\n<li><strong>Pensar</strong>: aprender os caminhos da rede e decidir para onde enviar os dados.</li>\n<li><strong>Executar</strong>: pegar o pacote que chegou e jogá-lo na porta de saída correta.</li>\n</ul>\n<p>Ou seja, a \"inteligência\" da rede fica espalhada e presa dentro de cada equipamento físico.</p>"
+          },
+          {
+            "heading": "Separando o cérebro dos músculos (SDN)",
+            "html": "<p>A <strong>SDN</strong> (<em>software-defined networking</em>, ou rede definida por software) separa a rede em dois planos:</p>\n<table><tr><td><strong>Plano de controle (<em>control plane</em>)</strong></td><td>É o \"cérebro\" da rede. É o software centralizado (o controlador SDN) que tem a visão de toda a rede e decide as regras de roteamento.</td></tr>\n<tr><td><strong>Plano de dados (<em>data plane</em>)</strong></td><td>São os \"músculos\" da rede. Os switches e roteadores viram equipamentos rápidos que recebem as regras do controlador e repassam os pacotes.</td></tr></table>"
+          },
+          {
+            "heading": "Virtualização de rede",
+            "html": "<p>Se a inteligência agora é um software, os próprios equipamentos também podem ser. A virtualização de rede permite criar switches e roteadores dentro de servidores, sem cabos e caixas de metal dedicadas.</p>\n<table><tr><td><strong>Virtual switch (vSwitch)</strong></td><td>Um switch de software que conecta máquinas virtuais (VMs) dentro de um mesmo servidor físico.</td></tr>\n<tr><td><strong>Virtual router (vRouter)</strong></td><td>Um roteador de software que conecta redes virtuais diferentes, roteando pacotes totalmente via software.</td></tr></table>"
+          },
+          {
+            "heading": "Por que as grandes empresas de nuvem usam isso",
+            "html": "<ul>\n<li><strong>Agilidade</strong>: criar um vSwitch leva segundos; comprar e instalar um switch físico leva dias.</li>\n<li><strong>Visão global</strong>: o controlador SDN gerencia todos os vSwitches e vRouters de um painel único.</li>\n<li><strong>Automação</strong>: se uma rede virtual sofre um ataque, o controlador pode reprogramar os vRouters na hora para bloquear o tráfego malicioso.</li>\n</ul>"
+          }
+        ],
+        "atividadePratica": {
+          "titulo": "Prática guiada — Controlando o fluxo no campus",
+          "enunciado": "<p><strong>Cenário:</strong> o campus tem duas redes virtuais: <strong>Rede secretaria</strong> (dados sensíveis) e <strong>Rede academia</strong> (uso geral). Você é o analista de rede SDN e precisa definir como elas se comunicam.</p>\n<p>Façam no caderno, um passo de cada vez:</p>\n<table><tr><th>Passo — o que fazer</th><th>Como pensar</th></tr>\n<tr><td><strong>1. Observar o diagrama:</strong> qual componente conecta os dispositivos dentro da secretaria? E qual gerencia a comunicação entre secretaria e academia?</td><td>O vSwitch conecta os dispositivos dentro de uma rede. O vRouter conecta as redes entre si.</td></tr>\n<tr><td><strong>2. Definir a política de segurança (control plane):</strong> a rede da academia não pode acessar o servidor de matrículas da secretaria. Escreva no caderno a regra lógica que o controlador deve criar.</td><td>Uma regra diz: de onde vem, para onde vai e o que fazer (permitir ou bloquear).</td></tr>\n<tr><td><strong>3. Simular o data plane:</strong> um pacote sai da academia e tenta acessar a secretaria. O vRouter pergunta ao controlador o que fazer. O controlador responde com a regra do passo 2. O que acontece com o pacote?</td><td>Pense no que a regra do passo 2 manda fazer com esse pacote.</td></tr></table>\n<p><strong>Instruções de entrega:</strong> mostrem a resposta do caderno ao professor na aula.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>1.</strong> O vSwitch conecta os dispositivos dentro da secretaria; o vRouter gerencia a comunicação entre secretaria e academia.</p><p><strong>2.</strong> Exemplo de regra: <em>origem = rede academia · destino = servidor de matrículas da secretaria · ação = bloquear</em>. Uma regra simples pode ser: \"bloquear acesso da academia ao servidor de matrículas\".</p><p><strong>3.</strong> O vRouter recebe a regra do controlador e <strong>descarta</strong> o pacote: ele não chega ao servidor de matrículas.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"O vRouter deixa passar, porque é a mesma rede da escola.\"</em> — Ignora que a regra do controlador é quem decide, e que o pedido era justamente bloquear o acesso.</p><p><strong>Critério rápido:</strong> aceite qualquer regra que tenha origem, destino e ação (bloquear/permitir) coerentes com o enunciado.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Qual é a principal diferença entre o plano de controle e o plano de dados em uma rede SDN?",
+            "options": [
+              "O plano de controle transmite pacotes; o plano de dados define as rotas.",
+              "O plano de controle decide as regras de roteamento; o plano de dados encaminha os pacotes.",
+              "Ambos os planos funcionam de forma independente, sem comunicação.",
+              "O plano de dados substitui o plano de controle em redes virtualizadas."
+            ],
+            "correct": 1,
+            "feedback": "O plano de controle é o \"cérebro\": o controlador SDN decide as regras. O plano de dados são os \"músculos\": os switches e roteadores apenas encaminham os pacotes seguindo essas regras."
+          }
+        ],
+        "sintese": [
+          "A SDN separa a rede em dois planos: o plano de controle decide, o plano de dados executa.",
+          "O vSwitch conecta máquinas virtuais dentro de um servidor; o vRouter conecta redes virtuais diferentes.",
+          "Redes virtualizadas são mais ágeis, escaláveis e gerenciáveis, com um painel único de controle."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S21A2",
+        "title": "Desenhando uma rede virtual na nuvem (VPC/VNet)",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Compreender como os conceitos de SDN são aplicados em redes virtuais de provedores de nuvem pública, mapeando recursos lógicos à infraestrutura física.",
+        "habilidadeSocioemocional": "Pensar a segurança de uma rede a partir de quem precisa acessar cada parte dela.",
+        "pontoDePartida": {
+          "titulo": "A rede da TechNova na nuvem",
+          "texto": "<p>A empresa TechNova decidiu migrar seus servidores locais para a nuvem pública. Eles precisam de uma rede segura e isolada para dois serviços: um <strong>servidor web</strong>, que precisa ser acessado pela internet, e um <strong>banco de dados</strong>, que deve ser acessado apenas pelo servidor web, nunca diretamente pela internet.</p>\n<p>Como desenhar essa rede sem comprar nenhum cabo?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "O que é uma VPC/VNet",
+            "html": "<p>Uma <strong>VPC</strong> (AWS) ou <strong>VNet</strong> (Azure) é uma rede virtual isolada dentro da nuvem pública. Você a desenha por software, pelo painel web ou por código, e o provedor traduz esse desenho para os equipamentos físicos usando SDN.</p>"
+          },
+          {
+            "heading": "Sub-rede pública e sub-rede privada",
+            "html": "<ul>\n<li><strong>Sub-rede pública</strong>: acessível pela internet, usada por quem precisa receber visitas (o servidor web).</li>\n<li><strong>Sub-rede privada</strong>: sem acesso direto da internet, usada por quem só deve ser acessado internamente (o banco de dados).</li>\n</ul>"
+          },
+          {
+            "heading": "Regras de fluxo (data plane)",
+            "html": "<p>As regras de segurança são as instruções que o controlador envia aos equipamentos virtuais, dizendo quem pode falar com quem e por qual porta. A comunicação precisa de uma regra explícita: sem ela, ela fica bloqueada.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 2 — \"Desenhando uma rede virtual na nuvem (VPC/VNet)\"</strong></p>\n<p><strong>O que fazer:</strong> desenhar a rede da TechNova na nuvem e escrever as regras de segurança dela.</p>\n<p>Façam um passo de cada vez. Cada resposta pode ser curta (uma ou duas frases):</p>\n<table><tr><th>Passo — o que fazer</th><th>Como pensar</th></tr>\n<tr><td><strong>1. Desenhe a rede:</strong> uma caixa grande (a VPC/VNet) e, dentro dela, duas caixas menores: sub-rede pública e sub-rede privada.</td><td>A caixa grande é a rede isolada. Cada sub-rede é uma parte dela.</td></tr>\n<tr><td><strong>2. Coloque os servidores:</strong> o servidor web na sub-rede pública; o banco de dados na sub-rede privada.</td><td>Pergunta-chave: quem precisa ser acessado pela internet?</td></tr>\n<tr><td><strong>3. Ligue as partes:</strong> desenhe o vRouter ligando as duas sub-redes e o gateway de internet na sub-rede pública.</td><td>O vRouter deixa o servidor web conversar com o banco. O gateway é a porta de entrada da internet.</td></tr>\n<tr><td><strong>4. Regra 1 (servidor web):</strong> escreva quem pode entrar no servidor web e por qual porta.</td><td>A internet precisa acessar o site. Quais portas são de site? (dica da aula: 80 e 443).</td></tr>\n<tr><td><strong>5. Regra 2 (banco de dados):</strong> escreva quem pode entrar no banco e por qual porta.</td><td>Só o servidor web pode falar com o banco. A internet não pode falar com ele. (dica da aula: 3306 ou 5432).</td></tr>\n<tr><td><strong>6. Responda as 3 perguntas da Parte 4</strong> em uma ou duas frases cada.</td><td>Use o seu desenho como apoio.</td></tr></table>\n<p><strong>Instruções de entrega:</strong> enviem no AVA o relatório em PDF e, se quiserem, a foto do desenho.</p>",
+          "gabarito": "<h4>Respostas esperadas do professor</h4><p><strong>Pergunta 1:</strong> Não muda. A SDN desvincula o endereço IP lógico do hardware físico: o controlador apenas atualiza as tabelas para apontar o novo servidor físico.</p><p><strong>Pergunta 2:</strong> A VPC/VNet cria túneis virtuais (encapsulamento) que separam o tráfego da TechNova do tráfego de outros clientes, mesmo que usem os mesmos cabos físicos.</p><p><strong>Pergunta 3:</strong> Agilidade, redução de custos (sem comprar hardware), escalabilidade e gerenciamento centralizado.</p><h4>Exemplo de regras</h4><p><strong>Regra 1:</strong> permitir entrada da internet, portas 80 e 443, no servidor web.</p><p><strong>Regra 2:</strong> bloquear toda a internet; permitir entrada apenas do IP do servidor web, nas portas 3306 ou 5432.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Coloquei o banco na sub-rede pública para ser mais fácil de acessar.\"</em> — Expõe o banco à internet, contrariando o cenário. O banco deve ficar na sub-rede privada.</p><p><strong>Critério rápido:</strong> o banco precisa estar na sub-rede privada e a Regra 2 precisa bloquear a internet. Aceite variações de porta, desde que o banco só receba conexão do servidor web.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Na nuvem pública (AWS, Azure, GCP), o serviço de rede virtual (VPC/VNet) é um exemplo prático de SDN. Qual componente da SDN é responsável por traduzir as configurações que você faz no painel da nuvem para os roteadores físicos do provedor?",
+            "options": [
+              "O cabo de fibra óptica do data center.",
+              "O servidor web hospedado na sub-rede.",
+              "O data plane, que encaminha os pacotes.",
+              "O control plane, que gerencia as regras."
+            ],
+            "correct": 3,
+            "feedback": "O control plane é quem gerencia as regras, traduzindo o que você configura no painel para os equipamentos físicos. O data plane apenas encaminha os pacotes seguindo essas regras."
+          }
+        ],
+        "sintese": [
+          "Uma VPC/VNet é uma rede virtual isolada, desenhada por software e traduzida pelo provedor com SDN.",
+          "Sub-redes públicas recebem a internet; sub-redes privadas só falam com quem tem regra explícita."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S21A3",
+        "title": "Planejando uma topologia SDN com Mininet",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Descrever hosts, switches OpenFlow e controlador, e analisar o fluxo de dados de uma rede SDN planejada no Mininet.",
+        "habilidadeSocioemocional": "Pensar como o componente da rede (o switch) antes de decidir o que ele faz.",
+        "pontoDePartida": {
+          "titulo": "Um laboratório de redes dentro do seu notebook",
+          "texto": "<p>A universidade InovaTech precisa reestruturar a rede de dois laboratórios, cada um com dois computadores. As duas redes devem se comunicar por switches que obedecem a um único controlador central.</p>\n<p>Montar isso com computadores e switches físicos seria caro e difícil de gerenciar. Existe uma forma de planejar e testar essa rede sem comprar nada?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Mininet: uma rede inteira dentro de um computador",
+            "html": "<p>O <strong>Mininet</strong> é um emulador de redes: cria uma rede virtual inteira, com hosts, switches, links e controladores, rodando dentro de um único computador (como o seu notebook).</p>"
+          },
+          {
+            "heading": "Hosts, switches e controlador",
+            "html": "<table><tr><td><strong>Hosts (h1, h2...)</strong></td><td>São os computadores. Geram o tráfego e não sabem como a rede é gerenciada.</td></tr>\n<tr><td><strong>Switches OpenFlow (s1, s2...)</strong></td><td>Representam o plano de dados. Nascem \"vazios\" e \"cegos\": sem uma regra, não sabem para onde enviar o pacote.</td></tr>\n<tr><td><strong>Controlador (c0)</strong></td><td>É o cérebro (plano de controle). Tem a visão de toda a topologia e envia as regras aos switches pelo protocolo OpenFlow.</td></tr></table>"
+          },
+          {
+            "heading": "Um switch SDN nasce \"cego\"",
+            "html": "<p>Quando um switch recebe um pacote que não sabe encaminhar, ele pergunta ao controlador. O controlador responde com uma regra, e o switch passa a encaminhar sem perguntar de novo para os próximos pacotes daquela conversa.</p>\n<p><strong>Resumindo:</strong> 1) o host gera o dado; 2) o switch recebe, mas não sabe o que fazer; 3) o switch pergunta ao controlador (via OpenFlow); 4) o controlador responde com a regra; 5) o switch encaminha o dado para o destino.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 3 — \"Planejando uma topologia SDN com Mininet\"</strong></p>\n<p><strong>O que fazer:</strong> desenhar a topologia do laboratório da InovaTech e explicar, passo a passo, o caminho de um ping de h1 até h4.</p>\n<p>Façam um passo de cada vez:</p>\n<table><tr><th>Passo — o que fazer</th><th>Como pensar</th></tr>\n<tr><td><strong>1. Desenhe o controlador (c0)</strong> no topo, como um círculo.</td><td>Ele é o \"cérebro\": decide as regras, mas não encaminha pacotes.</td></tr>\n<tr><td><strong>2. Desenhe os switches:</strong> s1 no meio; s2 e s3 embaixo dele, ligados ao s1 (quadrados).</td><td>Os switches são o \"músculo\": só encaminham o que o controlador manda.</td></tr>\n<tr><td><strong>3. Desenhe os hosts:</strong> h1 e h2 ligados ao s2; h3 e h4 ligados ao s3 (computadores).</td><td>Cada laboratório tem dois computadores.</td></tr>\n<tr><td><strong>4. Ligue o controlador aos switches</strong> com linha tracejada.</td><td>Linha tracejada = canal de controle (as regras). Linha contínua = cabo de dados.</td></tr>\n<tr><td><strong>5. Descreva o ping h1 → h4</strong> em uma frase por etapa: (a) o pacote chega ao s2; (b) o s2 pergunta ao controlador; (c) o controlador responde com a regra; (d) o pacote chega ao h4; (e) a resposta volta a h1.</td><td>Pense como o switch: ele sabe o caminho? Não. Quem sabe? O controlador.</td></tr>\n<tr><td><strong>6. Responda as 3 perguntas da Parte 4</strong> em uma ou duas frases cada.</td><td>Use o seu desenho e o caminho do ping como apoio.</td></tr></table>\n<p><strong>Instruções de entrega:</strong> enviem no AVA o relatório em PDF com o desenho (ou a foto), a descrição do caminho do ping e as respostas.</p>",
+          "gabarito": "<h4>Respostas esperadas do professor</h4><p><strong>Caminho do ping (fluxo esperado):</strong> o s2 pergunta ao c0; o c0 instala a regra no s2; o pacote vai para o s1; o s1 pergunta ao c0; o c0 instala a regra no s1; o pacote vai para o s3; o s3 pergunta ao c0; o c0 instala a regra no s3; o pacote chega ao h4. A volta (pong) já encontra as regras instaladas nos switches.</p><p><strong>Pergunta 1:</strong> a rede para. Sem regra e com o controlador offline, o pacote é descartado (drop). O plano de dados fica \"cego\" sem o plano de controle.</p><p><strong>Pergunta 2:</strong> permite testar redes complexas, criar protótipos e estudar SDN sem comprar dezenas de computadores e switches caros.</p><p><strong>Pergunta 3:</strong> é o canal seguro pelo qual o controlador envia as regras (tabelas de fluxo) aos switches.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"O h1 manda o pacote direto para o h4, porque os switches já sabem todos os caminhos.\"</em> — Ignora que o switch nasce \"cego\" e precisa perguntar ao controlador. Esse é o erro central da atividade.</p><p><strong>Critério rápido:</strong> aceite desenhos com nomes diferentes, desde que o controlador esteja ligado aos switches por linha tracejada e o texto mencione que o switch pergunta ao controlador.</p>"
+        },
+        "quiz": [
+          {
+            "question": "No emulador Mininet, ao criar uma topologia SDN, qual é a principal diferença de comportamento entre um host (h1) e um switch (s1) quando a rede é iniciada?",
+            "options": [
+              "O host gerencia a rede, e o switch apenas gera os dados.",
+              "O switch já conhece todos os caminhos, o host não.",
+              "O host gera tráfego; o switch precisa pedir regras ao controlador.",
+              "Ambos funcionam de forma idêntica e independente."
+            ],
+            "correct": 2,
+            "feedback": "O host gera o tráfego e não gerencia a rede. O switch SDN nasce sem regras e precisa pedir ao controlador o que fazer com cada pacote novo."
+          }
+        ],
+        "sintese": [
+          "No Mininet, hosts, switches e controlador rodam dentro de um único computador.",
+          "O switch SDN nasce \"cego\": ele pergunta ao controlador e aprende a regra para os próximos pacotes."
+        ]
+      }
+    ]
+  },
 ];
 const MODULES = ALL_WEEKS.map(buildModule);
 
