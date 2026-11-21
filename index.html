@@ -480,7 +480,7 @@ const BIMESTRE_INFO = {
   1: { title:'Bimestre 1 — Topologias de Rede e Meios de Transmissão', weeks:['s01','s02','s03','s04','s05','s06','s07'] },
   2: { title:'Bimestre 2 — Camadas, Protocolos e Fundamentos de Segurança', weeks:['s08','s09','s10','s11','s12','s13','s14'] },
   3: { title:'Bimestre 3 — Gestão de Riscos, LGPD e Segurança na Nuvem', weeks:['s15','s16','s17','s18','s19','s20'] },
-  4: { title:'Bimestre 4 — Virtualização de Rede e SDN', weeks:['s21'] }
+  4: { title:'Bimestre 4 — Nuvem, Escalabilidade e Observabilidade', weeks:['s21','s22','s23','s24','s25','s26'] }
 };
 function bimestreOfWeek(wid) {
   for (const b in BIMESTRE_INFO) { if (BIMESTRE_INFO[b].weeks.includes(wid)) return +b; }
@@ -549,7 +549,12 @@ const ATIVIDADE_POR_SEMANA = {
   s18: [['redes-18-s18a3.html', 'Conformidade de um cadastro com a LGPD']],
   s19: [['redes-19-s19a3.html', 'TLS 1.3 na prática']],
   s20: [['redes-20-s20a3.html', 'Planejando o DR Test da SegurData']],
-  s21: [['redes-21a-s21a2.html', 'Desenhando uma rede virtual na nuvem (VPC/VNet)'], ['redes-21b-s21a3.html', 'Planejando uma topologia SDN com Mininet']]
+  s21: [['redes-21a-s21a2.html', 'Desenhando uma rede virtual na nuvem (VPC/VNet)'], ['redes-21b-s21a3.html', 'Planejando uma topologia SDN com Mininet']],
+  s22: [['redes-22b-s22a2.html', 'Mapa de dados de um sistema de cadastro'], ['redes-22c-s22a3.html', 'Análise de conformidade de um cadastro com a LGPD']],
+  s23: [['redes-23b-s23a2.html', 'Esse sistema precisa crescer agora?'], ['redes-23c-s23a3.html', 'Até onde esse sistema aguenta?']],
+  s24: [['redes-24b-s24a2.html', 'Como se constrói uma cadeia de confiança PKI?'], ['redes-24c-s24a3.html', 'Quem precisa provar quem é no mTLS?']],
+  s25: [['redes-25b-s25a2.html', 'Latência e erro: a mesma história?'], ['redes-25c-s25a3.html', 'O log explica o que o painel só mostrou?']],
+  s26: [['redes-26b-s26a2.html', 'CDN interna ou provedor externo?'], ['redes-26c-s26a3.html', 'Cada tipo de conteúdo pede um cache diferente?']]
 };
 
 function atividadeLinkCard(modId, mi, si) {
@@ -3211,6 +3216,694 @@ const ALL_WEEKS = [
       }
     ]
   },
+  {
+    "id": "s22",
+    "title": "Semana 22 — LGPD Aplicada ao Desenvolvimento",
+    "unidade": "Unidade 6",
+    "aulas": [
+      {
+        "code": "SISANO1C2B4S22A1",
+        "title": "Que pedido o titular está fazendo?",
+        "duracao": "35 minutos",
+        "habilidadeTecnica": "Compreender os direitos do titular previstos na LGPD e relacionar cada tipo de solicitação à ação inicial que o sistema precisa tomar.",
+        "habilidadeSocioemocional": "Interpretar com empatia o pedido de quem está do outro lado da tela, entendendo por que cada direito existe antes de classificá-lo tecnicamente.",
+        "pontoDePartida": {
+          "titulo": "Um e-mail pedindo para ver os próprios dados",
+          "texto": "<p>A plataforma de cursos onde a startup de games mantém o cadastro dos alunos recebe um e-mail: <em>\"Quero saber quais dados meus vocês guardam.\"</em> Ninguém na equipe de atendimento sabe, de cara, o que responder: é só mandar uma lista? É preciso confirmar a identidade de quem pediu? Existe um prazo?</p><p>Esse é só um dos vários tipos de pedido que um titular de dados pode fazer. Cada um exige uma resposta técnica diferente.</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Os direitos do titular (DSAR)",
+            "html": "<p>A LGPD garante que o <strong>titular</strong> — a pessoa a quem os dados se referem — continue com direitos sobre eles mesmo depois do cadastro. Esse conjunto de direitos costuma ser chamado de <strong>DSAR</strong> (<em>Data Subject Access Request</em>).</p><table><tr><td><strong>Confirmação da existência de tratamento</strong></td><td>Saber se a empresa trata algum dado seu.</td></tr><tr><td><strong>Acesso aos dados</strong></td><td>Receber uma cópia dos dados armazenados.</td></tr><tr><td><strong>Correção</strong></td><td>Corrigir dados incompletos ou errados.</td></tr><tr><td><strong>Anonimização, bloqueio ou eliminação</strong></td><td>Quando o dado é desnecessário ou tratado fora da lei.</td></tr><tr><td><strong>Portabilidade e informação sobre compartilhamento</strong></td><td>Saber com quem os dados foram compartilhados, ou levá-los para outro serviço.</td></tr></table>"
+          },
+          {
+            "heading": "Do pedido à resposta",
+            "html": "<p>Todo pedido do titular segue o mesmo caminho geral: <strong>pedido do titular → sistema localiza os dados → equipe analisa e valida → sistema responde</strong>. A LGPD exige que esse caminho seja rápido: o sistema precisa conseguir rastrear, atualizar e responder com agilidade, sem depender de buscas manuais demoradas.</p>"
+          },
+          {
+            "heading": "Anonimização x pseudonimização",
+            "html": "<table><tr><td><strong>Anonimização</strong></td><td>O dado não pode mais ser vinculado à pessoa. É <strong>irreversível</strong>.</td></tr><tr><td><strong>Pseudonimização</strong></td><td>Os identificadores diretos são substituídos, mas o vínculo pode ser recuperado de forma controlada. É <strong>reversível</strong>.</td></tr></table><p>A escolha entre as duas depende do uso futuro do dado, não de qual parece \"mais segura\".</p>"
+          }
+        ],
+        "atividadePratica": {
+          "titulo": "Prática guiada — Que pedido o titular está fazendo?",
+          "enunciado": "<p><strong>Cenário:</strong> uma plataforma de cursos recebe quatro mensagens de usuários com diferentes pedidos sobre seus dados pessoais. Para cada caso, identifiquem qual direito do titular está sendo exercido e qual deve ser a resposta inicial da equipe.</p><table><tr><th>Caso</th></tr><tr><td>1. \"Quero saber quais dados meus vocês armazenam.\"</td></tr><tr><td>2. \"Meu e-mail está errado no cadastro e preciso corrigir.\"</td></tr><tr><td>3. \"Vocês armazenam um dado meu que não parece mais necessário.\"</td></tr><tr><td>4. \"Quero saber com quais empresas meus dados foram compartilhados.\"</td></tr></table><p><strong>Instruções de entrega:</strong> mostrem a classificação ao professor na aula.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Caso 1:</strong> confirmação da existência de tratamento + acesso aos dados. A pessoa pede uma cópia do que é armazenado; a resposta inicial é localizar o cadastro e enviar um relatório com os dados guardados.</p><p><strong>Caso 2:</strong> correção. A pessoa pede atualização de um dado incorreto; a resposta inicial é localizar o cadastro, corrigir o campo e confirmar a correção.</p><p><strong>Caso 3:</strong> anonimização, bloqueio ou eliminação. A pessoa questiona a necessidade do dado; a resposta inicial é verificar se existe base legal para manter aquele dado e, se não houver, eliminá-lo ou anonimizá-lo.</p><p><strong>Caso 4:</strong> portabilidade e informação sobre compartilhamento. A pessoa quer saber com quem os dados circularam; a resposta inicial é levantar o histórico de compartilhamentos e informar.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Em todos os casos, só mandamos os dados por e-mail.\"</em> — Trata os quatro pedidos como se fossem o mesmo direito; ignora que correção, eliminação e portabilidade pedem ações bem diferentes de só enviar uma cópia.</p><p><strong>Critério rápido:</strong> aceite qualquer resposta que relacione corretamente o texto do pedido ao direito e proponha uma ação inicial coerente com esse direito (não apenas \"enviar os dados\").</p>"
+        },
+        "quiz": [
+          {
+            "question": "Um usuário envia a mensagem: \"Meu e-mail está errado no cadastro, preciso corrigir.\" Qual direito do titular ele está exercendo?",
+            "options": [
+              "Confirmação da existência de tratamento",
+              "Correção de dados incompletos ou errados",
+              "Portabilidade dos dados",
+              "Anonimização dos dados"
+            ],
+            "correct": 1,
+            "feedback": "o pedido é para corrigir um dado incorreto — esse é exatamente o direito de correção. Portabilidade seria levar os dados para outro serviço; anonimização seria remover o vínculo com a pessoa."
+          }
+        ],
+        "sintese": [
+          "A LGPD garante ao titular direitos como confirmação, acesso, correção, anonimização/eliminação e portabilidade.",
+          "Todo pedido segue o caminho: pedido → sistema localiza → equipe analisa → sistema responde, com agilidade exigida por lei.",
+          "Anonimização é irreversível; pseudonimização permite reidentificação controlada."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S22A2",
+        "title": "Mapa de dados de um sistema de cadastro",
+        "duracao": "40 minutos",
+        "habilidadeTecnica": "Aplicar anonimização e pseudonimização a um conjunto de dados, escolhendo a técnica correta conforme a finalidade de uso.",
+        "habilidadeSocioemocional": "Comparar com o colega qual técnica se encaixa melhor em cada finalidade antes de decidir, em vez de aplicar a primeira ideia que surgir.",
+        "pontoDePartida": {
+          "titulo": "Uma aluna pediu para não ser mais identificável",
+          "texto": "<p>Uma estudante de uma plataforma de cursos técnicos pede que seus dados não fiquem mais identificáveis em parte dos registros do sistema. A equipe, porém, ainda precisa manter alguns históricos internos para controle operacional e relatórios gerais de uso da plataforma. Dar a mesma solução para as duas necessidades seria perder informação em um caso, ou manter risco de identificação no outro.</p>"
+        },
+        "conceito": [
+          {
+            "heading": "A pergunta que decide a técnica",
+            "html": "<p>Diante de um conjunto de dados, a escolha entre anonimizar e pseudonimizar depende de três perguntas: o dado ainda precisa voltar a se conectar à pessoa? A equipe precisa de algum acompanhamento interno? O objetivo é análise estatística ou continuidade operacional?</p><p>Não existe uma técnica \"mais segura\" em abstrato — existe a técnica adequada à finalidade.</p>"
+          },
+          {
+            "heading": "Reescrever não é só trocar o nome",
+            "html": "<p>Anonimizar ou pseudonimizar um registro envolve olhar para <strong>todos</strong> os campos que, juntos ou separados, podem identificar a pessoa — não só o nome. E-mail, CPF, data de nascimento e até o cruzamento de campos aparentemente neutros podem reidentificar alguém.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 2 — \"Mapa de dados de um sistema de cadastro\"</strong></p><p><strong>Cenário:</strong> uma plataforma de cursos técnicos recebeu o pedido da Aula 1 — uma estudante não quer mais ser identificável em parte dos registros. A equipe ainda precisa preservar alguns históricos internos para controle operacional e relatórios gerais de uso.</p><p><strong>Tarefas:</strong> para cada uma das duas saídas do sistema (1 — relatório estatístico de uso da plataforma; 2 — controle interno operacional), decidam a técnica (anonimização ou pseudonimização), reescrevam três registros de exemplo com a técnica escolhida e justifiquem com base no uso do dado.</p><p><strong>Instruções de entrega:</strong> relatório em PDF no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Saída 1 — relatório estatístico:</strong> anonimização. O relatório agregado não precisa voltar a identificar ninguém; os identificadores diretos (nome, e-mail, CPF) são removidos ou substituídos por categorias (ex.: \"aluno turma A\", faixa etária). Justificativa: o uso é análise estatística, sem necessidade de reidentificação.</p><p><strong>Saída 2 — controle interno operacional:</strong> pseudonimização. A equipe ainda precisa, eventualmente, relacionar um registro a um aluno específico (ex.: investigar um problema de acesso); os identificadores diretos são substituídos por um código interno, mantendo uma tabela de reidentificação controlada e restrita.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Trocamos o nome por XXX nas duas saídas.\"</em> — Usa a mesma solução para as duas finalidades, sem diferenciar que uma precisa ser irreversível (estatística) e a outra precisa permitir acompanhamento controlado (operacional).</p><p><strong>Critério rápido:</strong> aceite qualquer escolha de técnica desde que a justificativa conecte a técnica à finalidade (estatística → anonimização; acompanhamento interno → pseudonimização) e os registros reescritos sejam coerentes com a técnica escolhida.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Uma equipe precisa gerar um relatório estatístico de uso da plataforma, sem nunca mais precisar identificar os alunos individualmente. Qual técnica é mais adequada?",
+            "options": [
+              "Pseudonimização, porque é reversível.",
+              "Anonimização, porque o uso é estatístico e não exige reidentificação.",
+              "Nenhuma técnica é necessária nesse caso.",
+              "Criptografia simétrica dos nomes."
+            ],
+            "correct": 1,
+            "feedback": "quando o dado nunca mais precisa voltar a identificar a pessoa, a anonimização é a técnica adequada — ela remove o vínculo de forma irreversível, o que é aceitável justamente porque o uso é só estatístico."
+          }
+        ],
+        "sintese": [
+          "A escolha entre anonimização e pseudonimização depende da finalidade do uso futuro do dado, não de qual parece mais segura.",
+          "Reescrever um registro envolve todos os campos que podem identificar a pessoa, não só o nome."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S22A3",
+        "title": "Análise de conformidade de um cadastro com a LGPD",
+        "duracao": "40 minutos",
+        "habilidadeTecnica": "Avaliar se um formulário comunica com clareza o consentimento e o aviso de privacidade ao titular, propondo melhorias concretas.",
+        "habilidadeSocioemocional": "Colocar-se no lugar de quem preenche um formulário, avaliando se a própria equipe entenderia a comunicação se estivesse do outro lado.",
+        "pontoDePartida": {
+          "titulo": "Marcar a caixinha é suficiente?",
+          "texto": "<p>Uma plataforma de inscrição para oficinas técnicas será publicada para estudantes de ensino médio. O formulário tem um checkbox \"Li e concordo\" e um link \"Política\" no rodapé. Antes do lançamento, alguém da equipe pergunta: isso é suficiente para que o titular entenda, de fato, como seus dados serão tratados?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Consentimento x aviso de privacidade",
+            "html": "<table><tr><td><strong>Consentimento</strong></td><td>O titular entende com o que está concordando, de forma específica e informada — não apenas marca uma caixa.</td></tr><tr><td><strong>Aviso de privacidade</strong></td><td>Informa, de forma clara, como os dados serão utilizados e quais são os direitos do titular.</td></tr></table><p>Um formulário não serve só para coletar dados: ele também precisa informar como esses dados serão tratados.</p>"
+          },
+          {
+            "heading": "Presente não é o mesmo que claro",
+            "html": "<p>Um elemento de consentimento pode <strong>existir</strong> no formulário — um checkbox, um link — e, ainda assim, não ajudar o titular a entender nada. A pergunta certa não é \"existe um aviso?\", e sim \"quem preenche esse formulário entende para que seus dados vão servir?\"</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 3 — \"Análise de conformidade de um cadastro com a LGPD\"</strong></p><p><strong>Cenário:</strong> revisem o formulário de inscrição para oficinas técnicas antes do lançamento: um texto genérico sobre uso de dados, um checkbox \"Li e concordo\", um link \"Política\" no rodapé e um botão \"Enviar inscrição\".</p><p><strong>Tarefas:</strong> para cada um dos quatro elementos, avaliem se está presente, se está claro e o que ele informa; proponham ao menos três melhorias concretas e justifiquem como elas garantem direitos do titular.</p><p><strong>Instruções de entrega:</strong> envio individual no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Texto genérico \"seus dados poderão ser usados pela plataforma\":</strong> presente, mas não claro — não diz para quê, por quanto tempo, nem com quem pode ser compartilhado.</p><p><strong>Checkbox \"Li e concordo\":</strong> presente, mas não claro por si só — concordar com o quê, exatamente, se o texto acima é vago?</p><p><strong>Link \"Política\" no rodapé:</strong> presente, mas pouco visível e sem indicar que ali está a explicação completa do tratamento — fácil de ignorar.</p><p><strong>Botão \"Enviar inscrição\":</strong> não comunica nada sobre dados; não é o lugar esperado para isso, mas reforça que, até esse ponto, o titular pouco entendeu.</p><h4>Exemplos de melhoria</h4><ol><li>Substituir o texto genérico por uma frase específica: quais dados, para qual finalidade, por quanto tempo.</li><li>Renomear o checkbox para citar a finalidade (\"Li e entendi como meus dados de inscrição serão usados\").</li><li>Trocar o link \"Política\" por algo mais visível, como \"Como tratamos seus dados\", próximo ao botão de envio.</li></ol><h4>Resposta fraca (erro comum)</h4><p><em>\"Está tudo certo porque tem um checkbox e um link.\"</em> — Confunde presença com clareza; não avalia se o titular realmente entenderia o tratamento a partir desses elementos.</p><p><strong>Critério rápido:</strong> aceite qualquer melhoria concreta (não genérica como \"deixar mais claro\") que esteja ligada a um direito específico do titular (informação, consentimento específico, visibilidade do aviso).</p>"
+        },
+        "quiz": [
+          {
+            "question": "Um formulário tem um checkbox \"Li e concordo\", mas o texto acima dele só diz \"seus dados poderão ser usados pela plataforma\", sem detalhar finalidade ou prazo. O que isso representa?",
+            "options": [
+              "Conformidade total, pois o checkbox garante o consentimento.",
+              "Um elemento presente, mas que não comunica com clareza como os dados serão tratados.",
+              "Um erro apenas estético, sem relação com a LGPD.",
+              "Falta de aviso de privacidade, mas consentimento adequado."
+            ],
+            "correct": 1,
+            "feedback": "o checkbox existe (está presente), mas o texto vago não permite que o titular entenda, de fato, com o que está concordando — presença não é o mesmo que clareza."
+          }
+        ],
+        "sintese": [
+          "Consentimento precisa ser específico e informado; aviso de privacidade precisa ser claro sobre uso e direitos.",
+          "Um elemento pode estar presente no formulário e, ainda assim, não comunicar nada com clareza ao titular."
+        ],
+        "saibaMais": {
+          "texto": "Pesquise o site da Autoridade Nacional de Proteção de Dados (ANPD) e veja exemplos reais de notificações e orientações às empresas.",
+          "link": "https://www.gov.br/anpd/"
+        }
+      }
+    ]
+  },
+  {
+    "id": "s23",
+    "title": "Semana 23 — Load Balancer e Auto-scaling",
+    "unidade": "Unidade 6",
+    "aulas": [
+      {
+        "code": "SISANO1C2B4S23A1",
+        "title": "Qual tipo de balanceador essa situação pede?",
+        "duracao": "15 minutos",
+        "habilidadeTecnica": "Diferenciar load balancer de camada 4 (transporte) e camada 7 (aplicação), e reconhecer quando um health-check é necessário.",
+        "habilidadeSocioemocional": "Decidir com base no que o serviço realmente precisa, resistindo à tentação de escolher pela fama do nome (L7 parecer \"mais avançado\").",
+        "pontoDePartida": {
+          "titulo": "Um servidor some, e ninguém percebe",
+          "texto": "<p>Uma loja virtual tem vários servidores atrás de um load balancer. Um deles trava silenciosamente — continua \"de pé\", mas não responde mais nenhuma requisição. Sem alguém monitorando ativamente, o balanceador continuaria mandando clientes para esse servidor morto. Como evitar isso?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "L4 e L7: dois níveis de decisão",
+            "html": "<table><tr><td><strong>L4 (camada de transporte)</strong></td><td>Analisa apenas IP e porta. Decisão simples e rápida, baixa flexibilidade.</td></tr><tr><td><strong>L7 (camada de aplicação)</strong></td><td>Analisa o conteúdo da requisição (ex.: URL, cookie, cabeçalho). Decisão mais inteligente e específica, mas um pouco mais lenta.</td></tr></table><p>A escolha depende de quanta informação o balanceador precisa analisar para decidir corretamente — não de qual parece mais sofisticado.</p>"
+          },
+          {
+            "heading": "Health-check: a verificação a mais",
+            "html": "<p>O load balancer envia verificações periódicas (<em>health-checks</em>) a cada servidor. Se o servidor responde normalmente, continua recebendo tráfego; se não responde, é removido temporariamente da distribuição — e pode ser reintegrado quando voltar a responder.</p><p>Health-check é uma pergunta <strong>separada</strong> da escolha entre L4 e L7: ela não substitui essa escolha, ela se soma a ela.</p>"
+          }
+        ],
+        "atividadePratica": {
+          "titulo": "Prática guiada — Qual tipo de balanceador essa situação pede?",
+          "enunciado": "<p><strong>Cenário:</strong> classifiquem três serviços quanto ao tipo de balanceamento (L4, L7 ou os dois) e se cada um precisa de health-check.</p><table><tr><th>Serviço</th></tr><tr><td>A — Streaming de vídeo</td></tr><tr><td>B — Loja virtual</td></tr><tr><td>C — Sistema bancário</td></tr></table><p><strong>Instruções de entrega:</strong> mostrem a classificação ao professor na aula.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Serviço A — Streaming de vídeo:</strong> L4 costuma bastar, já que a decisão principal é distribuir conexões de longa duração por IP/porta; health-check é recomendável para remover servidores de streaming que travarem.</p><p><strong>Serviço B — Loja virtual:</strong> L7, pois é comum rotear por URL (ex.: /checkout para um conjunto de servidores, /catalogo para outro) e por cookie de sessão; health-check é essencial para não perder vendas por um servidor fora do ar.</p><p><strong>Serviço C — Sistema bancário:</strong> L7 com health-check obrigatório — decisões de roteamento costumam depender do conteúdo (sessão autenticada, tipo de operação) e a tolerância a um servidor silenciosamente fora do ar é praticamente zero.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Todos usam L7 porque é mais moderno.\"</em> — Ignora que L4 pode ser suficiente e mais eficiente quando a decisão não depende do conteúdo da requisição, como no streaming simples.</p><p><strong>Critério rápido:</strong> aceite qualquer classificação que justifique a escolha pelo tipo de decisão exigida (precisa olhar o conteúdo? sim → L7; não → L4 basta) e que reconheça health-check como necessário sempre que a disponibilidade for crítica.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Um sistema bancário precisa rotear requisições com base no tipo de operação (consulta, transferência) contido na URL. Qual tipo de load balancer é necessário?",
+            "options": [
+              "L4, porque analisa apenas IP e porta.",
+              "L7, porque precisa analisar o conteúdo da requisição.",
+              "Nenhum dos dois, basta um servidor único.",
+              "Health-check substitui a necessidade de L4 ou L7."
+            ],
+            "correct": 1,
+            "feedback": "decidir com base no conteúdo da requisição (como a URL) exige um load balancer L7, que opera na camada de aplicação. O L4 só vê IP e porta."
+          }
+        ],
+        "sintese": [
+          "L4 decide por IP e porta (rápido, simples); L7 decide pelo conteúdo da requisição (mais flexível).",
+          "Health-check remove servidores que não respondem e os reintegra quando voltam — é uma decisão separada da escolha entre L4 e L7."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S23A2",
+        "title": "Esse sistema precisa crescer agora?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Interpretar métricas de CPU, latência e tamanho de fila para decidir quando um sistema deve escalar automaticamente, e definir uma política de auto-scale completa.",
+        "habilidadeSocioemocional": "Resistir à conclusão precipitada ao ver um único número alto, cruzando as três métricas antes de decidir.",
+        "pontoDePartida": {
+          "titulo": "Um painel, três números, uma decisão",
+          "texto": "<p>Você é Analista de Infraestrutura da StreamFácil, uma plataforma de streaming de músicas e podcasts. A equipe monitora CPU, latência e tamanho da fila para decidir quando adicionar ou remover servidores automaticamente. Um painel mostra CPU em 91% — isso já basta para adicionar servidores?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Três métricas, três tipos de problema",
+            "html": "<table><tr><td><strong>CPU</strong></td><td>Mede o quanto os servidores estão sendo usados — indica saturação de recursos.</td></tr><tr><td><strong>Latência</strong></td><td>Mede quanto tempo o usuário espera por uma resposta — indica experiência do usuário.</td></tr><tr><td><strong>Tamanho da fila</strong></td><td>Mede quantas requisições aguardam processamento — indica acúmulo de demanda.</td></tr></table><p>Nenhuma métrica sozinha descreve completamente o sistema: cada uma revela um tipo diferente de problema.</p>"
+          },
+          {
+            "heading": "Scale out, scale in e os três elementos da política",
+            "html": "<p><strong>Scale out</strong> é adicionar servidores quando a demanda cresce; <strong>scale in</strong> é remover servidores quando a demanda cai. Juntos, formam a política de auto-scale.</p><p>Uma boa política define três elementos: o <strong>gatilho</strong> (quando agir), a <strong>ação</strong> (o que fazer) e o <strong>tempo de estabilização</strong> (quanto esperar antes de agir de novo) — isso evita que o sistema reaja de forma precipitada a uma variação momentânea.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 2 — \"Esse sistema precisa crescer agora?\"</strong></p><p><strong>Cenário:</strong> três painéis de monitoramento da StreamFácil mostram combinações diferentes de CPU, latência e fila.</p><table><tr><th>Painel</th><th>CPU</th><th>Latência</th><th>Fila</th></tr><tr><td>A</td><td>91%</td><td>1,1s</td><td>320</td></tr><tr><td>B</td><td>48%</td><td>3,8s</td><td>210</td></tr><tr><td>C</td><td>62%</td><td>0,9s</td><td>4.200</td></tr></table><p><strong>Tarefas:</strong> para cada painel, decidam a ação (scale out, scale in ou nenhuma), qual métrica indica o problema e a justificativa; depois, escolham uma métrica e definam uma política de auto-scale completa (gatilho, ação, tempo de espera); por fim, reflitam sobre o risco de monitorar só uma métrica.</p><p><strong>Instruções de entrega:</strong> em grupos de até 5, no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Painel A (CPU 91%, latência 1,1s, fila 320):</strong> scale out — a CPU está saturada; mesmo a latência e a fila moderadas tendem a piorar se nada for feito.</p><p><strong>Painel B (CPU 48%, latência 3,8s, fila 210):</strong> scale out também pode ajudar, mas o indicador principal é a latência alta mesmo com CPU baixa — sugere um gargalo que não é só capacidade de processamento (pode ser I/O, rede ou dependência externa lenta); vale investigar antes de só adicionar servidores.</p><p><strong>Painel C (CPU 62%, latência 0,9s, fila 4.200):</strong> scale out — a fila enorme, com CPU e latência ainda razoáveis, indica que as requisições estão se acumulando mais rápido do que são processadas; é um sinal de alerta antecipado antes que CPU e latência piorem.</p><p><strong>Política de exemplo (métrica CPU):</strong> gatilho = CPU média acima de 80% por 3 minutos consecutivos; ação = adicionar 2 servidores; tempo de estabilização = aguardar 5 minutos antes de avaliar novamente (evita \"flapping\").</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Os três painéis pedem scale out porque algum número está alto.\"</em> — Não erra totalmente, mas não diferencia POR QUE cada painel indica isso, perdendo a chance de identificar que o Painel B pode ter uma causa diferente de capacidade pura.</p><p><strong>Critério rápido:</strong> aceite qualquer ação coerente com a métrica mais alterada do painel, desde que a justificativa relacione o número ao tipo de problema (saturação, experiência do usuário ou acúmulo).</p>"
+        },
+        "quiz": [
+          {
+            "question": "Um painel mostra CPU baixa (48%), mas latência alta (3,8s). O que essa combinação sugere?",
+            "options": [
+              "O sistema está saudável, pois a CPU está baixa.",
+              "É preciso remover servidores imediatamente (scale in).",
+              "Pode haver um gargalo que não é de capacidade de CPU, como rede ou uma dependência externa lenta.",
+              "A fila de requisições certamente está vazia."
+            ],
+            "correct": 2,
+            "feedback": "CPU baixa com latência alta não combina com saturação de processamento — sugere outro tipo de gargalo (rede, I/O, serviço externo lento), que simplesmente adicionar servidores pode não resolver."
+          }
+        ],
+        "sintese": [
+          "CPU, latência e fila revelam tipos diferentes de problema; nenhuma sozinha conta a história toda.",
+          "Uma política de auto-scale precisa de gatilho, ação e tempo de estabilização para não reagir de forma precipitada."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S23A3",
+        "title": "Até onde esse sistema aguenta?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Interpretar os resultados de um teste de carga (TTFB, taxa de erro e throughput) para identificar o limite de capacidade de um sistema.",
+        "habilidadeSocioemocional": "Manter a atenção linha por linha de uma tabela de dados, sem pular para uma conclusão antes de comparar todos os valores.",
+        "pontoDePartida": {
+          "titulo": "Quantos usuários o sistema aguenta antes de quebrar?",
+          "texto": "<p>Você é Analista de Qualidade da EduFlow, uma plataforma de ensino online que vai lançar provas ao vivo. Antes do lançamento, a equipe executou um teste de carga simulando o aumento progressivo de usuários simultâneos. Os números da tabela escondem, em algum ponto, o limite do sistema — e, mais adiante, o colapso.</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Três métricas de um teste de carga",
+            "html": "<table><tr><td><strong>TTFB</strong></td><td>Tempo até o início da resposta. Quanto maior, piora a experiência do usuário.</td></tr><tr><td><strong>Taxa de erro</strong></td><td>Percentual de requisições que falham.</td></tr><tr><td><strong>Throughput</strong></td><td>Quantas requisições o sistema consegue processar por segundo.</td></tr></table>"
+          },
+          {
+            "heading": "O que observar: degradação e colapso",
+            "html": "<p>Ao comparar cada linha do teste com a anterior, observem: quando o TTFB começa a subir rapidamente (degradação), quando os erros começam a aparecer, e quando o throughput para de crescer mesmo com mais usuários tentando acessar (colapso). Nenhum número isolado conta a história — é a mudança de comportamento ao longo da tabela que revela o limite do sistema.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 3 — \"Até onde esse sistema aguenta?\"</strong></p><p><strong>Cenário:</strong> o teste de carga da EduFlow registrou TTFB, taxa de erro e throughput conforme o número de usuários simultâneos aumentava progressivamente.</p><p><strong>Tarefas:</strong> identifiquem em que ponto aparece a degradação perceptível (e qual métrica sinaliza primeiro), em que ponto ocorre o colapso (o que acontece com o throughput), a capacidade máxima sustentável do sistema, o principal problema identificado, uma ação de melhoria antes do lançamento e como auto-scale e load balancer poderiam ajudar.</p><p><strong>Instruções de entrega:</strong> relatório em PDF no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Degradação:</strong> costuma aparecer primeiro no TTFB, que sobe de forma mais gradual antes de qualquer erro aparecer — é o primeiro sinal de que o sistema está perdendo folga.</p><p><strong>Colapso:</strong> identificado no ponto em que o throughput para de crescer (ou cai) mesmo com mais usuários tentando se conectar, e a taxa de erro sobe de forma acentuada — o sistema não consegue mais absorver demanda extra.</p><p><strong>Capacidade sustentável:</strong> o maior número de usuários simultâneos em que TTFB e taxa de erro ainda se mantêm em níveis aceitáveis, antes do ponto de degradação.</p><p><strong>Ação de melhoria:</strong> aumentar a capacidade antes do lançamento (mais servidores, otimização de consultas) e configurar auto-scale para reagir automaticamente a picos.</p><p><strong>Conexão com auto-scale e load balancer:</strong> auto-scale adicionaria servidores automaticamente antes do ponto de colapso, reagindo ao aumento de CPU/latência/fila; o load balancer distribuiria as requisições entre esses servidores e usaria health-check para não enviar tráfego a instâncias sobrecarregadas ou fora do ar.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"O sistema quebra quando dá muito erro.\"</em> — Não identifica em que ponto da tabela isso acontece, nem diferencia degradação (ainda funciona, mas pior) de colapso (para de absorver demanda).</p><p><strong>Critério rápido:</strong> aceite qualquer leitura que identifique corretamente as linhas de degradação e colapso com base na mudança de comportamento das três métricas, não em um valor isolado.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Em um teste de carga, o throughput para de crescer (ou cai) mesmo com o número de usuários simultâneos continuando a aumentar. O que isso indica?",
+            "options": [
+              "O sistema está funcionando normalmente.",
+              "O ponto de colapso: o sistema não consegue mais absorver demanda extra.",
+              "Apenas que o TTFB está baixo.",
+              "Que não há necessidade de auto-scale."
+            ],
+            "correct": 1,
+            "feedback": "quando o throughput deixa de crescer mesmo com mais usuários tentando se conectar, o sistema atingiu seu limite de capacidade — esse é o ponto de colapso."
+          }
+        ],
+        "sintese": [
+          "TTFB, taxa de erro e throughput revelam degradação (TTFB sobe) e colapso (throughput para de crescer, erros disparam).",
+          "O limite de um sistema se identifica comparando cada linha do teste de carga com a anterior, não por um valor isolado."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s24",
+    "title": "Semana 24 — TLS, PKI e Gestão de Certificados",
+    "unidade": "Unidade 7",
+    "aulas": [
+      {
+        "code": "SISANO1C2B4S24A1",
+        "title": "O que cada mensagem do handshake TLS prova?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Descrever as mensagens do handshake TLS e identificar o momento em que o servidor prova sua identidade e a comunicação passa a ser cifrada.",
+        "habilidadeSocioemocional": "Seguir uma sequência de passos sem pular etapas, mesmo quando a resposta final parece óbvia antes de terminar de ler todas as mensagens.",
+        "pontoDePartida": {
+          "titulo": "Antes de qualquer dado real trafegar",
+          "texto": "<p>Toda vez que você acessa um site com HTTPS, antes de qualquer dado real ser trocado, cliente e servidor têm uma \"conversa\" inicial — o <strong>handshake TLS</strong>. Nela, eles decidem como vão se comunicar com segurança e o servidor precisa provar quem é. Mas em qual exata mensagem dessa conversa essa prova acontece?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Duas criptografias, uma negociação",
+            "html": "<p>O handshake combina <strong>criptografia assimétrica</strong>, usada para trocar a chave de sessão com segurança, com <strong>criptografia simétrica</strong>, usada para cifrar os dados da sessão com eficiência. Cada uma é usada em sua principal vantagem: segurança na troca, eficiência no uso contínuo.</p>"
+          },
+          {
+            "heading": "Cipher suite e autoridade certificadora",
+            "html": "<p>A <strong>cipher suite</strong> é negociada no início do handshake: o cliente oferece uma lista de algoritmos suportados e o servidor escolhe o conjunto mais seguro que ambos conhecem. Ela define os algoritmos usados durante toda a conexão.</p><p>Uma <strong>autoridade certificadora (CA)</strong> é uma entidade confiável que assina certificados digitais para atestar a identidade de quem os apresenta. Quando um certificado é assinado por uma CA confiável, quem o recebe pode validar essa assinatura.</p>"
+          },
+          {
+            "heading": "As mensagens do handshake, em ordem",
+            "html": "<table><tr><td><strong>ClientHello</strong></td><td>O cliente inicia, oferecendo a lista de cipher suites que suporta.</td></tr><tr><td><strong>ServerHello</strong></td><td>O servidor escolhe a cipher suite da conexão.</td></tr><tr><td><strong>Certificate</strong></td><td>O servidor apresenta seu certificado digital — aqui ele prova sua identidade.</td></tr><tr><td><strong>ServerHelloDone</strong></td><td>O servidor sinaliza que terminou sua parte da negociação.</td></tr><tr><td><strong>ClientKeyExchange</strong></td><td>O cliente envia material para gerar a chave de sessão.</td></tr><tr><td><strong>ChangeCipherSpec</strong></td><td>Sinaliza que, a partir daqui, a comunicação passa a ser cifrada (simétrica).</td></tr><tr><td><strong>Finished</strong></td><td>Confirma que o handshake terminou com sucesso.</td></tr></table>"
+          }
+        ],
+        "atividadePratica": {
+          "titulo": "Prática guiada — O que cada mensagem do handshake TLS prova?",
+          "enunciado": "<p><strong>Cenário:</strong> vocês são analistas de segurança da Securanza Shop, uma plataforma de e-commerce. Descrevam, mensagem por mensagem, o fluxo de um handshake TLS para um cliente iniciando uma conexão HTTPS com o servidor da empresa, indicando em qual momento o servidor prova sua identidade e quando a comunicação passa a ser cifrada.</p><p><strong>Instruções de entrega:</strong> mostrem a sequência ao professor na aula.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Prova de identidade do servidor:</strong> na mensagem <strong>Certificate</strong>, quando o servidor apresenta seu certificado digital assinado por uma CA confiável.</p><p><strong>Início da cifragem:</strong> a partir da mensagem <strong>ChangeCipherSpec</strong>, quando ambos os lados passam a usar a chave de sessão (criptografia simétrica) para os dados seguintes.</p><p><strong>O que pode ser visto antes da cifragem:</strong> as mensagens ClientHello, ServerHello e Certificate trafegam sem cifragem de sessão — um atacante que interceptasse o tráfego nesse ponto veria a cipher suite negociada e o certificado do servidor (que é, por natureza, público), mas não conseguiria forjar a prova de identidade sem a chave privada do servidor, nem decifrar o que vem depois do ChangeCipherSpec.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"A conexão já é segura desde o ClientHello.\"</em> — Ignora que as primeiras mensagens são de negociação, ainda sem prova de identidade nem cifragem da sessão.</p><p><strong>Critério rápido:</strong> aceite qualquer sequência que coloque a prova de identidade em Certificate e o início da cifragem em ChangeCipherSpec (ou \"a partir daí\"), mesmo com palavras diferentes.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Em qual mensagem do handshake TLS o servidor prova sua identidade ao cliente?",
+            "options": [
+              "ClientHello",
+              "ServerHello",
+              "Certificate",
+              "Finished"
+            ],
+            "correct": 2,
+            "feedback": "é na mensagem Certificate que o servidor apresenta seu certificado digital, assinado por uma CA confiável — essa é a prova de identidade."
+          }
+        ],
+        "sintese": [
+          "O handshake combina criptografia assimétrica (troca de chave) e simétrica (dados da sessão, mais eficiente).",
+          "O servidor prova sua identidade na mensagem Certificate; a cifragem da sessão começa no ChangeCipherSpec."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S24A2",
+        "title": "Como se constrói uma cadeia de confiança PKI?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Descrever a construção de uma hierarquia PKI (CA raiz, CA intermediária, certificado de servidor) e explicar por que a chave privada nunca deve ser enviada pela rede.",
+        "habilidadeSocioemocional": "Explicar com cuidado, passo a passo, por que uma etapa sensível do processo (a chave privada da CA raiz) exige proteção extra, sem pular direto para a conclusão.",
+        "pontoDePartida": {
+          "titulo": "Quem assina quem, numa hierarquia de confiança",
+          "texto": "<p>A CorpBank quer construir sua própria PKI: uma CA raiz (CorpBank Root CA) que assina apenas uma CA intermediária (CorpBank Issuing CA), que por sua vez assina os certificados de servidor usados no dia a dia. Por que não usar a CA raiz para assinar os certificados de servidor diretamente?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "A hierarquia PKI",
+            "html": "<p>Uma <strong>PKI</strong> (infraestrutura de chaves públicas) emite e valida certificados digitais através de uma hierarquia de confiança: a <strong>CA raiz</strong> assina a <strong>CA intermediária</strong>, e a CA intermediária assina o certificado do servidor. Quem confia na CA raiz passa a confiar em tudo que ela assina, direta ou indiretamente.</p>"
+          },
+          {
+            "heading": "CSR: pedido de certificado",
+            "html": "<p>Um <strong>CSR</strong> (pedido de assinatura de certificado) contém o nome comum, a organização, o país e a <strong>chave pública</strong> de quem está pedindo o certificado — mas <strong>não contém a chave privada</strong>. É por isso que o CSR pode ser enviado pela rede até a CA sem expor nada sensível.</p>"
+          },
+          {
+            "heading": "Os três passos que se repetem em cada elo",
+            "html": "<p>Para cada entidade da cadeia (CA raiz, CA intermediária, servidor): 1) gerar a chave privada; 2) gerar o CSR; 3) a CA superior assina o CSR, criando o certificado. Esses 3 passos se repetem a cada novo elo que entra na hierarquia.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 2 — \"Como se constrói uma cadeia de confiança PKI?\"</strong></p><p><strong>Contexto:</strong> a CorpBank quer construir sua PKI — CA raiz (CorpBank Root CA) assina apenas a CA intermediária (CorpBank Issuing CA), que assina os certificados de servidor (ex.: api.corpbank.internal) no dia a dia.</p><p><strong>Tarefas:</strong> descrevam, passo a passo, a criação da CA raiz, da CA intermediária e do certificado do servidor; expliquem por que a chave privada da CA raiz precisa de proteção extra e por que o CSR pode circular pela rede sem expor a chave privada; e expliquem a cadeia de confiança completa, da raiz até o certificado do servidor.</p><p><strong>Instruções de entrega:</strong> relatório em PDF no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Por que a CA raiz não assina o servidor diretamente:</strong> a CA raiz é a base de toda a confiança da hierarquia; se sua chave privada for comprometida, todos os certificados emitidos por ela (direta ou indiretamente) ficam comprometidos. Por isso, ela fica o mínimo de tempo possível conectada à rede, delegando o trabalho do dia a dia a uma CA intermediária — se a intermediária for comprometida, só é preciso revogá-la e criar outra, sem derrubar a confiança na raiz.</p><p><strong>Por que o CSR pode circular pela rede:</strong> o CSR contém apenas a chave <strong>pública</strong> e dados de identificação — sem a chave privada, ninguém pode se passar pelo solicitante, mesmo interceptando o CSR.</p><p><strong>Cadeia de confiança:</strong> quem confia na CorpBank Root CA passa a confiar na CorpBank Issuing CA (porque a raiz a assinou) e, por extensão, no certificado de api.corpbank.internal (porque a intermediária o assinou) — validando a cadeia completa, elo por elo, até a raiz.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"A CA raiz assina tudo direto, é mais simples.\"</em> — Ignora o risco de manter a chave privada da raiz exposta ao uso constante; é exatamente esse risco que justifica a existência da CA intermediária.</p><p><strong>Critério rápido:</strong> aceite qualquer explicação que relacione a proteção da CA raiz ao impacto de seu comprometimento (toda a hierarquia cai), e que diferencie claramente CSR (público) de chave privada (nunca sai do servidor que a gerou).</p>"
+        },
+        "quiz": [
+          {
+            "question": "Por que o CSR (pedido de assinatura de certificado) pode ser enviado pela rede até a CA sem representar um risco de segurança?",
+            "options": [
+              "Porque ele é criptografado com a chave privada.",
+              "Porque ele contém apenas a chave pública e dados de identificação, nunca a chave privada.",
+              "Porque ele é enviado só uma vez.",
+              "Porque a CA sempre confia em qualquer CSR recebido."
+            ],
+            "correct": 1,
+            "feedback": "o CSR carrega a chave pública e informações de identificação, mas nunca a chave privada — por isso pode circular pela rede sem expor nada sensível."
+          }
+        ],
+        "sintese": [
+          "Numa PKI, a CA raiz assina a CA intermediária, que assina os certificados de servidor — isolando o risco da chave privada da raiz.",
+          "O CSR contém a chave pública, nunca a privada, por isso pode ser enviado pela rede com segurança."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S24A3",
+        "title": "Quem precisa provar quem é no mTLS?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Diferenciar TLS convencional de mTLS e identificar as diretivas do Nginx que exigem e validam o certificado do cliente.",
+        "habilidadeSocioemocional": "Reconhecer os limites de uma defesa perimetral (firewall) e entender por que camadas internas também precisam de autenticação mútua.",
+        "pontoDePartida": {
+          "titulo": "E se o atacante já estiver dentro da rede?",
+          "texto": "<p>Um firewall não é suficiente para proteger uma API interna: se um servidor da rede for comprometido, o atacante já estaria \"dentro\". No TLS convencional, só o servidor prova sua identidade ao cliente — e se o cliente for a parte comprometida?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "TLS convencional x mTLS",
+            "html": "<p>No TLS comum, apenas o <strong>servidor</strong> prova sua identidade. No <strong>mTLS</strong> (TLS mútuo), o <strong>cliente também precisa provar sua identidade</strong>, apresentando seu próprio certificado. O mTLS não é uma tecnologia nova: é o TLS comum aplicado nos dois sentidos, usando a PKI já construída.</p>"
+          },
+          {
+            "heading": "PKI + handshake = mTLS",
+            "html": "<p>A PKI fornece os certificados, o handshake TLS realiza a validação, e o mTLS utiliza ambos para criar uma comunicação cifrada com <strong>autenticação bidirecional</strong>. No Nginx, duas diretivas controlam isso: <code>ssl_client_certificate</code> (indica qual CA valida os clientes) e <code>ssl_verify_client</code> (torna obrigatório o certificado do cliente).</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 3 — \"Quem precisa provar quem é no mTLS?\"</strong></p><p><strong>Cenário:</strong> usando os certificados da CA criados na Aula 2, configurem o Nginx para exigir mTLS de um cliente que acessa uma API interna.</p><p><strong>Tarefas:</strong> expliquem para que servem <code>ssl_client_certificate</code> e <code>ssl_verify_client</code>; descrevam o resultado esperado de um teste sem certificado e de um teste com certificado válido; expliquem por que a chave privada do cliente também precisa ser protegida.</p><p><strong>Instruções de entrega:</strong> relatório em PDF no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong><code>ssl_client_certificate</code>:</strong> indica o arquivo da CA (intermediária, no caso da CorpBank) que o Nginx usa para validar se o certificado apresentado pelo cliente foi assinado por uma autoridade confiável — não é o certificado do cliente, é o certificado da CA que valida o cliente.</p><p><strong><code>ssl_verify_client</code> = on:</strong> torna obrigatório que o cliente apresente um certificado; sem essa diretiva, o servidor aceitaria conexões mesmo sem certificado do cliente, caindo de volta para TLS convencional.</p><p><strong>Teste 1 (sem certificado):</strong> conexão rejeitada pelo servidor, já que <code>ssl_verify_client on</code> exige o certificado do cliente.</p><p><strong>Teste 2 (com certificado válido):</strong> conexão aceita, pois o certificado foi assinado pela CA indicada em <code>ssl_client_certificate</code>.</p><p><strong>Por que proteger a chave privada do cliente:</strong> quem tiver acesso a ela pode se passar pelo cliente legítimo diante do servidor, assim como uma chave privada de servidor comprometida permitiria se passar pelo servidor.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Basta ter um certificado de cliente para passar a ser seguro.\"</em> — Ignora que, sem <code>ssl_verify_client on</code>, o servidor nem exige esse certificado; as duas diretivas trabalham juntas.</p><p><strong>Critério rápido:</strong> aceite qualquer explicação que diferencie claramente a função das duas diretivas e descreva corretamente o resultado esperado dos dois testes (rejeitado sem certificado, aceito com certificado válido).</p>"
+        },
+        "quiz": [
+          {
+            "question": "No Nginx, qual é a diferença entre as diretivas ssl_client_certificate e ssl_verify_client?",
+            "options": [
+              "São sinônimos, fazem exatamente a mesma coisa.",
+              "ssl_client_certificate indica qual CA valida os clientes; ssl_verify_client torna obrigatório o certificado do cliente.",
+              "ssl_client_certificate configura o certificado do servidor.",
+              "ssl_verify_client só funciona sem PKI."
+            ],
+            "correct": 1,
+            "feedback": "ssl_client_certificate aponta o arquivo da CA usado para validar o certificado apresentado pelo cliente; ssl_verify_client é quem efetivamente exige esse certificado na conexão."
+          }
+        ],
+        "sintese": [
+          "No TLS convencional, só o servidor prova identidade; no mTLS, o cliente também precisa apresentar certificado.",
+          "No Nginx, ssl_client_certificate define a CA de validação e ssl_verify_client torna o certificado do cliente obrigatório."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s25",
+    "title": "Semana 25 — Diagnóstico de Aplicações com Logs e Métricas",
+    "unidade": "Unidade 7",
+    "aulas": [
+      {
+        "code": "SISANO1C2B4S25A1",
+        "title": "O que esse log está tentando avisar?",
+        "duracao": "20 minutos",
+        "habilidadeTecnica": "Classificar linhas de log por tipo (evento, erro, auditoria) e severidade (INFO, WARN, ERROR).",
+        "habilidadeSocioemocional": "Separar dois julgamentos diferentes (o que aconteceu e o quanto isso importa) em vez de misturá-los numa única impressão rápida.",
+        "pontoDePartida": {
+          "titulo": "Milhares de linhas, nem todas pedem a mesma atenção",
+          "texto": "<p>Uma aplicação pode gerar milhares de registros de log todos os dias. Durante um incidente parecido com o que afetou a AWS em outubro de 2025, uma equipe de observabilidade precisa decidir, rapidamente, quais linhas exigem ação imediata e quais são só funcionamento normal.</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Três tipos de log",
+            "html": "<table><tr><td><strong>Log de evento</strong></td><td>Registra o funcionamento normal. Ex.: \"usuário fez login às 14h32\".</td></tr><tr><td><strong>Log de auditoria</strong></td><td>Registra ações importantes para segurança e rastreabilidade. Ex.: \"administrador alterou permissão de acesso do usuário X\".</td></tr><tr><td><strong>Log de erro</strong></td><td>Registra falhas que impedem o funcionamento correto. Ex.: \"falha ao conectar ao banco de dados\".</td></tr></table>"
+          },
+          {
+            "heading": "Três níveis de severidade",
+            "html": "<table><tr><td><strong>INFO</strong></td><td>Funcionamento esperado. Ex.: usuário autenticado.</td></tr><tr><td><strong>WARN</strong></td><td>Comportamento fora do padrão, ainda não uma falha. Ex.: aumento de latência.</td></tr><tr><td><strong>ERROR</strong></td><td>Falha que exige ação. Ex.: conexão perdida.</td></tr></table><p>Tipo (o que a linha descreve) e severidade (quanto isso exige atenção) são dois eixos diferentes: nem toda ação registrada é um erro, e nem todo erro é crítico.</p>"
+          }
+        ],
+        "atividadePratica": {
+          "titulo": "Prática guiada — O que esse log está tentando avisar?",
+          "enunciado": "<p><strong>Cenário:</strong> classifiquem as cinco linhas de log abaixo quanto ao tipo (evento/erro/auditoria) e à severidade (INFO/WARN/ERROR).</p><table><tr><th>Linha</th></tr><tr><td>1. \"14:48:02 — Serviço de banco de dados respondendo normalmente\"</td></tr><tr><td>2. \"14:52:17 — Registro de DNS não foi atualizado corretamente\"</td></tr><tr><td>3. \"14:53:40 — Falha ao criar nova instância: tempo de espera excedido\"</td></tr><tr><td>4. \"14:55:12 — Administrador executou reinício manual do serviço\"</td></tr><tr><td>5. \"14:58:30 — Balanceador removeu 3 servidores indisponíveis\"</td></tr></table><p><strong>Instruções de entrega:</strong> mostrem a classificação ao professor na aula.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>1.</strong> Evento, INFO — funcionamento normal.</p><p><strong>2.</strong> Erro, WARN — algo saiu do padrão (DNS não atualizado), mas ainda não impediu o funcionamento.</p><p><strong>3.</strong> Erro, ERROR — falha explícita que impede a criação da instância.</p><p><strong>4.</strong> Auditoria, INFO — ação humana sensível, registrada para rastreabilidade, mas não é uma falha.</p><p><strong>5.</strong> Evento, WARN — o balanceador está reagindo automaticamente (saúde do sistema sendo defendida), mas indicar servidores indisponíveis já é um comportamento fora do padrão.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"A linha 4 é um erro, porque é algo sério que o administrador fez.\"</em> — Confunde \"ação sensível\" com \"falha\"; uma ação humana registrada por motivos de segurança é auditoria, não necessariamente um erro.</p><p><strong>Critério rápido:</strong> aceite qualquer classificação que separe corretamente tipo (o que a linha descreve) de severidade (quanto exige atenção), mesmo com pequenas variações na severidade das linhas 2 e 5.</p>"
+        },
+        "quiz": [
+          {
+            "question": "A linha de log \"Administrador executou reinício manual do serviço\" deve ser classificada como qual tipo?",
+            "options": [
+              "Erro, porque reiniciar um serviço é sempre um problema.",
+              "Evento, porque é o funcionamento esperado.",
+              "Auditoria, porque é uma ação humana sensível registrada para rastreabilidade.",
+              "Nenhum dos três tipos se aplica."
+            ],
+            "correct": 2,
+            "feedback": "uma ação humana importante para segurança e rastreabilidade — como um reinício manual feito por um administrador — é classificada como log de auditoria, não necessariamente um erro."
+          }
+        ],
+        "sintese": [
+          "Logs se dividem em evento, erro e auditoria — o tipo descreve o que a linha representa.",
+          "INFO, WARN e ERROR são níveis de severidade, um eixo diferente e independente do tipo."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S25A2",
+        "title": "Latência e erro: a mesma história?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Interpretar percentis de latência (p50, p95, p99) e taxa de erro, relacionando os dois painéis para diagnosticar um problema de aplicação.",
+        "habilidadeSocioemocional": "Buscar uma segunda métrica antes de confiar totalmente na primeira, mesmo quando ela já parece contar uma história completa.",
+        "pontoDePartida": {
+          "titulo": "O p50 está normal. Isso basta?",
+          "texto": "<p>A NuvemFit é um aplicativo de treinos que roda na nuvem. A equipe de operações monitora a API /treinos por um painel que exibe latência e taxa de erro. Usuários relataram um possível problema na manhã de hoje — mas o tempo de resposta \"típico\" (p50) parece normal. Isso é suficiente para descartar o problema?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Percentis de latência",
+            "html": "<table><tr><td><strong>p50</strong></td><td>Tempo de resposta típico — metade das requisições são mais rápidas que isso.</td></tr><tr><td><strong>p95</strong></td><td>Tempo de resposta das requisições mais lentas, mas ainda comuns.</td></tr><tr><td><strong>p99</strong></td><td>Tempo de resposta do pior 1% das requisições — ajuda a enxergar problemas que afetariam poucos usuários, mas de forma severa.</td></tr></table><p>O p50 sozinho pode esconder um problema que só aparece nos percentis mais altos.</p>"
+          },
+          {
+            "heading": "Latência e taxa de erro, juntas",
+            "html": "<p><strong>Latência</strong> é quanto tempo a API leva para responder; <strong>taxa de erro</strong> é o percentual de requisições que resultam em falha (como um erro 500) em relação ao total recebido. São métricas diferentes — uma mede tempo, a outra mede falhas — mas juntas contam mais da história do que cada uma isolada.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 2 — \"Latência e erro: a mesma história?\"</strong></p><p><strong>Cenário:</strong> o painel da API /treinos da NuvemFit mostra p50, p95, p99 e taxa de erro ao longo da manhã.</p><p><strong>Tarefas:</strong> identifiquem em qual intervalo de horário a latência aparece anormal, o que o p99 revela que o p50 não mostra, se o pico de taxa de erro coincide com o pico de latência e o que isso sugere, e se seria possível ter um pico de uma métrica sem o pico da outra.</p><p><strong>Instruções de entrega:</strong> no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Intervalo anormal:</strong> o período em que o p95 e, principalmente, o p99 sobem de forma acentuada mesmo que o p50 continue estável — esse é justamente o tipo de problema que só aparece nos percentis altos.</p><p><strong>O que o p99 revela:</strong> que uma fração pequena, mas real, dos usuários está tendo uma experiência muito pior do que a maioria — algo que o p50 (tempo \"típico\") esconde completamente.</p><p><strong>Coincidência com a taxa de erro:</strong> quando o pico de latência (especialmente no p99) coincide com o pico de erro, isso sugere uma causa comum — por exemplo, uma dependência externa ou um recurso do servidor próximo do limite, que tanto atrasa quanto, em casos extremos, falha.</p><p><strong>Pico isolado:</strong> sim, é possível — um aumento de latência sem aumento de erro pode indicar lentidão sem falha explícita (ex.: uma consulta mais lenta, mas que ainda termina); um aumento de erro sem aumento de latência pode indicar falhas rápidas (ex.: validação rejeitando requisições de imediato).</p><h4>Resposta fraca (erro comum)</h4><p><em>\"O p50 está normal, então não há problema.\"</em> — É exatamente o raciocínio que o p99 existe para corrigir: ignora os usuários que caem nos percentis mais altos.</p><p><strong>Critério rápido:</strong> aceite qualquer resposta que relacione corretamente o papel do p99 (revelar problemas que o p50 esconde) e discuta a relação entre latência e erro com base em causa comum, não coincidência superficial.</p>"
+        },
+        "quiz": [
+          {
+            "question": "O painel de uma API mostra p50 estável, mas p99 subindo bastante em um horário específico. O que isso indica?",
+            "options": [
+              "Não há problema, já que a maioria das requisições (p50) está normal.",
+              "Uma fração pequena das requisições está com latência muito alta, mesmo que a maioria esteja normal.",
+              "O sistema está completamente fora do ar.",
+              "A taxa de erro certamente é zero."
+            ],
+            "correct": 1,
+            "feedback": "o p99 mede o pior 1% das requisições. Ele pode subir mesmo com o p50 (tempo típico) estável, revelando um problema que afeta uma fração pequena, mas real, dos usuários."
+          }
+        ],
+        "sintese": [
+          "p50 mostra o tempo típico; p95 e p99 revelam problemas que afetam uma fração menor de usuários, mas de forma severa.",
+          "Latência e taxa de erro são métricas diferentes, mas quando seus picos coincidem, sugerem uma causa comum."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S25A3",
+        "title": "O log explica o que o painel só mostrou?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Identificar a causa raiz de um incidente a partir de um log centralizado e propor uma regra de alerta por threshold.",
+        "habilidadeSocioemocional": "Investigar de forma ordenada, em sequência cronológica, resistindo à tentação de apontar a causa raiz pela primeira falha visível.",
+        "pontoDePartida": {
+          "titulo": "O painel mostrou o quê. O log explica o porquê",
+          "texto": "<p>Entre 10:20 e 10:30, a API /treinos da NuvemFit apresentou um pico de latência e de taxa de erro ao mesmo tempo (Aula 2). O painel mostrou QUE algo deu errado — mas não disse POR QUE. A resposta está no log centralizado desse intervalo.</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Causa raiz e log centralizado",
+            "html": "<p>A <strong>causa raiz</strong> é o problema que deu origem às demais falhas observadas. Um <strong>log centralizado</strong> reúne, em um só lugar, os registros gerados por diferentes partes de uma aplicação, permitindo consultar tudo em ordem cronológica — essencial para encontrar o que começou a sequência de falhas.</p>"
+          },
+          {
+            "heading": "Alerta por threshold",
+            "html": "<p>Um <strong>alerta por threshold</strong> é uma regra que dispara uma notificação quando uma métrica ultrapassa um valor definido durante um determinado período, para que a equipe possa agir antes que muitos usuários sejam afetados. Uma boa regra define: métrica monitorada, operador (maior/menor que), valor de threshold, duração mínima para disparo e ação ao disparar.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 3 — \"O log explica o que o painel só mostrou?\"</strong></p><p><strong>Cenário:</strong> o log centralizado da NuvemFit entre 10:20 e 10:30 registra uma sequência de linhas, incluindo uma mensagem WARN às 10:19:47, antes de qualquer ERROR aparecer.</p><p><strong>Tarefas:</strong> identifiquem qual linha (ou linhas) explica a causa raiz e qual serviço está por trás do incidente, mesmo não sendo o serviço acessado diretamente pelos usuários; proponham uma regra de alerta por threshold que poderia ter avisado a equipe mais cedo; e expliquem o compromisso entre disparar mais cedo (usando o WARN) e o risco de mais falsos positivos.</p><p><strong>Instruções de entrega:</strong> no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Causa raiz:</strong> a mensagem WARN das 10:19:47, que aparece antes de todas as linhas de ERROR, costuma indicar o início real do problema — por exemplo, uma dependência interna (banco de dados, serviço de autenticação, fila) ficando lenta ou instável antes que os erros visíveis na API /treinos comecem.</p><p><strong>Serviço por trás do incidente:</strong> normalmente não é o serviço que o usuário acessa diretamente (a própria API /treinos), e sim uma dependência dela — é por isso que o log centralizado, reunindo todos os serviços, é necessário: olhar só os logs da API não revelaria a causa numa dependência.</p><p><strong>Regra de alerta (exemplo):</strong> métrica = latência da dependência (ou da API); operador = maior que; threshold = um valor acima do normal observado; duração mínima = 2 minutos consecutivos; ação = notificar a equipe de operações.</p><p><strong>Compromisso cedo x falsos positivos:</strong> um alerta baseado na mensagem WARN dispararia mais cedo (antes dos erros), dando mais tempo de reação, mas um WARN isolado pode ocorrer sem se tornar um incidente real, gerando mais alertas falsos; um alerta baseado na taxa de erro é mais confiável, mas dispara mais tarde, quando o problema já afeta usuários.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"A causa raiz é a primeira linha de ERROR.\"</em> — Ignora que um ERROR pode ser consequência de um problema que já vinha sendo sinalizado antes, por uma mensagem WARN.</p><p><strong>Critério rápido:</strong> aceite qualquer resposta que aponte a causa raiz antes da primeira falha visível e que discuta o trade-off entre antecipação e falsos positivos na escolha do threshold.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Em um log centralizado, uma mensagem WARN aparece às 10:19:47, antes de todas as linhas de ERROR do incidente. Por que isso é relevante para encontrar a causa raiz?",
+            "options": [
+              "Não é relevante, só mensagens ERROR importam.",
+              "Porque ela pode indicar o início real do problema, antes que as falhas visíveis apareçam.",
+              "Porque WARN sempre significa que o sistema já caiu.",
+              "Porque mensagens WARN nunca têm relação com ERROR."
+            ],
+            "correct": 1,
+            "feedback": "uma mensagem WARN anterior a todos os ERROS pode ser o primeiro sinal do problema que depois gerou as falhas — é por isso que a leitura cronológica do log é importante para achar a causa raiz."
+          }
+        ],
+        "sintese": [
+          "Causa raiz é o problema que deu origem às demais falhas — muitas vezes sinalizado antes por um WARN.",
+          "Um alerta por threshold mais sensível dispara mais cedo, mas aumenta o risco de falsos positivos."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "s26",
+    "title": "Semana 26 — Edge Computing e Content Delivery Network (CDN)",
+    "unidade": "Unidade 7",
+    "aulas": [
+      {
+        "code": "SISANO1C2B4S26A1",
+        "title": "Em qual camada esse dado deve ser processado?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Classificar dados e operações entre as camadas edge, fog e cloud, com base em latência exigida, volume de dados e disponibilidade de conectividade.",
+        "habilidadeSocioemocional": "Pesar os três critérios de decisão juntos, mesmo quando um item parece se encaixar em mais de uma camada à primeira vista.",
+        "pontoDePartida": {
+          "titulo": "500 sensores, três lugares possíveis para pensar",
+          "texto": "<p>A AgriTech Nação opera 500 sensores agrícolas: temperatura e umidade a cada 30 segundos, detecção de pragas por imagem a cada 10 minutos, vazão de irrigação a cada 5 segundos. Nem todo esse dado pode (ou precisa) ser processado no mesmo lugar. Onde processar cada tipo de dado: no próprio sensor, numa central regional, ou na nuvem?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Três camadas",
+            "html": "<table><tr><td><strong>Edge</strong></td><td>Processamento local, no dispositivo ou gateway. Latência mínima.</td></tr><tr><td><strong>Fog</strong></td><td>Nó intermediário regional, que agrega e filtra antes de enviar à nuvem.</td></tr><tr><td><strong>Cloud</strong></td><td>Processamento central, para armazenamento de longo prazo e análises complexas.</td></tr></table><p>As três camadas trabalham juntas — nenhuma substitui as outras duas.</p>"
+          },
+          {
+            "heading": "Três critérios de decisão",
+            "html": "<p>A camada certa para cada tipo de dado depende de três fatores, avaliados juntos: a <strong>latência exigida</strong> pela ação resultante, o <strong>volume de dados</strong> gerado, e a <strong>disponibilidade de conectividade</strong> contínua com as camadas superiores. Nenhum critério decide sozinho.</p>"
+          }
+        ],
+        "atividadePratica": {
+          "titulo": "Prática guiada — Em qual camada esse dado deve ser processado?",
+          "enunciado": "<p><strong>Cenário:</strong> a AgriTech Nação precisa decidir, para cada item abaixo, se o processamento é edge, fog ou cloud. Requisitos: alerta de vazamento de irrigação em até 200ms; análise de pragas por IA pode levar até 2 horas; histórico de temperatura/umidade retido por 3 anos; o sistema deve continuar operando durante quedas de conectividade com a cloud.</p><table><tr><th>Item</th></tr><tr><td>Detecção de limiar de vazão e acionamento de válvulas de irrigação</td></tr><tr><td>Agregação de leituras de temperatura/umidade antes de enviar à cloud</td></tr><tr><td>Análise de imagens de pragas por IA (dataset de 50 GB)</td></tr><tr><td>Armazenamento de 3 anos de histórico de temperatura/umidade</td></tr></table><p><strong>Instruções de entrega:</strong> mostrem a classificação ao professor na aula.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Acionamento de válvulas de irrigação:</strong> edge — exige resposta em até 200ms, incompatível com qualquer ida até a nuvem; precisa funcionar mesmo sem conectividade.</p><p><strong>Agregação de leituras de temperatura/umidade:</strong> fog — reúne e filtra leituras frequentes de vários sensores antes de mandar para a cloud, reduzindo volume sem exigir latência mínima.</p><p><strong>Análise de imagens de pragas por IA (50 GB):</strong> cloud — alto volume de dados e até 2 horas de prazo, compatível com a capacidade de processamento centralizada da nuvem, sem exigência de latência mínima.</p><p><strong>Armazenamento de 3 anos de histórico:</strong> cloud — volume acumulado grande e não há exigência de latência; a nuvem é o lugar adequado para retenção de longo prazo.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Tudo que vem de sensor é edge.\"</em> — Ignora que o critério não é a origem do dado, e sim a combinação de latência, volume e conectividade exigidos por cada uso específico daquele dado.</p><p><strong>Critério rápido:</strong> aceite qualquer classificação que justifique a escolha citando pelo menos um dos três critérios (latência, volume, conectividade) de forma coerente com o item.</p>"
+        },
+        "quiz": [
+          {
+            "question": "O acionamento de válvulas de irrigação precisa responder em até 200ms e continuar funcionando mesmo sem conexão com a nuvem. Em qual camada esse processamento deve ocorrer?",
+            "options": [
+              "Cloud, porque é mais seguro.",
+              "Fog, porque reduz o volume de dados.",
+              "Edge, porque exige latência mínima e precisa funcionar sem depender da conectividade.",
+              "Não importa a camada, desde que haja internet disponível."
+            ],
+            "correct": 2,
+            "feedback": "uma exigência de latência tão baixa (200ms) e a necessidade de continuar funcionando sem conectividade com camadas superiores apontam para processamento na borda (edge), o mais próximo possível da ação."
+          }
+        ],
+        "sintese": [
+          "Edge, fog e cloud são três camadas complementares, não substitutas entre si.",
+          "A escolha da camada depende de latência exigida, volume de dados e disponibilidade de conectividade, avaliados juntos."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S26A2",
+        "title": "CDN interna ou provedor externo?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Decidir entre construir uma CDN interna ou usar um provedor externo, e comparar provedores de CDN por cobertura, custo e perfil de uso.",
+        "habilidadeSocioemocional": "Comparar perfis de cliente diferentes sem aplicar a mesma solução padrão a ambos, reconhecendo que o contexto de cada um muda a decisão.",
+        "pontoDePartida": {
+          "titulo": "Dois perfis, a mesma pergunta",
+          "texto": "<p>Quanto maior a distância entre usuário e servidor, maior tende a ser o tempo de carregamento. Uma CDN aproxima o conteúdo do usuário sem mover o servidor principal. Mas construir a própria CDN ou contratar um provedor como CloudFront, Cloudflare ou Akamai depende de quem está perguntando.</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Como uma CDN funciona",
+            "html": "<p>CDNs distribuem cópias de conteúdo em vários servidores ao redor do mundo. Quando um usuário acessa um site, a CDN direciona a requisição para o servidor mais próximo. Esses pontos distribuídos são chamados de <strong>PoPs</strong> (<em>Points of Presence</em>).</p>"
+          },
+          {
+            "heading": "O que pesa na decisão",
+            "html": "<p>A escolha entre CDN interna e provedor externo depende de quatro fatores, avaliados juntos: o <strong>volume e a distribuição geográfica</strong> dos usuários, a <strong>equipe técnica e infraestrutura</strong> disponíveis, <strong>exigências legais</strong> ou de controle de dados, e o <strong>orçamento</strong> (capital ou operacional). Uma equipe pequena sem infraestrutura própria pesa a favor de um provedor externo; uma exigência legal de manter dados no país pesa a favor de uma CDN interna — mas nenhum fator decide sozinho.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 2 — \"CDN interna ou provedor externo?\"</strong></p><p><strong>Perfil A — GovDoc Brasil:</strong> sistema de documentos públicos, exigência legal de manter dados em território nacional, equipe técnica pequena.</p><p><strong>Perfil B — MeuFit App:</strong> aplicativo de treinos com usuários em vários países, equipe técnica reduzida, orçamento operacional limitado.</p><p><strong>Tarefas:</strong> recomendem CDN interna ou provedor externo para cada perfil, justificando com pelo menos três características de cada um; depois, comparem CloudFront, Cloudflare e Akamai (cobertura geográfica, modelo de custo e perfil de uso mais comum) e indiquem qual provedor seria mais adequado para cada perfil.</p><p><strong>Instruções de entrega:</strong> em grupos de até 5, no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>GovDoc Brasil:</strong> a exigência legal de manter dados em território nacional pesa fortemente a favor de uma solução que garanta controle sobre a localização dos dados — isso pode significar uma CDN interna, ou um provedor externo com garantias contratuais e PoPs/regiões no Brasil; dada a equipe pequena, se optarem por provedor externo, a escolha deve priorizar suporte a conformidade local e controle de região.</p><p><strong>MeuFit App:</strong> usuários distribuídos globalmente e equipe pequena favorecem fortemente um provedor externo, que já tem PoPs ao redor do mundo — construir uma CDN interna global estaria fora do alcance da equipe e do orçamento.</p><p><strong>Comparação de provedores (direções gerais):</strong> CloudFront tende a ser a escolha natural para quem já usa a nuvem AWS, com cobrança por uso; Cloudflare costuma ter um plano de entrada mais acessível e é popular entre times pequenos; Akamai tende a ser direcionado a operações de grande escala com contratos corporativos. GovDoc Brasil, com exigência de conformidade local, deve avaliar qual desses provedores oferece controle de região mais claro; MeuFit App, buscando cobertura ampla com baixo custo operacional, tende a se beneficiar de um provedor com plano de entrada acessível.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Os dois devem usar a mesma solução, porque CDN é CDN.\"</em> — Ignora que o contexto de cada perfil (exigência legal x distribuição geográfica, equipe disponível, orçamento) muda completamente a decisão adequada.</p><p><strong>Critério rápido:</strong> aceite qualquer recomendação que relacione corretamente pelo menos três características de cada perfil à escolha (CDN interna ou externa) e qualquer comparação de provedores que reconheça diferenças plausíveis de cobertura, custo e público típico.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Uma aplicação tem usuários distribuídos em vários países e uma equipe técnica pequena. O que isso sugere na escolha entre CDN interna e provedor externo?",
+            "options": [
+              "CDN interna, porque é sempre mais barata.",
+              "Provedor externo, já que ele já tem PoPs globais e não exige que a equipe construa essa infraestrutura.",
+              "Nenhuma das duas opções é necessária nesse caso.",
+              "A decisão não depende do tamanho da equipe."
+            ],
+            "correct": 1,
+            "feedback": "usuários globais exigem PoPs em várias regiões — algo que provedores externos já oferecem prontos. Com equipe pequena, construir e manter uma CDN interna global seria inviável."
+          }
+        ],
+        "sintese": [
+          "Uma CDN aproxima o conteúdo do usuário através de PoPs distribuídos geograficamente.",
+          "A escolha entre CDN interna e provedor externo depende de volume/distribuição de usuários, equipe, exigências legais e orçamento, avaliados juntos."
+        ]
+      },
+      {
+        "code": "SISANO1C2B4S26A3",
+        "title": "Cada tipo de conteúdo pede um cache diferente?",
+        "duracao": "45 minutos",
+        "habilidadeTecnica": "Definir comportamentos de cache por tipo de conteúdo numa distribuição CDN e interpretar TTFB e cache-hit ratio.",
+        "habilidadeSocioemocional": "Tratar com cuidado os dados sensíveis de uma aplicação (checkout, autenticação), reconhecendo que nem tudo deve ser otimizado pela conveniência do cache.",
+        "pontoDePartida": {
+          "titulo": "Nem tudo que é rápido deve ficar em cache",
+          "texto": "<p>A plataforma RetailGo tem quatro tipos de conteúdo: assets estáticos versionados, imagens de produto, uma API de catálogo que muda com frequência, e a área de checkout com dados de pagamento. Colocar tudo em cache da mesma forma seria um erro — mas por quê?</p>"
+        },
+        "conceito": [
+          {
+            "heading": "Os quatro mecanismos de uma distribuição CDN",
+            "html": "<p>Uma distribuição CDN é composta por <strong>origens</strong> (onde o conteúdo vive) e por <strong>comportamentos de cache</strong> (como a CDN responde a cada caminho). Os quatro mecanismos fundamentais são: <strong>TTL</strong> (tempo de vida do cache), <strong>comportamentos de cache</strong> por caminho, <strong>origin groups com failover</strong>, e <strong>invalidação de cache</strong>.</p><p>Conteúdo que muda pouco pode ter cache longo; conteúdo que muda sempre pede cache curto ou nenhum. Dados sensíveis ou de sessão <strong>nunca</strong> devem ficar em cache, independentemente de quanto mudam.</p>"
+          },
+          {
+            "heading": "TTFB e cache-hit ratio",
+            "html": "<p><strong>TTFB</strong> (<em>Time To First Byte</em>) é o tempo até o início da resposta do servidor ao navegador. <strong>Cache-hit ratio</strong> é o percentual de requisições atendidas pelo cache da CDN, sem precisar buscar na origem. Essas duas métricas são medidas depois da configuração — mostram se as decisões de cache funcionaram.</p>"
+          }
+        ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula 3 — \"Cada tipo de conteúdo pede um cache diferente?\"</strong></p><p><strong>Cenário:</strong> a RetailGo tem 4 tipos de conteúdo: Tipo 1 — assets estáticos (/static) no S3, versionados (ex.: app.v3.2.min.js), não mudam após publicação. Tipo 2 — imagens de produto (/images) no S3, podem mudar quando um produto é atualizado. Tipo 3 — API de catálogo (/api/catalog) em EC2, retorna produtos/preços em JSON, muda com frequência. Tipo 4 — checkout e área do cliente (/checkout, /minha-conta), contém autenticação e dados sensíveis de pagamento.</p><p><strong>Tarefas:</strong> para cada tipo, decidam o comportamento de cache (longo, curto ou desabilitado) e justifiquem; expliquem por que arquivos versionados ajudam a atualizar o site sem limpar todo o cache; e expliquem o que o TTFB representa e por que o cache-hit ratio tende a ser maior para assets estáticos do que para a API.</p><p><strong>Instruções de entrega:</strong> em grupos de até 5, no AVA.</p>",
+          "gabarito": "<h4>Respostas esperadas</h4><p><strong>Tipo 1 — assets estáticos:</strong> cache longo. Como os arquivos são versionados (app.v3.2.min.js), uma nova versão tem um nome de arquivo diferente — não é preciso invalidar o cache do arquivo antigo, só apontar para o novo nome.</p><p><strong>Tipo 2 — imagens de produto:</strong> cache médio/curto, ou cache longo combinado com invalidação quando a imagem é atualizada — como o conteúdo pode mudar, mas não constantemente, um TTL moderado com invalidação sob demanda equilibra desempenho e atualização.</p><p><strong>Tipo 3 — API de catálogo:</strong> cache curto ou desabilitado — como os dados mudam com frequência (preços, estoque), cache longo serviria dados desatualizados aos usuários.</p><p><strong>Tipo 4 — checkout e área do cliente:</strong> cache desabilitado — dados de autenticação, sessão e pagamento nunca devem ser servidos do cache, sob risco de um usuário ver dados de outro.</p><p><strong>Por que versionamento ajuda:</strong> cada nova versão do arquivo tem uma URL diferente, então o cache antigo simplesmente deixa de ser solicitado — não é preciso esperar o TTL expirar nem disparar uma invalidação manual.</p><p><strong>TTFB e cache-hit ratio:</strong> o TTFB tende a cair quando o conteúdo é servido direto de um PoP próximo ao usuário, sem precisar buscar na origem. Assets estáticos têm cache-hit ratio mais alto porque mudam raramente e são acessados por muitos usuários com o mesmo conteúdo exato; a API tende a ter cache-hit ratio menor porque os dados mudam com frequência e muitas vezes são específicos de cada consulta.</p><h4>Resposta fraca (erro comum)</h4><p><em>\"Colocamos tudo em cache longo para ser mais rápido.\"</em> — Ignora que dados sensíveis nunca devem ir para cache e que conteúdo dinâmico em cache longo serviria informação desatualizada ou vazaria dados entre usuários.</p><p><strong>Critério rápido:</strong> aceite qualquer configuração de cache que mantenha o checkout/área do cliente sem cache e que diferencie corretamente conteúdo estático (cache longo) de conteúdo que muda com frequência (cache curto/desabilitado), com justificativa coerente.</p>"
+        },
+        "quiz": [
+          {
+            "question": "Por que a área de checkout e dados de pagamento de uma aplicação nunca devem ser armazenados em cache por uma CDN?",
+            "options": [
+              "Porque isso tornaria o site mais lento.",
+              "Porque contêm dados sensíveis e de sessão, que podem ser indevidamente compartilhados entre usuários diferentes.",
+              "Porque a CDN não suporta conteúdo dinâmico.",
+              "Porque o cache sempre expira antes de ser usado."
+            ],
+            "correct": 1,
+            "feedback": "dados de autenticação, sessão e pagamento são específicos de cada usuário — colocá-los em cache arriscaria servir os dados de uma pessoa para outra, independentemente de quão rápido isso tornasse o site."
+          }
+        ],
+        "sintese": [
+          "Conteúdo estático versionado aceita cache longo; conteúdo que muda com frequência pede cache curto ou desabilitado.",
+          "Dados sensíveis ou de sessão nunca devem ficar em cache, mesmo que raramente mudem.",
+          "TTFB e cache-hit ratio medem, depois da configuração, se as decisões de cache funcionaram na prática."
+        ]
+      }
+    ]
+  }
 ];
 const MODULES = ALL_WEEKS.map(buildModule);
 
@@ -3315,6 +4008,7 @@ async function syncProgress() {
       notaBim1: bimestreScore(1).pts,
       notaBim2: bimestreScore(2).pts,
       notaBim3: bimestreScore(3).pts,
+      notaBim4: bimestreScore(4).pts,
       estadoCompleto: state,
       atualizadoEm: new Date().toISOString()
     });
@@ -3388,12 +4082,12 @@ async function openPanel() {
           + '<td>'+esc(s.semanaAtual||'—')+'</td>'
           + '<td><span class="panel-bar-wrap"><div style="width:'+(s.percentual||0)+'%"></div></span>'+(s.percentual||0)+'%</td>'
           + '<td>'+(s.telaNumero||0)+' / '+(s.telaTotal||0)+'</td>'
-          + '<td>'+(s.notaBim1??0)+' / '+(s.notaBim2??0)+' / '+(s.notaBim3??0)+'</td>'
+          + '<td>'+(s.notaBim1??0)+' / '+(s.notaBim2??0)+' / '+(s.notaBim3??0)+' / '+(s.notaBim4??0)+'</td>'
           + '<td>Nível '+(s.nivel||1)+' · '+(s.xp||0)+' XP</td>'
           + '<td>'+fmtRelative(s.atualizadoEm)+'</td></tr>';
       });
       body.innerHTML = '<div style="overflow-x:auto;"><table class="panel-table"><thead><tr>'
-        + '<th>Aluno</th><th>Turma</th><th>Escola</th><th>Semana atual</th><th>Progresso</th><th>Tela</th><th>Notas Bim 1/2/3</th><th>Nível/XP</th><th>Última atividade</th>'
+        + '<th>Aluno</th><th>Turma</th><th>Escola</th><th>Semana atual</th><th>Progresso</th><th>Tela</th><th>Notas Bim 1/2/3/4</th><th>Nível/XP</th><th>Última atividade</th>'
         + '</tr></thead><tbody>'+rows+'</tbody></table></div>';
     },
     (err) => { body.innerHTML = '<p style="color:var(--err); font-size:13px;">Não foi possível carregar o painel agora ('+esc(err.code||'erro')+').</p>'; }
@@ -3466,7 +4160,8 @@ const BADGES = [
   { id:'semana1',        name:'Base de Topologias', desc:'Conclua a Semana 1', icon:'bulb', check: s => isModuleFullyVisited('s01', s) },
   { id:'bimestre1',      name:'Guardião das Topologias', desc:'Conclua o Bimestre 1', icon:'trophy', check: s => bimestreDone(1, s) },
   { id:'bimestre2',      name:'Guardião da Segurança', desc:'Conclua o Bimestre 2', icon:'trophy', check: s => bimestreDone(2, s) },
-  { id:'bimestre3',      name:'Arquiteto(a) de Redes Seguras', desc:'Conclua o curso inteiro', icon:'trophy', check: s => bimestreDone(3, s) },
+  { id:'bimestre3',      name:'Arquiteto(a) de Redes Seguras', desc:'Conclua o Bimestre 3', icon:'trophy', check: s => bimestreDone(3, s) },
+  { id:'bimestre4',      name:'Mestre(a) da Nuvem', desc:'Conclua o curso inteiro', icon:'trophy', check: s => bimestreDone(4, s) },
   { id:'sequencia5',     name:'Sequência de Ouro', desc:'Acerte 5 quizzes seguidos', icon:'fire', check: s => s.bestStreak>=5 },
   { id:'perfeccionista', name:'Sem Erros', desc:'Acerte um quiz na primeira tentativa', icon:'star', check: s => Object.values(s.quizAnswers).some(q => Object.values(q).some(a => a && a.firstTry && a.correct)) },
   { id:'maratonista',    name:'Maratonista', desc:'Visite 15 telas ou mais', icon:'heart', check: s => Object.keys(s.visited).length>=15 }
@@ -3880,7 +4575,7 @@ function moduleProgress(mi) {
 function buildSidebar() {
   const nav = document.getElementById('sidebar');
   nav.innerHTML = '';
-  [1,2,3].forEach(b => {
+  Object.keys(BIMESTRE_INFO).map(Number).sort((a,b)=>a-b).forEach(b => {
     const info = BIMESTRE_INFO[b];
     const group = el('div','bim-group');
     const score = bimestreScore(b);
@@ -3941,7 +4636,7 @@ function renderMap() {
   c.appendChild(el('div','screen-kicker','Sua jornada'));
   c.appendChild(el('h1','screen-title','Mapa da trilha'));
   const wrap = el('div','mapwrap');
-  [1,2,3].forEach(b => {
+  Object.keys(BIMESTRE_INFO).map(Number).sort((a,b)=>a-b).forEach(b => {
     const info = BIMESTRE_INFO[b];
     const box = el('div','map-bim');
     const score = bimestreScore(b);
