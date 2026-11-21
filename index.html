@@ -2362,7 +2362,7 @@ const ALL_WEEKS = [
         "title": "Vulnerabilidades e o OWASP Top 10",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Identificar as principais vulnerabilidades web listadas pelo OWASP Top 10 e compreender o que é uma vulnerabilidade.",
-        "habilidadeSocioemocional": "Refletir sobre um caso real de vazamento de dados e suas implicações para o próprio trabalho.",
+        "habilidadeSocioemocional": "Explorar com curiosidade um caso real de vazamento de dados, questionando o que faltou para evitá-lo e suas implicações para o próprio trabalho.",
         "pontoDePartida": {
           "titulo": "Se um sistema como o INSS pode falhar...",
           "texto": "<p>O jogo multiplayer da startup de games agora tem um portal web: login, busca de itens na loja, comentários em partidas e um formulário de suporte. Uma notícia real chama atenção da equipe: uma falha de segurança na plataforma digital do INSS expôs dados de cerca de 2 milhões de segurados. O tech lead pergunta: se um sistema público e crítico como esse pode falhar, o que garante que o portal da startup não vai repetir o mesmo erro?</p>"
@@ -2400,7 +2400,7 @@ const ALL_WEEKS = [
         "title": "SQL Injection e XSS",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Diferenciar SQL Injection (ataque ao banco de dados) de XSS (ataque à tela/navegador).",
-        "habilidadeSocioemocional": "Reconhecer campos de formulário comuns como pontos de entrada de risco.",
+        "habilidadeSocioemocional": "Antecipar, campo por campo de um formulário, onde um ataque poderia entrar, planejando a defesa antes que o problema apareça.",
         "conceito": [
           {
             "heading": "SQL Injection: quando a entrada interfere no banco de dados",
@@ -2434,7 +2434,7 @@ const ALL_WEEKS = [
         "title": "Validação de entradas",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Aplicar técnicas básicas de validação de entradas para reduzir vulnerabilidades.",
-        "habilidadeSocioemocional": "Priorizar a prevenção (validar na entrada) em vez de corrigir problemas depois que já ocorreram.",
+        "habilidadeSocioemocional": "Planejar a validação de cada campo antes de codificar, priorizando prevenção em vez de corrigir problemas depois que já ocorreram.",
         "conceito": [
           {
             "heading": "Validação de entradas: cuidar do que entra no sistema",
@@ -2478,7 +2478,7 @@ const ALL_WEEKS = [
         "title": "Estrutura do IPv4 e de classful para CIDR",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Descrever a estrutura de 32 bits de um endereço IPv4 e explicar por que o CIDR substituiu o modelo classful.",
-        "habilidadeSocioemocional": "Aprofundar um conceito já visto (Capítulo 11) com mais precisão técnica.",
+        "habilidadeSocioemocional": "Comparar, em dupla, o que cada um já sabe sobre IPv4, ouvindo o raciocínio do colega antes de validar a própria resposta.",
         "pontoDePartida": {
           "titulo": "Broadcast desnecessário atrapalhando o firewall",
           "texto": "<p>No Capítulo 11, vocês já foram apresentados ao IPv4 e às máscaras de sub-rede — o suficiente para dar IP a cada PC da startup. Agora a empresa cresceu: desenvolvedores, designers e servidores continuam no mesmo bloco de endereços, gerando broadcast desnecessário e dificultando regras de firewall específicas por setor.</p>\n<p>O gestor de TI decide dividir a rede em sub-redes por setor, usando notação CIDR. Como calcular, com precisão, quantos hosts cabem em cada sub-rede e onde cada bloco começa e termina?</p>"
@@ -2516,7 +2516,7 @@ const ALL_WEEKS = [
         "title": "Calculando hosts válidos e blocos de sub-rede",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Calcular hosts válidos a partir do prefixo CIDR e calcular blocos de sub-rede, endereço de rede e de broadcast.",
-        "habilidadeSocioemocional": "Aplicar uma fórmula matemática com precisão a um cenário de infraestrutura real.",
+        "habilidadeSocioemocional": "Resolver os cálculos de sub-rede em dupla, dividindo as etapas e conferindo juntos cada resultado antes de registrar a resposta final.",
         "conceito": [
           {
             "heading": "Calculando hosts válidos",
@@ -2554,7 +2554,7 @@ const ALL_WEEKS = [
         "title": "Dividindo a rede por departamento",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Dividir uma rede real em sub-redes por setor e reconhecer os benefícios da organização por departamento.",
-        "habilidadeSocioemocional": "Justificar uma decisão técnica em termos de benefícios organizacionais (organização, segurança).",
+        "habilidadeSocioemocional": "Defender a divisão de sub-redes perante a turma com argumentos técnicos claros e confiança, respondendo a perguntas dos colegas.",
         "conceito": [
           {
             "heading": "Domínio de broadcast menor",
@@ -2562,7 +2562,7 @@ const ALL_WEEKS = [
           }
         ],
         "colocandoEmPratica": {
-          "enunciado": "<p><strong>Registro da Aula (S16A2) — \"Aplicação prática: divisão por departamentos\"</strong></p>\n<p><strong>Cenário:</strong> a startup possui quatro departamentos: RH, Financeiro, TI e Vendas. A rede 192.168.1.0/24 deve ser dividida em quatro sub-redes /26, uma para cada departamento.</p>\n<p><strong>Tarefas:</strong> 1) calculem as quatro sub-redes /26 (rede, broadcast, faixa de hosts); 2) atribuam uma sub-rede a cada departamento; 3) apresentem os benefícios (organização, controle de tráfego, segurança).</p>\n<p><strong>Entrega:</strong> folha à parte com os cálculos, escaneada ou fotografada, enviada pelo AVA.</p>"
+          "enunciado": "<p><strong>Registro da Aula (S16A3) — \"Aplicação prática: divisão por departamentos\"</strong></p>\n<p><strong>Cenário:</strong> a startup possui quatro departamentos: RH, Financeiro, TI e Vendas. A rede 192.168.1.0/24 deve ser dividida em quatro sub-redes /26, uma para cada departamento.</p>\n<p><strong>Tarefas:</strong> 1) calculem as quatro sub-redes /26 (rede, broadcast, faixa de hosts); 2) atribuam uma sub-rede a cada departamento; 3) apresentem os benefícios (organização, controle de tráfego, segurança); 4) defendam a divisão escolhida em até 2 minutos para a turma, respondendo às perguntas dos colegas.</p>\n<p><strong>Entrega:</strong> em duplas — folha com os cálculos (escaneada ou fotografada, enviada pelo AVA) + apresentação oral do desenho para a turma.</p>"
         },
         "quiz": [
           {
@@ -2598,7 +2598,7 @@ const ALL_WEEKS = [
         "title": "Os quatro elementos do risco",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Identificar ativo, ameaça, vulnerabilidade e impacto em um cenário de segurança da informação.",
-        "habilidadeSocioemocional": "Registrar um incidente real de forma estruturada, sem confundir seus elementos.",
+        "habilidadeSocioemocional": "Manter o foco ao registrar um incidente real de forma estruturada, sem se deixar levar por conclusões apressadas ou confundir seus elementos.",
         "pontoDePartida": {
           "titulo": "28 mil chaves Pix expostas",
           "texto": "<p>A startup de games, agora operando parte da infraestrutura na nuvem, monitora dezenas de sistemas: servidores de jogo, banco de dados de jogadores, API de pagamentos. Um caso real chama a atenção da equipe de segurança: em março de 2026, o Banco Central comunicou publicamente que a financeira Pefisa S.A. teve dados cadastrais de <strong>28 mil chaves Pix</strong> expostos por falhas pontuais em seus sistemas.</p>\n<p>Como uma equipe de segurança organiza o raciocínio para identificar, avaliar e decidir o que fazer diante de um risco como esse?</p>"
@@ -2634,7 +2634,7 @@ const ALL_WEEKS = [
         "title": "Probabilidade, impacto e a matriz de priorização",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Avaliar riscos combinando probabilidade e impacto, usando a matriz de priorização.",
-        "habilidadeSocioemocional": "Basear uma decisão de priorização em evidências, não em impressões.",
+        "habilidadeSocioemocional": "Exigir de si mesmo(a) uma priorização baseada em evidências, não em impressões, mesmo quando isso dá mais trabalho.",
         "conceito": [
           {
             "heading": "O caso WannaCry",
@@ -2667,13 +2667,16 @@ const ALL_WEEKS = [
         "title": "Estratégias de tratamento de risco",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Diferenciar as quatro estratégias de tratamento de risco: mitigar, evitar, transferir e aceitar.",
-        "habilidadeSocioemocional": "Propor uma medida de mitigação concreta e justificada, não genérica.",
+        "habilidadeSocioemocional": "Persistir até propor uma medida de mitigação concreta e justificada, resistindo à tentação de uma resposta genérica.",
         "conceito": [
           {
             "heading": "Quatro estratégias de tratamento",
             "html": "<table><tr><td><strong>Estratégia</strong></td><td><strong>O que significa</strong></td></tr>\n<tr><td>Mitigar</td><td>Implementar controles que diminuem probabilidade ou impacto.</td></tr>\n<tr><td>Evitar</td><td>Eliminar a atividade que gera o risco.</td></tr>\n<tr><td>Transferir</td><td>Compartilhar consequências financeiras (ex.: seguro).</td></tr>\n<tr><td>Aceitar</td><td>Decidir formalmente conviver com o risco.</td></tr></table>\n<p>Aceitar um risco <strong>não é o mesmo que ignorá-lo</strong> — é uma decisão consciente, documentada e justificada.</p>"
           }
         ],
+        "colocandoEmPratica": {
+          "enunciado": "<p><strong>Registro da Aula (S17A3) — \"Proposta de mitigação para o risco prioritário\"</strong></p>\n<p><strong>Cenário:</strong> retomando o caso da PagoDigital (Aula 1), a equipe de segurança aplicou a matriz de probabilidade × impacto (Aula 2) ao risco identificado — falha de configuração do servidor de consulta expondo dados cadastrais associados a chaves Pix — e confirmou prioridade <strong>crítica</strong>.</p>\n<p><strong>Tarefas:</strong> 1) classifiquem esse risco na matriz de probabilidade × impacto, justificando a prioridade crítica; 2) proponham <strong>uma</strong> medida de mitigação concreta e específica para esse risco (nada de \"melhorar a segurança\" de forma genérica); 3) expliquem, em 2–3 frases, por que evitar, transferir ou aceitar não seriam estratégias adequadas para esse caso.</p>\n<p><strong>Entrega:</strong> em duplas, registrado no AVA.</p>"
+        },
         "quiz": [
           {
             "question": "A portaria do MCTI prevê que um risco avaliado pode ser tratado por meio de controles de segurança ou por aceitação formal. O que isso demonstra sobre o tratamento de riscos?",
@@ -2708,7 +2711,7 @@ const ALL_WEEKS = [
         "title": "Titular, dado pessoal e dado pessoal sensível",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Compreender o objetivo da LGPD e identificar quem é o titular dos dados, diferenciando dado pessoal de dado pessoal sensível.",
-        "habilidadeSocioemocional": "Refletir sobre um caso real de fiscalização e suas implicações práticas.",
+        "habilidadeSocioemocional": "Lidar com calma ao refletir sobre um caso real de fiscalização, sem transformar a notícia em alarme, avaliando suas implicações práticas.",
         "pontoDePartida": {
           "titulo": "A ANPD notificou 20 empresas",
           "texto": "<p>A startup de games está lançando um novo portal de cadastro para jogadores do seu multiplayer. Um caso real preocupa a equipe: em dezembro de 2024, a ANPD notificou <strong>20 empresas</strong> por descumprirem regras de proteção de dados. Que dados o formulário de cadastro do jogo realmente precisa pedir, e quais decisões o time de desenvolvimento precisa tomar para não repetir esses erros?</p>"
@@ -2746,7 +2749,7 @@ const ALL_WEEKS = [
         "title": "Princípios da LGPD: finalidade, adequação e necessidade",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Reconhecer o que é um dado pessoal e classificar campos de um formulário como pessoal ou sensível.",
-        "habilidadeSocioemocional": "Aplicar critérios objetivos a um mapeamento de dados, evitando julgamentos vagos.",
+        "habilidadeSocioemocional": "Persistir até classificar todos os campos de um mapeamento de dados com critérios objetivos, sem deixar nenhum em julgamento vago.",
         "conceito": [
           {
             "heading": "Três princípios que orientam a LGPD",
@@ -2778,7 +2781,7 @@ const ALL_WEEKS = [
         "title": "Verificando a conformidade de um cadastro",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Verificar se o tratamento de dados de uma aplicação atende aos princípios de finalidade e necessidade.",
-        "habilidadeSocioemocional": "Propor ajustes concretos a um sistema real antes que ele entre no ar.",
+        "habilidadeSocioemocional": "Sustentar a atenção até revisar os doze campos de um cadastro real, propondo ajustes concretos antes que o sistema entre no ar.",
         "conceito": [
           {
             "heading": "Nem todo dado pedido é necessário",
@@ -2821,7 +2824,7 @@ const ALL_WEEKS = [
         "title": "O Modelo de Responsabilidade Compartilhada",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Explicar o Modelo de Responsabilidade Compartilhada e comparar como a responsabilidade muda entre IaaS, PaaS e SaaS.",
-        "habilidadeSocioemocional": "Questionar uma suposição confortável (\"a nuvem cuida de tudo\") com raciocínio técnico.",
+        "habilidadeSocioemocional": "Questionar com disciplina uma suposição confortável (\"a nuvem cuida de tudo\"), organizando o raciocínio técnico em vez de aceitar a resposta fácil.",
         "pontoDePartida": {
           "titulo": "\"A segurança passa a ser problema do provedor, certo?\"",
           "texto": "<p>A startup de games decidiu migrar parte da infraestrutura para a nuvem — servidor de builds e banco de dados de jogadores vão para um provedor como AWS ou Azure. Na reunião de planejamento, alguém pergunta: \"se migrarmos para a nuvem, a segurança passa a ser problema do provedor, certo?\"</p>\n<p>A resposta é mais delicada. Existe uma linha clara entre o que o provedor garante e o que continua sendo dever da empresa.</p>"
@@ -2859,7 +2862,7 @@ const ALL_WEEKS = [
         "title": "IAM: menor privilégio, MFA, RBAC e rotação",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Descrever os controles de IAM: menor privilégio, MFA, RBAC, rotação e monitoramento.",
-        "habilidadeSocioemocional": "Auditar uma configuração de acesso real e propor uma arquitetura mais segura.",
+        "habilidadeSocioemocional": "Expressar com confiança, em uma auditoria de acessos real, quais permissões estão erradas e propor com segurança uma arquitetura mais adequada.",
         "conceito": [
           {
             "heading": "IAM: o pilar central da responsabilidade do cliente",
@@ -2891,7 +2894,7 @@ const ALL_WEEKS = [
         "title": "TLS 1.3: handshake e criptografia em trânsito",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Explicar por que a criptografia em trânsito é do cliente configurar e mapear o handshake TLS 1.3.",
-        "habilidadeSocioemocional": "Documentar tecnicamente uma migração de segurança para uma auditoria de conformidade.",
+        "habilidadeSocioemocional": "Organizar o próprio tempo para documentar, com disciplina técnica, uma migração de segurança até o prazo da auditoria de conformidade.",
         "conceito": [
           {
             "heading": "Criptografia em trânsito",
@@ -2939,7 +2942,7 @@ const ALL_WEEKS = [
         "title": "Política de backup: full, incremental e snapshot",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Explicar o que é uma política de backup e diferenciar backup full, incremental e snapshot.",
-        "habilidadeSocioemocional": "Tratar dados diferentes (código, banco, ativos) com estratégias diferentes, evitando soluções únicas.",
+        "habilidadeSocioemocional": "Resistir à tentação de uma solução única fácil, tratando com disciplina cada tipo de dado (código, banco, ativos) com a estratégia que ele exige.",
         "pontoDePartida": {
           "titulo": "E se, mesmo com os acessos corretos, algo der errado?",
           "texto": "<p>No Capítulo 19, a startup migrou parte da infraestrutura para a nuvem e aprendeu que dados e acessos continuam sendo sempre responsabilidade dela. Agora surge a pergunta natural: e se, mesmo com os controles de acesso corretos, algo der errado — falha de hardware, erro humano, corrupção de dados?</p>\n<p>A startup tem três tipos de dado muito diferentes: código-fonte do jogo (muda a cada commit), banco de dados de jogadores (muda o tempo todo) e ativos de arte (mudam bem menos). Tratar os três igual seria ineficiente.</p>"
@@ -2977,7 +2980,7 @@ const ALL_WEEKS = [
         "title": "RPO, RTO e a regra 3-2-1",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Explicar RPO e RTO, usá-los para escolher uma estratégia, e calcular consumo de armazenamento com deduplicação/compressão.",
-        "habilidadeSocioemocional": "Planejar uma política de backup considerando restrições reais de orçamento.",
+        "habilidadeSocioemocional": "Buscar a melhor política de backup possível dentro de um orçamento real, sem se contentar com a primeira solução que caiba na conta.",
         "conceito": [
           {
             "heading": "RPO e RTO",
@@ -3014,7 +3017,7 @@ const ALL_WEEKS = [
         "title": "Planejando um DR Test",
         "duracao": "50 minutos",
         "habilidadeTecnica": "Reconstruir a cadeia de restauração após uma falha e justificar a importância de testar a restauração.",
-        "habilidadeSocioemocional": "Planejar um teste de recuperação de desastres sem impactar a produção.",
+        "habilidadeSocioemocional": "Manter a calma ao planejar um teste de recuperação de desastres, simulando uma falha real sem deixar a tensão do cenário comprometer o plano.",
         "conceito": [
           {
             "heading": "Um backup nunca testado é apenas presumido funcional",
